@@ -1,0 +1,11 @@
+import about from "../assets/about/newAbout.webp";
+
+const AboutBanner = () => {
+  return (
+    <div className="w-full h-[500px]">
+      <img className="w-full h-full object-cover" src={about} />
+    </div>
+  );
+};
+
+export default AboutBanner;
