@@ -93,10 +93,10 @@ const ThankYou = () => {
               </h4>
               <h4 className="text-base mt-5 text-center flex justify-center text-texthead">
                 <Link
-                  to={"mailto:support@nexlinbd.com"}
+                  to={"mailto:support@rpcworld-bd.com"}
                   className="flex items-center gap-x-2"
                 >
-                  <MdOutlineMail /> support@nexlinbd.com
+                  <MdOutlineMail /> support@rpcworld-bd.com
                 </Link>
               </h4>
               <p className="text-center mt-5">You can buy more products.</p>

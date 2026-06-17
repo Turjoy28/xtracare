@@ -99,8 +99,8 @@ const MiddleFooter = () => {
                   01930414944
                 </a>
                 <p className="text-white font-bold underline">Email</p>
-                <a className="text-white" href="mailto:support@nexlinbd.com">
-                  support@nexlinbd.com
+                <a className="text-white" href="mailto:support@rpcworld-bd.com">
+                  support@rpcworld-bd.com
                 </a>
                 <ul className="flex items-center gap-x-5 mt-5">
                   {socialList.map((item, index) => {

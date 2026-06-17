@@ -16,7 +16,7 @@ import AddCategory from "../Pages/Category";
 import AllBanner from "../Pages/AllBanner";
 import UploadProduct from "../Pages/UploadProduct";
 import AllProduct from "../Pages/AllProduct";
-import logo from "../assets/logos/Nexlibd-logo.png";
+import logo from "../assets/logos/main-logo.png";
 import { useDispatch, useSelector } from "react-redux";
 import { activeUser } from "../Slices/userSlices";
 import AddDiscount from "../Pages/AddDiscount";

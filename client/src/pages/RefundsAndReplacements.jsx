@@ -13,7 +13,7 @@ const RefundsAndReplacements = () => {
       <div className="max-w-4xl mx-auto px-4 py-8">
         <h1 className="text-2xl font-bold mb-6">Refunds & Replacements</h1>
         <p className="mb-4">
-        Welcome to nexlinbd ! We want you to be happy with your purchase, but we understand that sometimes things don’t work out as planned. Here’s everything you need to know about our refund and replacement policy:
+          Welcome to rpcworld-bd ! We want you to be happy with your purchase, but we understand that sometimes things don’t work out as planned. Here’s everything you need to know about our refund and replacement policy:
         </p>
         <div className="bg-white shadow-lg rounded-lg p-6 mb-6">
           <h2 className="text-xl font-semibold mb-4">Refunds</h2>
@@ -86,7 +86,7 @@ const RefundsAndReplacements = () => {
           <p>
             If you have any questions or need help with a return or replacement,
             please reach out to our customer service team. We’re here to assist
-            you and ensure you have a great experience with nexlinbd .
+            you and ensure you have a great experience with rpcworld-bd .
           </p>
         </div>
       </div>

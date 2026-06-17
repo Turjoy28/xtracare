@@ -29,10 +29,10 @@ const ContactInfo = () => {
                 </div>
                 <div className="mt-6">
                   <Link
-                    to={"mailto:support@nexlinbd.com"}
+                    to={"mailto:support@rpcworld-bd.com"}
                     className="text-sm text-texthead mb-1 block hover:text-danger"
                   >
-                    support@nexlinbd.com
+                    support@rpcworld-bd.com
                   </Link>
                   <Link
                     to={"tel:01755599108"}
@@ -54,12 +54,12 @@ const ContactInfo = () => {
                     item.name === "facebook"
                       ? "bg-[#3b5998] hover:bg-opacity-70"
                       : item.name === "instagram"
-                      ? "bg-[#DC1E66] hover:bg-opacity-70"
-                      : item.name === "youtube"
-                      ? "bg-[#FF0000] hover:bg-opacity-70"
-                      : item.name === "tiktok"
-                      ? "bg-[#69C9D0] hover:bg-opacity-70"
-                      : "";
+                        ? "bg-[#DC1E66] hover:bg-opacity-70"
+                        : item.name === "youtube"
+                          ? "bg-[#FF0000] hover:bg-opacity-70"
+                          : item.name === "tiktok"
+                            ? "bg-[#69C9D0] hover:bg-opacity-70"
+                            : "";
                   return (
                     <Link key={index} className="text-texthead" to={item.link}>
                       <li

@@ -6,7 +6,7 @@ module.exports = class Email {
     this.to = user.email;
     this.firstName = user.name.split(" ")[0];
     this.url = url;
-    this.from = `Nexlin <${process.env.EMAIL_FROM}>`;
+    this.from = `RPC World BD <${process.env.EMAIL_FROM}>`;
   }
 
   newTransport() {
@@ -35,12 +35,12 @@ module.exports = class Email {
 
   async sendWelcome() {
     const html = `
-      <h1>Welcome to the Nexlin Family, ${this.firstName}!</h1>
+      <h1>Welcome to the RPC World BD Family, ${this.firstName}!</h1>
       <p>We are excited to have you onboard.</p>
       <p>Click <a href="${this.url}">here</a> to get started.</p>
     `;
 
-    await this.send(html, "Welcome to the Nexlin Family!");
+    await this.send(html, "Welcome to the RPC World BD Family!");
   }
 
   async sendPasswordReset() {
@@ -51,7 +51,7 @@ module.exports = class Email {
     <p><a href="${this.url}">Reset your password</a></p>
     <p>If you did not request a password reset, please ignore this email.</p>
     <p>Thanks,</p>
-    <p>Nexlin Team</p>
+    <p>RPC World BD Team</p>
   `;
 
     await this.send(
@@ -79,62 +79,72 @@ module.exports = class Email {
         </thead>
         <tbody>
           ${order.products
-            .map((product) => {
-              const originalPrice = product.option.price;
-              const discountPrice = product.option.salePrice || originalPrice;
-              const discountAmount = originalPrice - discountPrice;
+        .map((product) => {
+          const option = product.option;
+          if (!option) {
+            const productName = (product.product && product.product.name) || "Deleted Product Variant";
+            return `
+                <tr>
+                  <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">${productName}</td>
+                  <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">${product.quantity}</td>
+                  <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">N/A</td>
+                  <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">N/A</td>
+                  <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">N/A</td>
+                  <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">N/A</td>
+                  <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">N/A</td>
+                </tr>
+              `;
+          }
 
-              const discountPercentage = (
-                (discountAmount / originalPrice) *
-                100
-              ).toFixed(2);
+          const originalPrice = option.price || 0;
+          const discountPrice = option.salePrice || originalPrice;
+          const discountAmount = originalPrice - discountPrice;
 
-              const subtotal = discountPrice * product.quantity;
+          const discountPercentage = originalPrice > 0
+            ? ((discountAmount / originalPrice) * 100).toFixed(2)
+            : "0.00";
 
-              return `
+          const subtotal = discountPrice * product.quantity;
+
+          const productName = (option.product && option.product.name)
+            || (product.product && product.product.name)
+            || "Unknown Product";
+
+          const colorName = (option.variant && option.variant.colorName) || "N/A";
+          const colorCode = (option.variant && option.variant.colorCode) || "";
+          const size = option.size || "N/A";
+
+          return `
               <tr>
-                <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">${
-                  product.option.product.name
-                }</td>
-                <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">${
-                  product.quantity
-                }</td>
+                <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">${productName}</td>
+                <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">${product.quantity}</td>
                 <td style="border: 1px solid #ddd; padding: 8px;">
                   <div>
                     <div style="width: 42%; margin: 0 auto;">
                       <div style="float: left;">
-                        ${product.option.variant.colorName || "N/A"}
+                        ${colorName}
                       </div>
-                      <div style="width: 12px; height: 12px; border-radius: 50%; margin-top: 4.5px; float: right; background-color: ${
-                        product.option.variant.colorCode
-                      }">
+                      ${colorCode ? `
+                      <div style="width: 12px; height: 12px; border-radius: 50%; margin-top: 4.5px; float: right; background-color: ${colorCode}">
                       </div>
+                      ` : ""}
                     </div>
                   </div>
                 </td>
-                <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">${
-                  product.option.size || "N/A"
-                }</td>
-                <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">৳ ${originalPrice.toFixed(
-                  2
-                )}</td>
-                <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">৳ ${discountAmount.toFixed(
-                  2
-                )} (${discountPercentage}%)</td>
-                <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">৳ ${subtotal.toFixed(
-                  2
-                )}</td>
+                <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">${size}</td>
+                <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">৳ ${originalPrice.toFixed(2)}</td>
+                <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">৳ ${discountAmount.toFixed(2)} (${discountPercentage}%)</td>
+                <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">৳ ${subtotal.toFixed(2)}</td>
               </tr>
             `;
-            })
-            .join("")}
+        })
+        .join("")}
         </tbody>
       </table>
       <p>
         <strong>
-          Shipping Cost: ${
-            order.shippingCost > 0 ? ` ৳ ${order.shippingCost}` : "FREE"
-          }
+          Shipping Cost: ${order.shippingCost > 0 ? ` ৳ ${order.shippingCost}` : "FREE"
+      }
         </strong>
       </p>
       <p><strong>Sub-Total: ৳ ${order.totalCost}</strong></p>
@@ -165,14 +175,37 @@ module.exports = class Email {
         </thead>
         <tbody>
           ${order.products
-            .map((product) => {
-              const originalPrice = product.option.price;
-              const subtotal = originalPrice * product.quantity;
+        .map((product) => {
+          const option = product.option;
+          if (!option) {
+            const productName = (product.product && product.product.name) || "Deleted Product Variant";
+            return `
+                <tr>
+                  <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">${productName}</td>
+                  <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">${product.quantity}</td>
+                  <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">N/A</td>
+                  <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">N/A</td>
+                  <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">N/A</td>
+                  <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">N/A</td>
+                  <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">N/A</td>
+                </tr>
+              `;
+          }
+          const originalPrice = option.price || 0;
+          const subtotal = originalPrice * product.quantity;
 
-              return `
+          const productName = (option.product && option.product.name)
+            || (product.product && product.product.name)
+            || "Unknown Product";
+
+          const colorName = (option.variant && option.variant.colorName) || "N/A";
+          const colorCode = (option.variant && option.variant.colorCode) || "";
+          const size = option.size || "N/A";
+
+          return `
               <tr>
                 <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">
-                  ${product.option.product.name}
+                  ${productName}
                 </td>
                 <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">
                   ${product.quantity}
@@ -181,17 +214,17 @@ module.exports = class Email {
                   <div>
                     <div style="width: 42%; margin: 0 auto;">
                       <div style="float: left;">
-                        ${product.option.variant.colorName || "N/A"}
+                        ${colorName}
                       </div>
-                      <div style="width: 12px; height: 12px; border-radius: 50%; margin-top: 4.5px; float: right; background-color: ${
-                        product.option.variant.colorCode
-                      }">
+                      ${colorCode ? `
+                      <div style="width: 12px; height: 12px; border-radius: 50%; margin-top: 4.5px; float: right; background-color: ${colorCode}">
                       </div>
+                      ` : ""}
                     </div>
                   </div>
                 </td>
                 <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">
-                  ${product.option.size}
+                  ${size}
                 </td>
                 <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">
                   ৳ ${originalPrice.toFixed(2)}
@@ -204,33 +237,34 @@ module.exports = class Email {
                 </td>
               </tr>
             `;
-            })
-            .join("")}
+        })
+        .join("")}
         </tbody>
       </table>
       <p>
         <strong>
-          Shipping Cost: ${
-            order.shippingCost > 0 ? ` ৳ ${order.shippingCost}` : "FREE"
-          }
+          Shipping Cost: ${order.shippingCost > 0 ? ` ৳ ${order.shippingCost}` : "FREE"
+      }
         </strong>
       </p>
       <p>
         <strong>
           Product Total: ৳ ${order.products
-            .reduce(
-              (total, product) =>
-                total + product.option.price * product.quantity,
-              0
-            )
-            .toFixed(2)}
+        .reduce(
+          (total, product) => {
+            const price = (product.option && product.option.price) || 0;
+            return total + price * product.quantity;
+          },
+          0
+        )
+        .toFixed(2)}
         </strong>
       </p>
       <p>
         <strong>
           Coupon Discount: (${discountPercent}%): ৳ ${order.couponDiscount.toFixed(
-      2
-    )}
+          2
+        )}
         </strong>
       </p>
       <p>

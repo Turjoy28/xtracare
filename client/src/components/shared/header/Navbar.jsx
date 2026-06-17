@@ -15,7 +15,7 @@ import { MdKeyboardArrowRight, MdOutlineClose } from "react-icons/md";
 import MobileSearch from "./MobileSearch";
 import { TiArrowBackOutline } from "react-icons/ti";
 import { PiPercentBold } from "react-icons/pi";
-import logo from "../../../assets/logos/Nexlibd-logo.png";
+import logo from "../../../assets/logos/main-logo.png";
 import { FiSearch, FiShoppingBag } from "react-icons/fi";
 import ApiContext from "../../baseapi/BaseApi";
 import Containar from "../../../layouts/Containar";
@@ -81,7 +81,7 @@ const Navbar = () => {
   // Calculate the total quantity of items in the cart
   const totalQuantity = cartItems.reduce((acc, item) => acc + item.quantity, 0);
 
-  const handleDelete = (id) => {};
+  const handleDelete = (id) => { };
 
   const calculateSubtotal = () => {
     return cartItems
@@ -89,9 +89,9 @@ const Navbar = () => {
         (total, item) =>
           total +
           item?.quantity *
-            (item?.selectedOption?.discountValue > 0
-              ? Math.ceil(item?.selectedOption?.salePrice)
-              : item?.selectedOption?.price),
+          (item?.selectedOption?.discountValue > 0
+            ? Math.ceil(item?.selectedOption?.salePrice)
+            : item?.selectedOption?.price),
         0
       )
       ?.toFixed(0);
@@ -176,9 +176,8 @@ const Navbar = () => {
                 </li>
               ))}
               <li
-                className={`absolute ${
-                  categoryActive ? "left-0" : "left-full "
-                }   transition-all duration-300 ease-in-out top-0 w-full min-h-[500px] bg-white z-20`}
+                className={`absolute ${categoryActive ? "left-0" : "left-full "
+                  }   transition-all duration-300 ease-in-out top-0 w-full min-h-[500px] bg-white z-20`}
               >
                 <div>
                   <div className="">
@@ -205,12 +204,11 @@ const Navbar = () => {
                                 setCategoryActive(false);
                               }}
                               className="py-3.5 px-9 inline-block "
-                              to={`/shop/subcategory/${
-                                item?._id
-                              }/${encodeURIComponent(
-                                item?.title.replace(/\s+/g, "")
-                              )}`}
-                              // to={`/shop/subcategory/${item?._id}`}
+                              to={`/shop/subcategory/${item?._id
+                                }/${encodeURIComponent(
+                                  item?.title.replace(/\s+/g, "")
+                                )}`}
+                            // to={`/shop/subcategory/${item?._id}`}
                             >
                               {item?.title}
                             </Link>
@@ -299,7 +297,7 @@ const Navbar = () => {
                           {item?.selectedOption?.discountValue > 0 && (
                             <p className="text-xs cursor-pointer absolute right-2 -top-0.5 mt-2 px-2 text-white rounded-md py-0.5 bg-[#10B1DF] inline-block">
                               {item?.selectedOption?.discountType ==
-                              "amount" ? (
+                                "amount" ? (
                                 <span className="flex font-bold items-center gap-x-0.5">
                                   ৳ {item?.selectedOption?.discountValue}
                                 </span>
@@ -391,9 +389,9 @@ const Navbar = () => {
                               <span className="mr-1"> ৳</span>
                               {item?.selectedOption?.discountValue > 0
                                 ? Math.ceil(item?.selectedOption?.salePrice) *
-                                  item?.quantity
+                                item?.quantity
                                 : item?.selectedOption?.price?.toFixed(0) *
-                                  item?.quantity}
+                                item?.quantity}
                             </span>
                           </p>
                         </div>

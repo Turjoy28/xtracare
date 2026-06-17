@@ -18,7 +18,7 @@ const DeliveryInfo = () => {
             <h1 className="text-2xl font-bold mb-6">Delivery Info</h1>
             <p className="mb-4">
               Here’s what you need to know about getting your order from
-              nexlinbd :
+              rpcworld-bd :
             </p>
             <div className="bg-white shadow-lg rounded-lg p-6 mb-6">
               <h2 className="text-xl font-semibold mb-4">How We Ship</h2>
@@ -62,7 +62,7 @@ const DeliveryInfo = () => {
               </p>
             </div>
             <p className="mt-6">
-              Thanks for choosing nexlinbd! If you have any questions about your
+              Thanks for choosing rpcworld-bd! If you have any questions about your
               delivery, feel free to reach out to us.
             </p>
           </div>

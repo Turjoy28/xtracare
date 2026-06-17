@@ -11,7 +11,7 @@ import {
 } from "antd";
 import axios from "../Components/Axios";
 
-import logoImage from "../assets/logos/Nexlibd-logo.png";
+import logoImage from "../assets/logos/main-logo.png";
 import qrImg from "../assets/logos/qrcode.png";
 
 const Order = () => {
@@ -382,9 +382,9 @@ const Order = () => {
         <div class="billing-section">
           <div class="billing-info">
             <p><strong><b>COMPANY:</b></strong></p>
-            <p>Nexlibd</p>
+            <p>RPC World BD</p>
             <p>+88 01930414944</p>
-            <p>support@nexlinbd.com</p>
+            <p>support@rpcworld-bd.com</p>
           </div>
         </div>
 
@@ -399,8 +399,8 @@ const Order = () => {
           <div class="order-info">
             <p><strong>Invoice No.:</strong> ${anOrder._id.slice(-6)}</p>
             <p><strong>Date:</strong> ${new Date(
-              anOrder.createdAt
-            ).toLocaleDateString()}</p>
+      anOrder.createdAt
+    ).toLocaleDateString()}</p>
           </div>
         </div>
 
@@ -415,36 +415,33 @@ const Order = () => {
           </thead>
           <tbody>
             ${productsWithTotalPrice
-              .map(
-                (product) => `
+        .map(
+          (product) => `
               <tr class="products-details">
                 <td class="billing-info">
-                  <p>${
-                    product?.product?.isBundle
-                      ? product?.product?.name || "N/A"
-                      : product?.option?.product?.name || "N/A"
-                  }</p>
+                  <p>${product?.product?.isBundle
+              ? product?.product?.name || "N/A"
+              : product?.option?.product?.name || "N/A"
+            }</p>
                   <p>Size: ${product?.option?.size || "N/A"}</p>
                   <p>Color: ${product?.option?.variant?.colorName || "N/A"}</p>
                 </td>
                 <td>${product?.quantity || "N/A"}</td>
-                <td>${
-                  product?.product?.isBundle
-                    ? product?.product?.price
-                    : product.option?.salePrice || product.option?.price || 0
-                } Tk</td>
+                <td>${product?.product?.isBundle
+              ? product?.product?.price
+              : product.option?.salePrice || product.option?.price || 0
+            } Tk</td>
                   <td>${product.totalPrice} Tk</td>
               </tr>
             `
-              )
-              .join("")}
+        )
+        .join("")}
           </tbody>
           <tfoot class="products-details">
             <tr>
               <th scope="row" colspan="3"><strong>Delivery Charge:</strong></th>
-              <td><strong>${
-                deliveryCharge === 0 ? "Free Shipping" : `${deliveryCharge} TK`
-              }</strong></td>
+              <td><strong>${deliveryCharge === 0 ? "Free Shipping" : `${deliveryCharge} TK`
+      }</strong></td>
             </tr>
             <tr>
               <th scope="row" colspan="3"><strong>Bundle Offer:</strong></th>
@@ -525,19 +522,18 @@ const Order = () => {
         <ul>
           {products && products.length > 0
             ? products.map((product, index) => (
-                <li
-                  key={index}
-                  className={`my-2 p-2 ${
-                    index !== products.length - 1 ? "border-b" : ""
+              <li
+                key={index}
+                className={`my-2 p-2 ${index !== products.length - 1 ? "border-b" : ""
                   }`}
-                >
-                  {product?.product?.isBundle ? (
-                    <a>{product?.product?.name || "N/A"}</a>
-                  ) : (
-                    <a>{product?.option?.product?.name || "N/A"}</a>
-                  )}
-                </li>
-              ))
+              >
+                {product?.product?.isBundle ? (
+                  <a>{product?.product?.name || "N/A"}</a>
+                ) : (
+                  <a>{product?.option?.product?.name || "N/A"}</a>
+                )}
+              </li>
+            ))
             : "N/A"}
         </ul>
       ),
@@ -558,9 +554,8 @@ const Order = () => {
               return (
                 <li
                   key={index}
-                  className={`my-2 p-2 ${
-                    index !== record.products.length - 1 ? "border-b" : ""
-                  }`}
+                  className={`my-2 p-2 ${index !== record.products.length - 1 ? "border-b" : ""
+                    }`}
                 >
                   {Math.round(price)} Taka
                 </li>
@@ -672,7 +667,7 @@ const Order = () => {
 
         // console.log("totalCost",totalCost)
 
-        const grandTotal = record.totalCost  - bundleDiscount;
+        const grandTotal = record.totalCost - bundleDiscount;
 
         console.log("----grandTotal----", grandTotal);
         console.log("----record.totalCost----", record.totalCost);
@@ -703,15 +698,14 @@ const Order = () => {
         <div>
           {products && products.length > 0
             ? products.map((product, index) => (
-                <div
-                  key={index}
-                  className={`my-2 p-2 ${
-                    index !== products.length - 1 ? "border-b" : ""
+              <div
+                key={index}
+                className={`my-2 p-2 ${index !== products.length - 1 ? "border-b" : ""
                   }`}
-                >
-                  {product?.option?.variant?.colorName || "N/A"}
-                </div>
-              ))
+              >
+                {product?.option?.variant?.colorName || "N/A"}
+              </div>
+            ))
             : "N/A"}
         </div>
       ),
@@ -724,15 +718,14 @@ const Order = () => {
         <ul>
           {products && products.length > 0
             ? products.map((product, index) => (
-                <li
-                  className={`my-2 p-2 ${
-                    index !== products.length - 1 ? "border-b" : ""
+              <li
+                className={`my-2 p-2 ${index !== products.length - 1 ? "border-b" : ""
                   }`}
-                  key={index}
-                >
-                  {product?.option?.size || "N/A"}
-                </li>
-              ))
+                key={index}
+              >
+                {product?.option?.size || "N/A"}
+              </li>
+            ))
             : "N/A"}
         </ul>
       ),

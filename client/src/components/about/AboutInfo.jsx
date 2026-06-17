@@ -9,10 +9,10 @@ const AboutInfo = () => {
         <div className="relative">
           <div className="sticky px-10 top-0 text-center h-screen flex flex-col items-center justify-center bg-gradient-to-b from-red-200 to-black-200">
             <h2 className="text-4xl font-bold max-w-screen-md mx-auto">
-              Welcome to nexlinbd
+              Welcome to rpcworld-bd
             </h2>
             <p className="mt-2 max-w-screen-md mx-auto">
-              Welcome to nexlinbd , your destination for traditional and modest
+              Welcome to rpcworld-bd , your destination for traditional and modest
               fashion. We specialize in offering a curated selection of
               high-quality cloth, crafted to reflect both cultural heritage and
               contemporary style. Our products are designed to make you feel
@@ -20,7 +20,7 @@ const AboutInfo = () => {
               a formal event.
             </p>
             <div className="my-5 max-w-screen-md mx-auto">
-              <strong> What we really do? At nexlinbd</strong> , <br /> we are
+              <strong> What we really do? At rpcworld-bd</strong> , <br /> we are
               passionate about providing our customers with authentic and
               stylish cloth collections. Our mission is to blend tradition with
               modernity, offering a diverse range of products that cater to all
@@ -36,7 +36,7 @@ const AboutInfo = () => {
             <div className="max-w-screen-md mx-auto">
               <br /> Our vision is to be a leading provider of traditional and
               modest fashion, creating a platform where culture meets
-              contemporary trends. We aim to make nexlinbd a household name for
+              contemporary trends. We aim to make rpcworld-bd a household name for
               anyone seeking quality cloth, with a focus on sustainability and
               ethical production practices.
             </div>

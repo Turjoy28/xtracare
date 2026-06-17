@@ -87,7 +87,7 @@ const PrivacyPolicy = () => {
           </p>
           <p style={styles.paragraph}>
             <strong>Email:</strong>{" "}
-            <a href="mailto:support@nexlinbd.com">support@nexlinbd.com</a>
+            <a href="mailto:support@rpcworld-bd.com">support@rpcworld-bd.com</a>
           </p>
           <p style={styles.paragraph}>
             <strong>Address:</strong>{" "}

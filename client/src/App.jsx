@@ -38,7 +38,6 @@ const LatestSale = lazy(() => import("./components/shop/LatestSale"));
 const OfferSale = lazy(() => import("./components/shop/OfferSale"));
 
 const baseApi = "http://localhost:8000/api/v1";
-// const baseApi = "https://nexlinserver.nexlinbd.com/api/v1";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -47,10 +46,10 @@ const router = createBrowserRouter(
         index
         element={
           <Suspense fallback={<div></div>}>
-            {/* <Helmet>
-              <title>Nexlibd -নেক্সলিন| Tangail</title>
+            <Helmet>
+              <title>RPC World BD -আরপিসি ওয়ার্ল্ড বিডি</title>
               <link rel="canonical" href="/" />
-            </Helmet> */}
+            </Helmet>
             <Home />
           </Suspense>
         }

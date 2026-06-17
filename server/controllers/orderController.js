@@ -70,14 +70,20 @@ console.log("productAggregation",productAggregation)  // Calculate the total pro
     totalCost,
   });
 
-  order = await Order.findById(order._id).populate({
-    path: "products.option",
-    select: "sku size price salePrice discountType discountValue",
-    populate: {
-      path: "product variant",
-      select: "name colorName colorCode",
+  order = await Order.findById(order._id).populate([
+    {
+      path: "products.option",
+      select: "sku size price salePrice discountType discountValue",
+      populate: {
+        path: "product variant",
+        select: "name colorName colorCode",
+      },
     },
-  });
+    {
+      path: "products.product",
+      select: "name price isBundle",
+    },
+  ]);
 
   // if (order?.isBundle) {
   //   // If it's a bundle, populate from product._id
@@ -196,14 +202,20 @@ exports.createOrderWithCouponController = catchAsync(async (req, res, next) => {
   });
 
   order = await Order.findById(order._id)
-    .populate({
-      path: "products.option",
-      select: "sku size price salePrice discountType discountValue",
-      populate: {
-        path: "product variant",
-        select: "name colorName colorCode",
+    .populate([
+      {
+        path: "products.option",
+        select: "sku size price salePrice discountType discountValue",
+        populate: {
+          path: "product variant",
+          select: "name colorName colorCode",
+        },
       },
-    })
+      {
+        path: "products.product",
+        select: "name price isBundle",
+      },
+    ])
     .select("-__v");
 
   // Update the sellNumber for each option in the order
@@ -271,14 +283,20 @@ exports.updateOrderController = catchAsync(async (req, res, next) => {
     new: true,
     runValidators: true,
   })
-    .populate({
-      path: "products.option",
-      select: "sku size price salePrice discountType discountValue",
-      populate: {
-        path: "product variant",
-        select: "name colorName colorCode",
+    .populate([
+      {
+        path: "products.option",
+        select: "sku size price salePrice discountType discountValue",
+        populate: {
+          path: "product variant",
+          select: "name colorName colorCode",
+        },
       },
-    })
+      {
+        path: "products.product",
+        select: "name price isBundle",
+      },
+    ])
     .select("-__v");
 
   if (!order) return next(new AppError("No order found with that ID!", 404));
@@ -288,7 +306,11 @@ exports.updateOrderController = catchAsync(async (req, res, next) => {
 
   const { orderStatus } = req.body;
   if (["approved", "delivered", "shipped", "canceled"].includes(orderStatus)) {
-    await email.sendInvoice(order);
+    try {
+      await email.sendInvoice(order);
+    } catch (err) {
+      console.error("Failed to send order invoice email:", err);
+    }
   }
 
   res.status(200).json({

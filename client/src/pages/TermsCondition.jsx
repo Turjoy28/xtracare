@@ -13,7 +13,7 @@ const TermsCondition = () => {
         <Containar>
           <div className="max-w-5xl mx-auto p-6">
             <p className="mb-4">
-              Welcome to nexlinbd Before you start shopping, please take a
+              Welcome to rpcworld-bd Before you start shopping, please take a
               moment to read our Terms & Conditions. These terms are here to
               ensure a smooth and enjoyable experience for everyone. By using
               our website and making a purchase, you agree to the following
@@ -24,7 +24,7 @@ const TermsCondition = () => {
               1. Acceptance of Terms
             </h2>
             <p className="mb-4">
-              By accessing or using the nexlinbd website, you agree to comply
+              By accessing or using the rpcworld-bd website, you agree to comply
               with and be bound by these Terms & Conditions. If you do not agree
               with any part of these terms, please do not use our site.
             </p>
@@ -91,7 +91,7 @@ const TermsCondition = () => {
               7. Intellectual Property
             </h2>
             <p className="mb-4">
-              All content on the nexlinbdwebsite, including text, graphics,
+              All content on the rpcworld-bd website, including text, graphics,
               logos, and images, is owned by or licensed to us and is protected
               by copyright and other intellectual property laws. You may not
               use, reproduce, or distribute any content from our site without
@@ -102,7 +102,7 @@ const TermsCondition = () => {
               8. Limitation of Liability
             </h2>
             <p className="mb-4">
-              nexlinbdis not liable for any indirect, incidental, or
+              rpcworld-bd is not liable for any indirect, incidental, or
               consequential damages arising from your use of our website or
               products. Our liability is limited to the maximum extent permitted
               by law. We are not responsible for any damages resulting from
@@ -130,11 +130,11 @@ const TermsCondition = () => {
             <p className="mb-4">
               If you have any questions or concerns about these Terms &
               Conditions, please contact us at{" "}
-              <a href="support@nexlinbd.com" className="text-blue-500">
-                support@nexlinbd.com
+              <a href="support@rpcworld-bd.com" className="text-blue-500">
+                support@rpcworld-bd.com
               </a>
               . We are here to help and ensure you have a great experience with
-              nexlinbd.
+              rpcworld-bd.
             </p>
 
             <p className="text-center font-semibold mt-6">

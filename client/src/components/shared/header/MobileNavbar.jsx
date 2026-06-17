@@ -5,7 +5,7 @@ import { menusList, socialList } from "../../constants";
 import axios from "axios";
 import Drawer from "react-modern-drawer";
 import "react-modern-drawer/dist/index.css";
-import logo from "../../../assets/logos/Nexlibd-logo.png";
+import logo from "../../../assets/logos/main-logo.png";
 import { HiOutlineShoppingBag } from "react-icons/hi2";
 import { IoClose } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
@@ -106,9 +106,9 @@ const MobileNavbar = () => {
         (total, item) =>
           total +
           item?.quantity *
-            (item?.selectedOption?.discountValue > 0
-              ? Math.ceil(item?.selectedOption?.salePrice)
-              : item?.selectedOption?.price),
+          (item?.selectedOption?.discountValue > 0
+            ? Math.ceil(item?.selectedOption?.salePrice)
+            : item?.selectedOption?.price),
         0
       )
       ?.toFixed(0);
@@ -218,9 +218,8 @@ const MobileNavbar = () => {
                 </li>
               ))}
               <li
-                className={`absolute ${
-                  categoryActive ? "left-0" : "left-full "
-                }   transition-all duration-300 ease-in-out top-0 w-full min-h-[500px] bg-white z-20`}
+                className={`absolute ${categoryActive ? "left-0" : "left-full "
+                  }   transition-all duration-300 ease-in-out top-0 w-full min-h-[500px] bg-white z-20`}
               >
                 <div>
                   <div className="">
@@ -247,12 +246,11 @@ const MobileNavbar = () => {
                                 setCategoryActive(false);
                               }}
                               className="py-3.5 px-9 inline-block "
-                              to={`/shop/subcategory/${
-                                item?._id
-                              }/${encodeURIComponent(
-                                item?.title.replace(/\s+/g, "")
-                              )}`}
-                              // to={`/shop/category/${item?._id}`}
+                              to={`/shop/subcategory/${item?._id
+                                }/${encodeURIComponent(
+                                  item?.title.replace(/\s+/g, "")
+                                )}`}
+                            // to={`/shop/category/${item?._id}`}
                             >
                               {item?.title}
                             </Link>
@@ -327,7 +325,7 @@ const MobileNavbar = () => {
                           {item?.selectedOption?.discountValue && (
                             <p className="text-xs cursor-pointer absolute right-2 -top-0.5 mt-2 px-2 text-white rounded-md py-0.5 bg-danger inline-block">
                               {item?.selectedOption?.discountType ==
-                              "amount" ? (
+                                "amount" ? (
                                 <span className="flex font-bold items-center gap-x-0.5">
                                   ৳ {item?.selectedOption?.discountValue}
                                 </span>
@@ -416,9 +414,9 @@ const MobileNavbar = () => {
                               <span className="mr-1"> ৳</span>
                               {item?.selectedOption?.discountValue > 0
                                 ? Math.ceil(item?.selectedOption?.salePrice) *
-                                  item?.quantity
+                                item?.quantity
                                 : item?.selectedOption?.price?.toFixed(0) *
-                                  item?.quantity}
+                                item?.quantity}
                             </span>
                           </p>
                         </div>
@@ -492,9 +490,8 @@ const MobileNavbar = () => {
         </div>
       </Drawer>
       <nav
-        className={`fixed w-full bg-primary z-50 font-inter transition-all duration-300 ease-in-out py-5 sm:py-0 shadow-xl ${
-          isFixed ? "top-0 " : "-top-[200px] "
-        } mx-auto px-4 sm:px-14   `}
+        className={`fixed w-full bg-primary z-50 font-inter transition-all duration-300 ease-in-out py-5 sm:py-0 shadow-xl ${isFixed ? "top-0 " : "-top-[200px] "
+          } mx-auto px-4 sm:px-14   `}
       >
         {/* Main Navigation */}
         <div className="px-5">
