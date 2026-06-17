@@ -33,21 +33,20 @@ jobs:
           mkdir -p server/tmp
           touch server/tmp/restart.txt
 
-      - name: Configure SSH Key
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
+      - name: Deploy to cPanel via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          port: ${{ secrets.FTP_PORT || 21 }}
+          local-dir: ./server/
+          server-dir: ./api.rpcworld-bd.com/
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/.env
+            **/uploads/**
 
-      - name: Sync Server Files via rsync
-        run: |
-          # Sync server folder (including node_modules and tmp/restart.txt)
-          # Excludes local env files, git config, and user uploads to prevent overriding production data
-          rsync -avz -e "ssh -p ${{ secrets.SSH_PORT || '22' }} -o StrictHostKeyChecking=no" --delete \
-            --exclude=".env" \
-            --exclude=".git" \
-            --exclude=".github" \
-            --exclude="uploads/" \
-            server/ ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }}:/home/rpcworldbd/api.rpcworld-bd.com
 
 

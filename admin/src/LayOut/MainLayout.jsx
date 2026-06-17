@@ -144,7 +144,7 @@ const MainLayout = () => {
     getItem("Upload Banner", "3", <GiKnightBanner />),
     getItem("Add Discount", "9", <FileOutlined />),
     // getItem("Coupon", "11", <FileOutlined />),
-    getItem("Add Bundle", "13", <GiCardboardBox />),
+    // getItem("Add Bundle", "13", <GiCardboardBox />),
     // getItem("Landing Page", "sub5", <UploadOutlined />, [
     //   getItem("Banner", "14"),
     //   getItem("Customer Review", "15"),

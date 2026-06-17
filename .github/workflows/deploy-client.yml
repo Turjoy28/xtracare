@@ -35,13 +35,13 @@ jobs:
           # VITE_API_URL: ${{ secrets.VITE_API_URL }}
           npm run build
 
-      - name: Configure SSH Key
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-
-      - name: Deploy to cPanel via rsync
-        run: |
-          rsync -avz -e "ssh -p ${{ secrets.SSH_PORT || '22' }} -o StrictHostKeyChecking=no" --delete client/dist/ ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }}:/home/rpcworldbd/public_html
+      - name: Deploy to cPanel via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          port: ${{ secrets.FTP_PORT || 21 }}
+          local-dir: ./client/dist/
+          server-dir: ./public_html/
 

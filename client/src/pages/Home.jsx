@@ -18,7 +18,7 @@ const Home = () => {
       <Feature />
       <NewArival />
       <BestSell />
-      <BundlePackages />
+      {/* <BundlePackages /> */}
       <SaleFeature />
       <Brand />
     </>
