@@ -38,16 +38,16 @@ jobs:
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -p ${{ secrets.SSH_PORT || '22' }} -H "${{ secrets.SSH_HOST }}" >> ~/.ssh/known_hosts
 
       - name: Sync Server Files via rsync
         run: |
           # Sync server folder (including node_modules and tmp/restart.txt)
           # Excludes local env files, git config, and user uploads to prevent overriding production data
-          rsync -avz -e "ssh -p ${{ secrets.SSH_PORT || '22' }}" --delete \
+          rsync -avz -e "ssh -p ${{ secrets.SSH_PORT || '22' }} -o StrictHostKeyChecking=no" --delete \
             --exclude=".env" \
             --exclude=".git" \
             --exclude=".github" \
             --exclude="uploads/" \
             server/ ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }}:/home/rpcworldbd/api.rpcworld-bd.com
+
 

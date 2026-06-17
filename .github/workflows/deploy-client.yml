@@ -40,8 +40,8 @@ jobs:
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -p ${{ secrets.SSH_PORT || '22' }} -H "${{ secrets.SSH_HOST }}" >> ~/.ssh/known_hosts
 
       - name: Deploy to cPanel via rsync
         run: |
-          rsync -avz -e "ssh -p ${{ secrets.SSH_PORT || '22' }}" --delete client/dist/ ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }}:/home/rpcworldbd/public_html
+          rsync -avz -e "ssh -p ${{ secrets.SSH_PORT || '22' }} -o StrictHostKeyChecking=no" --delete client/dist/ ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }}:/home/rpcworldbd/public_html
+
