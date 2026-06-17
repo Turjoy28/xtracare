@@ -1,134 +1,140 @@
 import React, { useEffect } from "react";
 import BradCumbs from "../components/bradcumbs/BradCumbs";
+import Containar from "../layouts/Containar";
 
-// Define a Privacy Policy component
 const PrivacyPolicy = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
   return (
     <>
-      <BradCumbs title="Privacy Policiy" />
-      <div className="container pb-28 flex justify-center font-inter">
-        <div className="w-[1200px]">
-          <p style={styles.paragraph}>
-            Welcome to our Privacy Policy page! When you use our services, you
-            trust us with your information. This Privacy Policy explains how we
-            collect, use, disclose, and safeguard your information when you
-            visit our website.
-          </p>
-          <h2 style={styles.subHeader}>Information We Collect</h2>
-          <p style={styles.paragraph}>
-            We may collect information about you in a variety of ways. The
-            information we may collect includes:
-          </p>
-          <ul style={styles.list}>
-            <li style={styles.listItem}>
-              Personal Data: Personally identifiable information, such as your
-              name, email address, and contact information that you voluntarily
-              give to us when you register with the site or when you choose to
-              participate in various activities related to the site.
-            </li>
-            <li style={styles.listItem}>
-              Derivative Data: Information our servers automatically collect
-              when you access the site, such as your IP address, your browser
-              type, your operating system, your access times, and the pages you
-              have previously viewed on the site.
-            </li>
-            <li style={styles.listItem}>
-              Financial Data: Financial information, such as data related to
-              your payment method (e.g., valid credit card number, card brand,
-              expiration date) that we may collect when you purchase, order,
-              return, exchange, or request information about our services from
-              the site.
-            </li>
-          </ul>
-          <h2 style={styles.subHeader}>How We Use Your Information</h2>
-          <p style={styles.paragraph}>
-            We may use information collected about you via the site to:
-          </p>
-          <ul style={styles.list}>
-            <li style={styles.listItem}>
-              Assist you in completing your purchase.
-            </li>
-            <li style={styles.listItem}>
-              Monitor and analyze usage and trends to improve your experience
-              with the site.
-            </li>
-            <li style={styles.listItem}>
-              Notify you of updates to the site and our services.
-            </li>
-          </ul>
-          <h2 style={styles.subHeader}>Disclosure of Your Information</h2>
-          <p style={styles.paragraph}>
-            We may share information we have collected about you in certain
-            situations. Your information may be disclosed as follows:
-          </p>
-          <ul style={styles.list}>
-            <li style={styles.listItem}>
-              By Law or to Protect Rights: If we believe the release of
-              information about you is necessary to respond to legal process, to
-              investigate or remedy potential violations of our policies, or to
-              protect the rights, property, and safety of others, we may share
-              your information as permitted or required by any applicable law,
-              rule, or regulation.
-            </li>
-            <li style={styles.listItem}>
-              Business Transfers: We may share or transfer your information in
-              connection with, or during negotiations of, any merger, sale of
-              company assets, financing, or acquisition of all or a portion of
-              our business to another company.
-            </li>
-          </ul>
-          <h2 style={styles.subHeader}>Contact Us</h2>
-          <p style={styles.paragraph}>
-            If you have questions or comments about this Privacy Policy, please
-            contact us at:
-          </p>
-          <p style={styles.paragraph}>
-            <strong>Email:</strong>{" "}
-            <a href="mailto:rpcworldbd@gmail.com">rpcworldbd@gmail.com</a>
-          </p>
-          <p style={styles.paragraph}>
-            <strong>Address:</strong>{" "}
-            <p className=" text-texthead text-sm">
-              Dhaka Cantonment , Dhaka, Bangladesh
+      <BradCumbs title="Privacy Policy" />
+      <div className="bg-gray-50 py-12 sm:py-16 md:py-20 font-inter">
+        <Containar>
+          <div className="max-w-4xl mx-auto bg-white shadow-sm border border-gray-100 rounded-2xl p-6 sm:p-10 md:p-12">
+            <h1 className="text-3xl font-extrabold text-texthead mb-8 tracking-tight border-b border-gray-100 pb-4">
+              Privacy Policy
+            </h1>
+            <p className="text-paracolor text-base leading-relaxed mb-8">
+              At RPC World BD, we value your privacy and are committed to protecting your personal information. This Privacy Policy explains how we collect, use, and safeguard your information when you interact with our website, social media pages, or services.
             </p>
-          </p>
-        </div>
+
+            <div className="space-y-8">
+              <section>
+                <h2 className="text-xl font-bold text-texthead mb-4 flex items-center gap-2">
+                  <span className="w-1.5 h-6 bg-primary rounded-full inline-block"></span>
+                  Information We Collect
+                </h2>
+                <p className="text-paracolor text-base leading-relaxed mb-4">
+                  We may collect the following information:
+                </p>
+                <ul className="grid grid-cols-1 md:grid-cols-2 gap-3 pl-2">
+                  {[
+                    "Full Name",
+                    "Phone Number",
+                    "Email Address",
+                    "Shipping/Billing Address",
+                    "Payment Information (where applicable)",
+                    "Order History",
+                  ].map((item, idx) => (
+                    <li key={idx} className="flex items-center gap-3 text-paracolor text-base">
+                      <span className="w-2 h-2 rounded-full bg-primary/80"></span>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </section>
+
+              <section>
+                <h2 className="text-xl font-bold text-texthead mb-4 flex items-center gap-2">
+                  <span className="w-1.5 h-6 bg-primary rounded-full inline-block"></span>
+                  How We Use Your Information
+                </h2>
+                <p className="text-paracolor text-base leading-relaxed mb-4">
+                  We use your information to:
+                </p>
+                <ul className="space-y-3 pl-2">
+                  {[
+                    "Process and deliver orders",
+                    "Provide customer support",
+                    "Improve our products and services",
+                    "Send updates regarding orders, promotions, and offers",
+                    "Prevent fraud and maintain security",
+                  ].map((item, idx) => (
+                    <li key={idx} className="flex items-start gap-3 text-paracolor text-base">
+                      <span className="w-2 h-2 rounded-full bg-primary/80 mt-2.5 flex-shrink-0"></span>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+
+              <section>
+                <h2 className="text-xl font-bold text-texthead mb-4 flex items-center gap-2">
+                  <span className="w-1.5 h-6 bg-primary rounded-full inline-block"></span>
+                  Information Sharing
+                </h2>
+                <p className="text-paracolor text-base leading-relaxed">
+                  We do not sell, rent, or trade your personal information to third parties. Information may be shared with trusted delivery and payment service providers only when necessary to fulfill your order.
+                </p>
+              </section>
+
+              <section>
+                <h2 className="text-xl font-bold text-texthead mb-4 flex items-center gap-2">
+                  <span className="w-1.5 h-6 bg-primary rounded-full inline-block"></span>
+                  Data Security
+                </h2>
+                <p className="text-paracolor text-base leading-relaxed">
+                  We implement reasonable security measures to protect your personal information from unauthorized access, disclosure, or misuse.
+                </p>
+              </section>
+
+              <section>
+                <h2 className="text-xl font-bold text-texthead mb-4 flex items-center gap-2">
+                  <span className="w-1.5 h-6 bg-primary rounded-full inline-block"></span>
+                  Changes to This Policy
+                </h2>
+                <p className="text-paracolor text-base leading-relaxed">
+                  RPC World BD reserves the right to update this Privacy Policy at any time. Changes will be posted on this page.
+                </p>
+              </section>
+
+              <section className="pt-6 border-t border-gray-100">
+                <h2 className="text-xl font-bold text-texthead mb-4 flex items-center gap-2">
+                  <span className="w-1.5 h-6 bg-primary rounded-full inline-block"></span>
+                  Contact Us
+                </h2>
+                <p className="text-paracolor text-base leading-relaxed mb-4">
+                  If you have any questions regarding this Privacy Policy, please contact us.
+                </p>
+                <div className="bg-gray-50 rounded-xl p-6 space-y-3 border border-gray-100">
+                  <p className="text-texthead text-base">
+                    <strong>RPC World BD</strong>
+                  </p>
+                  <p className="text-paracolor text-base flex flex-wrap gap-x-2">
+                    <strong>Phone:</strong>
+                    <a href="tel:+8801718674140" className="text-primary hover:underline font-medium">
+                      +8801718674140
+                    </a>
+                  </p>
+                  <p className="text-paracolor text-base flex flex-wrap gap-x-2">
+                    <strong>Email:</strong>
+                    <a href="mailto:rpcworldbd@gmail.com" className="text-primary hover:underline font-medium">
+                      rpcworldbd@gmail.com
+                    </a>
+                  </p>
+                  <p className="text-paracolor text-base">
+                    <strong>Address:</strong> Dhaka Cantonment, Dhaka, Bangladesh
+                  </p>
+                </div>
+              </section>
+            </div>
+          </div>
+        </Containar>
       </div>
     </>
   );
-};
-
-// Define styles for the Privacy Policy page
-const styles = {
-  container: {
-    padding: "20px",
-    maxWidth: "800px",
-    margin: "0 auto",
-    fontFamily: "Arial, sans-serif",
-  },
-  header: {
-    fontSize: "2rem",
-    marginBottom: "10px",
-  },
-  subHeader: {
-    fontSize: "1.5rem",
-    marginTop: "20px",
-    marginBottom: "10px",
-  },
-  paragraph: {
-    marginBottom: "10px",
-    lineHeight: "1.6",
-  },
-  list: {
-    marginBottom: "10px",
-    paddingLeft: "20px",
-  },
-  listItem: {
-    marginBottom: "5px",
-  },
 };
 
 export default PrivacyPolicy;

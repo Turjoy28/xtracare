@@ -383,7 +383,7 @@ const Order = () => {
           <div class="billing-info">
             <p><strong><b>COMPANY:</b></strong></p>
             <p>RPC World BD</p>
-            <p>+88 +8801718674140</p>
+            <p>+8801718674140</p>
             <p>rpcworldbd@gmail.com</p>
           </div>
         </div>

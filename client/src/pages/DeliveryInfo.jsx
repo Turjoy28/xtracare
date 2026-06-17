@@ -1,70 +1,86 @@
-// src/components/DeliveryInfo.js
-
 import React, { useEffect } from "react";
 import BradCumbs from "../components/bradcumbs/BradCumbs";
-import { Link } from "react-router-dom";
 import Containar from "../layouts/Containar";
 
 const DeliveryInfo = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
   return (
     <>
-      <BradCumbs title={"Delivery Information"} />
-      <div className=" bg-gray-100 py-20 px-4 sm:px-6 lg:px-8">
-        <Containar className={" flex items-center justify-center"}>
-          <div className="max-w-4xl mx-auto px-4 py-8">
-            <h1 className="text-2xl font-bold mb-6">Delivery Info</h1>
-            <p className="mb-4">
-              Here’s what you need to know about getting your order from
-              rpcworld-bd :
+      <BradCumbs title="Delivery Information" />
+      <div className="bg-gray-50 py-12 sm:py-16 md:py-20 font-inter">
+        <Containar>
+          <div className="max-w-4xl mx-auto bg-white shadow-sm border border-gray-100 rounded-2xl p-6 sm:p-10 md:p-12">
+            <h1 className="text-3xl font-extrabold text-texthead mb-8 tracking-tight border-b border-gray-100 pb-4">
+              Delivery Policy
+            </h1>
+            <p className="text-paracolor text-base leading-relaxed mb-8">
+              At RPC World BD, we are committed to delivering your orders safely and efficiently across Bangladesh. Please read our delivery details below.
             </p>
-            <div className="bg-white shadow-lg rounded-lg p-6 mb-6">
-              <h2 className="text-xl font-semibold mb-4">How We Ship</h2>
-              <p className="mb-4">
-                We use reliable carriers to make sure your order arrives safely.
-                You’ll get a tracking number once your order is on its way, so
-                you can check where it is anytime.
-              </p>
+
+            <div className="space-y-8">
+              <section>
+                <h2 className="text-xl font-bold text-texthead mb-4 flex items-center gap-2">
+                  <span className="w-1.5 h-6 bg-primary rounded-full inline-block"></span>
+                  Delivery Coverage
+                </h2>
+                <p className="text-paracolor text-base leading-relaxed">
+                  RPC World BD provides delivery services throughout Bangladesh.
+                </p>
+              </section>
+
+              <section>
+                <h2 className="text-xl font-bold text-texthead mb-4 flex items-center gap-2">
+                  <span className="w-1.5 h-6 bg-primary rounded-full inline-block"></span>
+                  Delivery Time
+                </h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                  <div className="bg-gray-50 border border-gray-100 rounded-xl p-4">
+                    <p className="text-xs font-semibold text-primary uppercase tracking-wider mb-1">Inside Dhaka</p>
+                    <p className="text-2xl font-bold text-texthead">1–3 Business Days</p>
+                  </div>
+                  <div className="bg-gray-50 border border-gray-100 rounded-xl p-4">
+                    <p className="text-xs font-semibold text-primary uppercase tracking-wider mb-1">Outside Dhaka</p>
+                    <p className="text-2xl font-bold text-texthead">2–7 Business Days</p>
+                  </div>
+                </div>
+                <p className="text-paracolor text-sm italic">
+                  Delivery times may vary depending on location, courier operations, public holidays, or unforeseen circumstances.
+                </p>
+              </section>
+
+              <section>
+                <h2 className="text-xl font-bold text-texthead mb-4 flex items-center gap-2">
+                  <span className="w-1.5 h-6 bg-primary rounded-full inline-block"></span>
+                  Delivery Charges
+                </h2>
+                <p className="text-paracolor text-base leading-relaxed">
+                  Delivery charges are calculated based on location, package size, and courier rates.
+                </p>
+              </section>
+
+              <section>
+                <h2 className="text-xl font-bold text-texthead mb-4 flex items-center gap-2">
+                  <span className="w-1.5 h-6 bg-primary rounded-full inline-block"></span>
+                  Order Confirmation
+                </h2>
+                <p className="text-paracolor text-base leading-relaxed">
+                  RPC World BD may contact customers to verify order details before processing shipments.
+                </p>
+              </section>
+
+              <section>
+                <h2 className="text-xl font-bold text-texthead mb-4 flex items-center gap-2">
+                  <span className="w-1.5 h-6 bg-primary rounded-full inline-block"></span>
+                  Delivery Delays
+                </h2>
+                <p className="text-paracolor text-base leading-relaxed">
+                  While we strive to deliver orders on time, we are not responsible for delays caused by courier services, natural disasters, government restrictions, or other events beyond our control.
+                </p>
+              </section>
             </div>
-            <div className="bg-white shadow-lg rounded-lg p-6 mb-6">
-              <h2 className="text-xl font-semibold mb-4">Delivery Times</h2>
-              <p className="mb-4">
-                For standard shipping, it usually takes about 3-5 business days.
-                If you choose expedited shipping, it’ll be quicker. Delivery
-                times can be longer during busy times or holidays.
-              </p>
-            </div>
-            <div className="bg-white shadow-lg rounded-lg p-6 mb-6">
-              <h2 className="text-xl font-semibold mb-4">Shipping Locations</h2>
-              <p className="mb-4">
-                We ship to most places, but if you’re outside our regular
-                delivery areas, we’ll let you know if we can’t deliver to you.
-              </p>
-            </div>
-            <div className="bg-white shadow-lg rounded-lg p-6 mb-6">
-              <h2 className="text-xl font-semibold mb-4">Order Tracking</h2>
-              <p className="mb-4">
-                After we ship your order, you’ll get an email with a tracking
-                link. You can use this link to see where your package is and
-                when it’s expected to arrive.
-              </p>
-            </div>
-            <div className="bg-white shadow-lg rounded-lg p-6">
-              <h2 className="text-xl font-semibold mb-4">
-                Issues with Delivery
-              </h2>
-              <p>
-                If there’s a problem with your delivery, like it’s late or
-                damaged, please contact us right away. We’ll help you sort it
-                out as quickly as possible.
-              </p>
-            </div>
-            <p className="mt-6">
-              Thanks for choosing rpcworld-bd! If you have any questions about your
-              delivery, feel free to reach out to us.
-            </p>
           </div>
         </Containar>
       </div>

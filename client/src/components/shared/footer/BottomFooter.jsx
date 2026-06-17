@@ -8,11 +8,12 @@ const BottomFooter = () => {
     <footer className="font-inter py-5 bg-[#2B3445]  px-10 bottom-40 lg:top-0">
       <Containar>
         <div className="flex justify-center items-center">
-          <p className="text-sm text-gray-400 text-center">
-            ©2025 rpcworld-bd, All rights reserved. Developed by
+          <p className="text-sm text-gray-400 text-center flex items-center justify-between w-full gap-x-2">
+            {/* Take Current Year dynamically */}
+            <span>  © {new Date().getFullYear()} RPC World BD, All rights reserved.</span>
             <span className="text-white mx-2">
               <Link target="_blanck" to={"https://www.okobiz.com/"}>
-                okobiz.
+                Developed by okobiz.
               </Link>
             </span>
           </p>

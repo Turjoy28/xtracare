@@ -119,8 +119,8 @@ const MainLayout = () => {
       content = <AddLifeStyleProduct />;
       break;
     case "20":
-      content = <AddLifeStyleOrder />;
-      break;
+    //   content = <AddLifeStyleOrder />;
+    //   break;
 
     default:
       content = (
@@ -143,17 +143,17 @@ const MainLayout = () => {
     ]),
     getItem("Upload Banner", "3", <GiKnightBanner />),
     getItem("Add Discount", "9", <FileOutlined />),
-    getItem("Coupon", "11", <FileOutlined />),
+    // getItem("Coupon", "11", <FileOutlined />),
     getItem("Add Bundle", "13", <GiCardboardBox />),
-    getItem("Landing Page", "sub5", <UploadOutlined />, [
-      getItem("Banner", "14"),
-      getItem("Customer Review", "15"),
-      getItem("Featured Products", "16"),
-      getItem("Hot Title", "17"),
-      getItem("Customer Review Title", "18"),
-      getItem("Product Title", "19"),
-      getItem("Order Title", "20"),
-    ]),
+    // getItem("Landing Page", "sub5", <UploadOutlined />, [
+    //   getItem("Banner", "14"),
+    //   getItem("Customer Review", "15"),
+    //   getItem("Featured Products", "16"),
+    //   getItem("Hot Title", "17"),
+    //   getItem("Customer Review Title", "18"),
+    //   getItem("Product Title", "19"),
+    //   getItem("Order Title", "20"),
+    // ]),
     // getItem("Add Review", "10", <FileOutlined />),
   ];
 

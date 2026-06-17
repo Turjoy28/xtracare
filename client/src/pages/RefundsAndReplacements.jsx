@@ -8,89 +8,95 @@ const RefundsAndReplacements = () => {
   }, []);
 
   return (
-    <div className="bg-gray-100">
-      <BradCumbs title={"Refunds & Replacements"} />
-      <div className="max-w-4xl mx-auto px-4 py-8">
-        <h1 className="text-2xl font-bold mb-6">Refunds & Replacements</h1>
-        <p className="mb-4">
-          Welcome to rpcworld-bd ! We want you to be happy with your purchase, but we understand that sometimes things don’t work out as planned. Here’s everything you need to know about our refund and replacement policy:
-        </p>
-        <div className="bg-white shadow-lg rounded-lg p-6 mb-6">
-          <h2 className="text-xl font-semibold mb-4">Refunds</h2>
-          <p className="mb-4">
-            If you’re not completely satisfied with your purchase, you can
-            return it for a refund. Here’s how it works:
-          </p>
-          <ul className="list-disc list-inside mb-4">
-            <li>
-              <strong>Eligibility:</strong> To be eligible for a refund, your
-              item must be unused, in its original packaging, and in the same
-              condition you received it. You’ll need to return it within 30 days
-              of the delivery date.
-            </li>
-            <li>
-              <strong>How to Return:</strong> Contact our customer service team
-              to get a return authorization. They’ll provide you with
-              instructions on how to send the item back. Please make sure to
-              include a copy of your receipt or order number in the return
-              package.
-            </li>
-            <li>
-              <strong>Refund Process:</strong> Once we receive your returned
-              item, we’ll inspect it and process your refund. Refunds are
-              usually issued to the original payment method within 5-7 business
-              days. If you used a gift card, the refund will be applied to the
-              card.
-            </li>
-          </ul>
-        </div>
-        <div className="bg-white shadow-lg rounded-lg p-6 mb-6">
-          <h2 className="text-xl font-semibold mb-4">Replacements</h2>
-          <p className="mb-4">
-            If you received a damaged or defective item, or if you’ve simply
-            changed your mind, we offer replacements. Here’s what you need to
-            know:
-          </p>
-          <ul className="list-disc list-inside mb-4">
-            <li>
-              <strong>Damaged or Defective Items:</strong> If your item arrives
-              damaged or has a defect, please contact us right away. We’ll ask
-              for a photo of the damage or defect to help us resolve the issue.
-              We’ll then send you a replacement at no extra charge.
-            </li>
-            <li>
-              <strong>Changed Your Mind:</strong> If you want to replace an item
-              because you’ve changed your mind, you can still do so. Just return
-              the original item in accordance with our return policy, and we’ll
-              send you the replacement once we receive the returned item.
-            </li>
-          </ul>
-        </div>
-        <div className="bg-white shadow-lg rounded-lg p-6 mb-6">
-          <h2 className="text-xl font-semibold mb-4">Exceptions</h2>
-          <ul className="list-disc list-inside mb-4">
-            <li>
-              <strong>Personalized Items:</strong> Items that are customized or
-              personalized are not eligible for a refund or replacement unless
-              they arrive damaged or defective.
-            </li>
-            <li>
-              <strong>Sale Items:</strong> Sale items are generally
-              non-refundable. However, if there’s an issue with the item, please
-              let us know.
-            </li>
-          </ul>
-        </div>
-        <div className="bg-white shadow-lg rounded-lg p-6">
-          <h2 className="text-xl font-semibold mb-4">Contact Us</h2>
-          <p>
-            If you have any questions or need help with a return or replacement,
-            please reach out to our customer service team. We’re here to assist
-            you and ensure you have a great experience with rpcworld-bd .
-          </p>
-        </div>
+    <>
+      <BradCumbs title="Refund & Replacement Policy" />
+      <div className="bg-gray-50 py-12 sm:py-16 md:py-20 font-inter">
+        <Containar>
+          <div className="max-w-4xl mx-auto bg-white shadow-sm border border-gray-100 rounded-2xl p-6 sm:p-10 md:p-12">
+            <h1 className="text-3xl font-extrabold text-texthead mb-8 tracking-tight border-b border-gray-100 pb-4">
+              Refund & Replacement Policy
+            </h1>
+            <p className="text-paracolor text-base leading-relaxed mb-8">
+              At RPC World BD, we strive to ensure a seamless shopping experience. Please review our policy on refunds and replacements below.
+            </p>
+
+            <div className="space-y-8">
+              <section>
+                <h2 className="text-xl font-bold text-texthead mb-4 flex items-center gap-2">
+                  <span className="w-1.5 h-6 bg-primary rounded-full inline-block"></span>
+                  Refund Eligibility
+                </h2>
+                <p className="text-paracolor text-base leading-relaxed mb-4">
+                  Refunds may be approved under the following circumstances:
+                </p>
+                <ul className="space-y-3 pl-2">
+                  {[
+                    "Wrong product delivered",
+                    "Damaged or defective product received",
+                    "Product unavailable after payment has been made",
+                    "Order cancellation approved by RPC World BD",
+                  ].map((item, idx) => (
+                    <li key={idx} className="flex items-start gap-3 text-paracolor text-base">
+                      <span className="w-2 h-2 rounded-full bg-primary/80 mt-2.5 flex-shrink-0"></span>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+
+              <section>
+                <h2 className="text-xl font-bold text-texthead mb-4 flex items-center gap-2">
+                  <span className="w-1.5 h-6 bg-primary rounded-full inline-block"></span>
+                  Refund Request
+                </h2>
+                <p className="text-paracolor text-base leading-relaxed">
+                  Customers must report any issue within <strong className="text-texthead font-semibold">3 days</strong> of receiving the product. Supporting evidence such as photos or videos may be required.
+                </p>
+              </section>
+
+              <section>
+                <h2 className="text-xl font-bold text-texthead mb-4 flex items-center gap-2">
+                  <span className="w-1.5 h-6 bg-primary rounded-full inline-block"></span>
+                  Refund Process
+                </h2>
+                <p className="text-paracolor text-base leading-relaxed">
+                  Once approved, refunds will be processed within <strong className="text-texthead font-semibold">7–10 business days</strong> through the original payment method or another mutually agreed method.
+                </p>
+              </section>
+
+              <section>
+                <h2 className="text-xl font-bold text-texthead mb-4 flex items-center gap-2">
+                  <span className="w-1.5 h-6 bg-primary rounded-full inline-block"></span>
+                  Non-Refundable Situations
+                </h2>
+                <p className="text-paracolor text-base leading-relaxed mb-4">
+                  Refunds will not be provided for:
+                </p>
+                <ul className="space-y-3 pl-2">
+                  {[
+                    "Change of mind after purchase",
+                    "Products that have been used, damaged, or altered by the customer",
+                    "Customized or special-order products",
+                    "Digital products or services that have already been delivered",
+                  ].map((item, idx) => (
+                    <li key={idx} className="flex items-start gap-3 text-paracolor text-base">
+                      <span className="w-2 h-2 rounded-full bg-red-400 mt-2.5 flex-shrink-0"></span>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+
+              <section className="pt-6 border-t border-gray-100">
+                <p className="text-paracolor text-sm italic">
+                  RPC World BD reserves the right to approve or reject refund requests based on the circumstances.
+                </p>
+              </section>
+            </div>
+          </div>
+        </Containar>
       </div>
-    </div>
+    </>
   );
 };
 
