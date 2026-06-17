@@ -144,8 +144,7 @@ const demo = {
         visitCount: 0,
         saleNumber: 0,
         colorName: "black",
-        colorCode: "#000", // (size, color, product), sku --> unique
-        // details: "This is the details",
+        colorCode: "#000",
         sku: "afj345ng",
         size: "M",
         price: 300,
