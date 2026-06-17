@@ -199,8 +199,8 @@ const CheckoutForm = () => {
           couponDiscount > 0
             ? item?.selectedOption?.price
             : item?.selectedOption?.discountValue > 0
-            ? Math.ceil(item?.selectedOption?.salePrice)
-            : item?.selectedOption?.price;
+              ? Math.ceil(item?.selectedOption?.salePrice)
+              : item?.selectedOption?.price;
         return total + itemPrice * item.quantity;
       }
     }, 0);
@@ -279,7 +279,7 @@ const CheckoutForm = () => {
       setIsLoading(true);
       try {
         const bundleOffer = calculateBundleOffer();
-                    console.log("bundleOffer", cartItems)
+        console.log("bundleOffer", cartItems)
         const orderData = {
           name: formData.fullName,
           phone: formData.phoneNumber,
@@ -297,7 +297,7 @@ const CheckoutForm = () => {
           ...(formData.couponCode.trim() && { coupon: formData.couponCode }),
           bundleOffer: bundleOffer || 0,
         };
-console.log("orderData", orderData)
+        console.log("orderData", orderData)
 
         const apiEndpoint = formData.couponCode.trim()
           ? `${baseApi}/order/withCoupon`
@@ -316,7 +316,7 @@ console.log("orderData", orderData)
         console.error("Error submitting order", error);
         setCouponError(
           error.response?.data?.message ||
-            "An error occurred while placing the order"
+          "An error occurred while placing the order"
         );
       }
     }
@@ -359,11 +359,10 @@ console.log("orderData", orderData)
                             name="fullName"
                             value={formData.fullName}
                             onChange={handleChange}
-                            className={`w-full h-9 px-3 border  rounded-r ${
-                              errors.fullName
-                                ? "border-red-500"
-                                : "border-border"
-                            }`}
+                            className={`w-full h-9 px-3 border  rounded-r ${errors.fullName
+                              ? "border-red-500"
+                              : "border-border"
+                              }`}
                             placeholder="Full Name *"
                           />
                         </div>
@@ -381,11 +380,10 @@ console.log("orderData", orderData)
                             name="phoneNumber"
                             value={formData.phoneNumber}
                             onChange={handleChange}
-                            className={`w-full h-9 px-3 border  rounded-r ${
-                              errors.phoneNumber
-                                ? "border-red-500"
-                                : "border-border"
-                            }`}
+                            className={`w-full h-9 px-3 border  rounded-r ${errors.phoneNumber
+                              ? "border-red-500"
+                              : "border-border"
+                              }`}
                             placeholder="Mobile Number *"
                           />
                         </div>
@@ -420,11 +418,10 @@ console.log("orderData", orderData)
                           name="streetAddress"
                           value={formData.streetAddress}
                           onChange={handleChange}
-                          className={`w-full h-20 px-3 border  rounded-r ${
-                            errors.streetAddress
-                              ? "border-red-500"
-                              : "border-border"
-                          }`}
+                          className={`w-full h-20 px-3 border  rounded-r ${errors.streetAddress
+                            ? "border-red-500"
+                            : "border-border"
+                            }`}
                           placeholder="your full address"
                         />
                       </div>
@@ -509,7 +506,9 @@ console.log("orderData", orderData)
                             )}
                           </div>
                         )}
-                        <div className="w-full lg:w-[49%] mt-5">
+                        {/* Comment Cupon Field   */}
+
+                        {/* <div className="w-full lg:w-[49%] mt-5">
                           <h4 className="text-[15px] font-medium mb-2  uppercase">
                             Coupon (if have)
                           </h4>
@@ -519,11 +518,10 @@ console.log("orderData", orderData)
                               name="couponCode"
                               value={formData.couponCode}
                               onChange={handleChange}
-                              className={`w-full h-10 px-3 border  ${
-                                errors.couponCode
+                              className={`w-full h-10 px-3 border  ${errors.couponCode
                                   ? "border-red-500"
                                   : "border-border"
-                              }`}
+                                }`}
                               placeholder="enter your coupon"
                             />
                             <button
@@ -545,7 +543,7 @@ console.log("orderData", orderData)
                               Coupon applied! discount: {couponDiscount}%
                             </p>
                           )}
-                        </div>
+                        </div> */}
                       </div>
                       <div className="mt-6 flex gap-4">
                         {/* <button
@@ -716,21 +714,21 @@ console.log("orderData", orderData)
                                           {(item?.selectedOption
                                             ?.discountValue > 0
                                             ? Math?.ceil(
-                                                item?.selectedOption?.salePrice
-                                              )
+                                              item?.selectedOption?.salePrice
+                                            )
                                             : item?.selectedOption?.price) *
                                             item?.quantity}
                                         </span>
                                         {item?.selectedOption?.discountValue >
                                           0 && (
-                                          <del className="line-through text-normal text-red-500">
-                                            ৳{" "}
-                                            {item?.selectedOption
-                                              ?.discountValue > 0 &&
-                                              item?.selectedOption?.price *
+                                            <del className="line-through text-normal text-red-500">
+                                              ৳{" "}
+                                              {item?.selectedOption
+                                                ?.discountValue > 0 &&
+                                                item?.selectedOption?.price *
                                                 item?.quantity}
-                                          </del>
-                                        )}
+                                            </del>
+                                          )}
                                       </>
                                     )}
 
@@ -798,9 +796,9 @@ console.log("orderData", orderData)
                         <span className="mr-1">৳</span>
                         {couponDiscount > 0
                           ? Math.ceil(
-                              calculateSubtotal() -
-                                calculateSubtotal() * (couponDiscount / 100)
-                            )
+                            calculateSubtotal() -
+                            calculateSubtotal() * (couponDiscount / 100)
+                          )
                           : calculateSubtotal()}
                       </li>
                     </ul>
@@ -840,7 +838,7 @@ console.log("orderData", orderData)
                       </h2>
 
                       {selectedQuantityValue !== null &&
-                      quantityDiscount[selectedQuantityValue] ? (
+                        quantityDiscount[selectedQuantityValue] ? (
                         <div className="mt-3 px-6 text-sm flex justify-between items-center">
                           <div className="flex items-start text-lg gap-x-1 font-bold">
                             <div>

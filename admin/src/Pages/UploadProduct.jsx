@@ -358,22 +358,22 @@ const UploadProduct = () => {
                 <Input />
               </Form.Item>
             </Col>
-            <Col span={12}>
+            {/* <Col span={12}>
               <Form.Item label="Video URL" name="videoUrl">
                 <Input />
               </Form.Item>
-            </Col>
+            </Col> */}
           </Row>
 
           <Form.Item
             label="Product Description"
             name="description"
-            // rules={[
-            //   {
-            //     required: true,
-            //     message: "Please provide a product description!",
-            //   },
-            // ]}
+          // rules={[
+          //   {
+          //     required: true,
+          //     message: "Please provide a product description!",
+          //   },
+          // ]}
           >
             <Input.TextArea rows={3} />
           </Form.Item>
@@ -433,7 +433,7 @@ const UploadProduct = () => {
               <Form.Item
                 label="Select Brand"
                 name="brand"
-                // rules={[{ required: true, message: "Please select a brand!" }]}
+              // rules={[{ required: true, message: "Please select a brand!" }]}
               >
                 <Select
                   options={brands.map((brand) => ({
@@ -464,12 +464,12 @@ const UploadProduct = () => {
                 <Form.Item
                   label="Color Name"
                   name={`variant[${variantIndex}].colorName`}
-                  // rules={[
-                  //   {
-                  //     required: true,
-                  //     message: "Please provide a color name!",
-                  //   },
-                  // ]}
+                // rules={[
+                //   {
+                //     required: true,
+                //     message: "Please provide a color name!",
+                //   },
+                // ]}
                 >
                   <Input
                     value={variant.colorName}
@@ -483,12 +483,12 @@ const UploadProduct = () => {
                 <Form.Item
                   label="Color Code (# সহ ৬ ক্যারেকটার হতে হবে (example:#012f02))"
                   name={`variant[${variantIndex}].colorCode`}
-                  // rules={[
-                  //   {
-                  //     required: true,
-                  //     message: "Please provide a color code!",
-                  //   },
-                  // ]}
+                // rules={[
+                //   {
+                //     required: true,
+                //     message: "Please provide a color code!",
+                //   },
+                // ]}
                 >
                   <Input
                     value={variant.colorCode}
@@ -502,12 +502,12 @@ const UploadProduct = () => {
                 <Form.Item
                   label="Details"
                   name={`variant[${variantIndex}].details`}
-                  // rules={[
-                  //   {
-                  //     required: true,
-                  //     message: "Please provide variant details!",
-                  //   },
-                  // ]}
+                // rules={[
+                //   {
+                //     required: true,
+                //     message: "Please provide variant details!",
+                //   },
+                // ]}
                 >
                   <ReactQuill
                     value={variant.details}
@@ -562,12 +562,12 @@ const UploadProduct = () => {
                       <Form.Item
                         label="Size (Text or Number)"
                         name={`variant[${variantIndex}].options[${optionIndex}].size`}
-                        // rules={[
-                        //   {
-                        //     required: true,
-                        //     message: "Please provide size!",
-                        //   },
-                        // ]}
+                      // rules={[
+                      //   {
+                      //     required: true,
+                      //     message: "Please provide size!",
+                      //   },
+                      // ]}
                       >
                         <Input
                           value={option.size}

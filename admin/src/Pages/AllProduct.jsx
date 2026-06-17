@@ -279,25 +279,25 @@ const AllProduct = () => {
         prevData.map((item) =>
           item.key === editingRecord._id
             ? {
-                ...item,
-                ...values,
-                category:
-                  categories.find((cat) => cat._id === values.category)
-                    ?.title || "N/A",
-                subCategory:
-                  subCategories.find(
-                    (subCat) => subCat._id === values.subCategory
-                  )?.title || "N/A",
-                childCategory:
-                  childCategories.find(
-                    (childCat) => childCat._id === values.childCategory
-                  )?.title || "N/A",
-                photo: updatedProduct?.photos,
-                videoUrl:
-                  updatedProduct?.photos.find((photo) =>
-                    photo.includes("youtube.com")
-                  ) || "",
-              }
+              ...item,
+              ...values,
+              category:
+                categories.find((cat) => cat._id === values.category)
+                  ?.title || "N/A",
+              subCategory:
+                subCategories.find(
+                  (subCat) => subCat._id === values.subCategory
+                )?.title || "N/A",
+              childCategory:
+                childCategories.find(
+                  (childCat) => childCat._id === values.childCategory
+                )?.title || "N/A",
+              photo: updatedProduct?.photos,
+              videoUrl:
+                updatedProduct?.photos.find((photo) =>
+                  photo.includes("youtube.com")
+                ) || "",
+            }
             : item
         )
       );
@@ -526,7 +526,7 @@ const AllProduct = () => {
       </Space>
       {/* <Table columns={columns} dataSource={data} scroll={{ x: 1300 }} /> */}
       <Table columns={columns} dataSource={filteredData} scroll={{ x: 1300 }} />
-      
+
       {/* edit product modal */}
       <Modal
         title="Edit Product"
@@ -546,9 +546,9 @@ const AllProduct = () => {
           <Form.Item label="Title" name="title">
             <Input />
           </Form.Item>
-          <Form.Item label="YouTube Video URL" name="videoUrl">
+          {/* <Form.Item label="YouTube Video URL" name="videoUrl">
             <Input />
-          </Form.Item>
+          </Form.Item> */}
           <Form.Item label="Category" name="category">
             <Select onChange={(val) => {
               setSelectedCategory(val);

@@ -179,9 +179,12 @@ const MainLayout = () => {
         collapsible
         collapsed={collapsed}
       >
-        <div className="text-white  mx-auto  font-bold text-2xl leading-[80px] text-center  my-5 flex justify-center ">
-          <img src={logo} className="w-32"></img>
-        </div>
+        {/* on click logo link to home page */}
+        <Link to={"/dashboard"}>
+          <div className="text-white  mx-auto  font-bold text-2xl leading-[80px] text-center  my-5 flex justify-center ">
+            <img src={logo} className="w-32"></img>
+          </div>
+        </Link>
         <Menu
           theme="light"
           className="text-white !font-bold"

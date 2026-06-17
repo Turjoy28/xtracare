@@ -730,19 +730,19 @@ const ProductDetail = () => {
                   </div>
 
                   <div className="mt-20 flex gap-4 items-center">
-                    <p className="text-gray-400 text-sm w-[15%]">Share</p>
+                    <p className="text-gray-400 text-sm w-[15%]">Follow Us On:</p>
                     {socialList.map((item, index) => {
                       let Icon = item.logo;
                       const bgColor =
                         item.name === "facebook"
-                          ? "bg-[#3b5998] hover:bg-opacity-70"
+                          ? "bg-[#000000] hover:bg-opacity-10"
                           : item.name === "instagram"
-                            ? "bg-[#DC1E66] hover:bg-opacity-70"
+                            ? "bg-[#000000] hover:bg-opacity-10"
                             : item.name === "youtube"
-                              ? "bg-[#FF0000] hover:bg-opacity-70"
+                              ? "bg-[#000000] hover:bg-opacity-10"
                               : item.name === "tiktok"
-                                ? "bg-[#69C9D0] hover:bg-opacity-70"
-                                : "";
+                                ? "bg-[#000000] hover:bg-opacity-10"
+                                : "bg-[#000000] hover:bg-opacity-10";
                       return (
                         <Link
                           key={index}
