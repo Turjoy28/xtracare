@@ -5,7 +5,7 @@ import { FaBangladeshiTakaSign } from "react-icons/fa6";
 import { useDispatch, useSelector } from 'react-redux';
 import { setPriceRange } from "../../redux/slices/priceRangeSlice";
 
-const PriceFilter = ({toggleDrawer}) => {
+const PriceFilter = ({ toggleDrawer }) => {
   const [priceActive, setPriceActive] = useState(true);
   const dispatch = useDispatch();
   const priceRange = useSelector((state) => state.priceRange);
@@ -33,16 +33,15 @@ const PriceFilter = ({toggleDrawer}) => {
           <h3 className="text-2xl">{priceActive ? <FiMinus /> : <FiPlus />}</h3>
         </div>
         <div
-          className={`transition-all duration-500 ease-linear overflow-hidden ${
-            priceActive ? "max-h-[200px] opacity-100" : "max-h-0 opacity-0"
-          }`}
+          className={`transition-all duration-500 ease-linear overflow-hidden ${priceActive ? "max-h-[200px] opacity-100" : "max-h-0 opacity-0"
+            }`}
         >
           <div className="px-6 pb-10 mt-1">
             <form>
               <Slider.Root
                 className="relative flex items-center select-none touch-none w-full h-7"
                 value={sliderValue}
-                max={300000}
+                max={30000}
                 min={0}
                 step={1}
                 onValueChange={handleSliderChange}
@@ -63,10 +62,10 @@ const PriceFilter = ({toggleDrawer}) => {
             </form>
             <div className="mt-4 flex gap-x-3 items-center">
               <button
-                onClick={()=>{
+                onClick={() => {
                   handleFilterClick()
                   toggleDrawer()
-                } }
+                }}
                 className="px-5 py-1.5 text-white bg-danger"
               >
                 <span >Filter</span>

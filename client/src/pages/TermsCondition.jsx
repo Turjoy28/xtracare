@@ -130,8 +130,8 @@ const TermsCondition = () => {
             <p className="mb-4">
               If you have any questions or concerns about these Terms &
               Conditions, please contact us at{" "}
-              <a href="support@rpcworld-bd.com" className="text-blue-500">
-                support@rpcworld-bd.com
+              <a href="rpcworldbd@gmail.com" className="text-blue-500">
+                rpcworldbd@gmail.com
               </a>
               . We are here to help and ensure you have a great experience with
               rpcworld-bd.

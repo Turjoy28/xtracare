@@ -148,13 +148,13 @@ const RightPartProduct = () => {
             <span>
               <FaPhoneAlt />
             </span>
-            01930414944
+            +8801718674140
           </p>
           <p className="flex items-center gap-2">
             <span className="">
               <FaPhoneAlt />
             </span>
-            <span>01930414944</span>
+            <span>+8801718674140</span>
             <span className="px-1 border border-dashed border-[red] text-[red]">
               Bkash Personal
             </span>
@@ -163,7 +163,7 @@ const RightPartProduct = () => {
             <span>
               <FaPhoneAlt />
             </span>
-            <span>01930414944</span>
+            <span>+8801718674140</span>
             <span className="px-1 border border-dashed border-[#F7941D] text-[#F7941D]">
               Nagad Personal
             </span>
