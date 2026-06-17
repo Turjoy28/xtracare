@@ -13,6 +13,7 @@ import axios from "../Components/Axios";
 
 import logoImage from "../assets/logos/main-logo.png";
 import qrImg from "../assets/logos/qrcode.png";
+import signImage from "../assets/logos/sign.png";
 
 const Order = () => {
   const [data, setData] = useState([]);
@@ -461,6 +462,8 @@ const Order = () => {
 
        <div class="signature-section">
         <div class="">
+        <img src="${signImage}" alt="QR" style="height: 60px;" />
+        <br />
          <span class="sellerSig">Seller's Signature</span> <br />
           (auto generated Signature) 
         </div>
@@ -471,7 +474,9 @@ const Order = () => {
       
         <div class="qrlogo">
         <p>More Shopping, SCAN ME!</p>
-          <img src="${qrImg}" alt="QR" style="height: 100px;" />
+          <img src="${qrImg}" alt="QR" style="height: 200px;" />
+          <br />
+          <span style="font-size: 14px; margin-left: 30px;">www.rpcworld-bd.com</span>
         </div>
       </body>
     </html>
