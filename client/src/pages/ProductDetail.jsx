@@ -133,13 +133,13 @@ const ProductDetail = () => {
   //   fetchData();
   // }, [id, location]);
 
-  const totalStock = data?.variants?.reduce((total, variant) => {
-    const optionsStock = variant.options?.reduce(
-      (optionTotal, option) => optionTotal + (option.stock || 0),
-      0
-    );
-    return total + (optionsStock || 0);
-  }, 0);
+  const getSelectedOptionStock = () => {
+    if (data?.isBundle) return Infinity; // Bundles are not stock-limited here
+    const selectedOption = selectedColor?.options?.find(
+      (option) => option?.size === selectedSize
+    ) || selectedColor?.options?.[0];
+    return selectedOption?.stock ?? 0;
+  };
 
   const handleAddToCart = () => {
     if (data?.isBundle) {
@@ -157,6 +157,18 @@ const ProductDetail = () => {
         (option) => option.size === selectedSize
       );
 
+      const availableStock = selectedOption?.stock ?? 0;
+
+      // Check if the requested quantity exceeds the available stock
+      if (availableStock > 0 && quantity > availableStock) {
+        setError(
+          `Only ${availableStock} unit${availableStock === 1 ? '' : 's'} available${
+            selectedSize ? ` for size "${selectedSize}"` : ''
+          }!`
+        );
+        return;
+      }
+
       const item = {
         ...data,
         id,
@@ -168,6 +180,7 @@ const ProductDetail = () => {
 
       dispatch(addToCart(item)); // Dispatch the item to the cart
       setQuantity(1); // Reset quantity after adding
+      setError(""); // Clear error after successful add
 
       const price = selectedOption?.salePrice || selectedOption?.price || 0;
 
@@ -658,11 +671,20 @@ const ProductDetail = () => {
                             className="border w-6 h-6 cursor-pointer"
                             onClick={() => {
                               if (data?.isBundle === false) {
-                                if (quantity < totalStock) {
+                                const stock = getSelectedOptionStock();
+                                if (quantity < stock) {
                                   setQuantity(quantity + 1);
                                   setError("");
                                 } else {
-                                  setError("No stock limit!");
+                                  setError(
+                                    `Only ${stock} unit${
+                                      stock === 1 ? '' : 's'
+                                    } available${
+                                      selectedSize
+                                        ? ` for size "${selectedSize}"`
+                                        : ''
+                                    }!`
+                                  );
                                 }
                               } else {
                                 setQuantity(quantity + 1);

@@ -190,12 +190,12 @@ const CartBox = () => {
                             </li>
 
                             <li className="w-[17%] text-base font-medium">
-                              <div className="h-full flex border-border">
+                              <div className="h-full flex flex-col items-start gap-1">
                                 <div className="flex items-center justify-center w-20 h-12 relative border ">
                                   {item.quantity}
                                   <div className="absolute right-0">
                                     <IoIosArrowUp
-                                      className="border w-6 h-6"
+                                      className="border w-6 h-6 cursor-pointer"
                                       onClick={() =>
                                         dispatch(
                                           incrementQuantity({
@@ -203,13 +203,14 @@ const CartBox = () => {
                                             colorOptionId:
                                               item?.selectedOption._id,
                                             selectedSize: item?.selectedSize,
+                                            maxStock: item?.selectedOption?.stock,
                                           })
                                         )
                                       }
                                     />
 
                                     <IoIosArrowDown
-                                      className="border w-6 h-6"
+                                      className="border w-6 h-6 cursor-pointer"
                                       onClick={() =>
                                         dispatch(
                                           decrementQuantity({
@@ -223,6 +224,12 @@ const CartBox = () => {
                                     />
                                   </div>
                                 </div>
+                                {item?.selectedOption?.stock !== undefined &&
+                                  item.quantity >= item?.selectedOption?.stock && (
+                                    <p className="text-[10px] text-orange-500 font-medium leading-tight">
+                                      ⚠ Max stock reached ({item?.selectedOption?.stock} left)
+                                    </p>
+                                  )}
                               </div>
                             </li>
 

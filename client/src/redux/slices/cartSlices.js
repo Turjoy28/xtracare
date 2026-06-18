@@ -70,7 +70,7 @@ const cartSlice = createSlice({
     },
 
     incrementQuantity: (state, action) => {
-      const { id, colorOptionId, selectedSize } = action.payload;
+      const { id, colorOptionId, selectedSize, maxStock } = action.payload;
       const item = state.items.find(
         (item) =>
           item.id === id &&
@@ -78,6 +78,14 @@ const cartSlice = createSlice({
           item.selectedSize === selectedSize
       );
       if (item) {
+        // If maxStock is provided and we've already reached it, show a warning
+        if (maxStock !== undefined && item.quantity >= maxStock) {
+          toast.warn(
+            `Only ${maxStock} unit${maxStock === 1 ? '' : 's'} available in stock!`,
+            { autoClose: 2000 }
+          );
+          return;
+        }
         item.quantity += 1;
         saveCartToLocalStorage(state.items);
       }
