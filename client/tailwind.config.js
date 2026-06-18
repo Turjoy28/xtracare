@@ -52,7 +52,7 @@ export default {
         "8xl": "1400px",
       },
       fontFamily: {
-        inter: ["Inter", "sans-serif"],
+        inter: ["'Google Sans'", "'Hind Siliguri'", "sans-serif"],
       },
       colors: {
         primary: "#ff8650",

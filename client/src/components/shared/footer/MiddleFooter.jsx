@@ -42,12 +42,12 @@ const MiddleFooter = () => {
   }, []);
 
   return (
-    <div className=" bg-black px-10">
+    <div className=" bg-[#215578] px-10">
       <Containar>
         <div className="w-full flex justify-between flex-wrap py-10 gap-10 md:gap-0">
           <div className="w-full md:w-1/3">
             <Link className="flex items-baseline" to="/">
-              <div className="flex gap-2 items-center text-white bg-white rounded p-2">
+              <div className="flex gap-2 items-center text-white rounded p-2">
                 <img className="w-28" src={logo} />
               </div>
             </Link>

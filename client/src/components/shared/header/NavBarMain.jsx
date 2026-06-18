@@ -341,7 +341,7 @@ const NavBarMain = () => {
 
       <nav
         ref={navbarRef}
-        className={`sticky top-0 z-30 bg-[#BFEBFF] transition-all duration-200 ${isSticky ? "" : "border-none"
+        className={`sticky top-0 z-30 bg-[#215578] transition-all duration-200 ${isSticky ? "" : "border-none"
           }`}
       >
         <section className="flex justify-between items-center  max-w-screen-xl mx-auto px-5 2xl:px-0">

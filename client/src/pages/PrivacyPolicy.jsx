@@ -9,8 +9,8 @@ const PrivacyPolicy = () => {
 
   return (
     <>
-      <BradCumbs title="প্রাইভেসি পলিসি" />
-      <div className="bg-gray-50 py-12 sm:py-16 md:py-20 font-inter">
+      {/* <BradCumbs title="প্রাইভেসি পলিসি" /> */}
+      <div className="bg-gray-50 py-6 sm:py-8 md:py-12 font-inter">
         <Containar>
           <div className="max-w-4xl mx-auto bg-white shadow-sm border border-gray-100 rounded-2xl p-6 sm:p-10 md:p-12">
             <h1 className="text-3xl font-extrabold text-texthead mb-8 tracking-tight border-b border-gray-100 pb-4">
