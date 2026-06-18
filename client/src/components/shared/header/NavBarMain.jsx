@@ -93,20 +93,20 @@ const NavBarMain = () => {
   };
 
   useEffect(() => {
-  const handleClickOutside = (event) => {
-    if (
-      searchRef.current && !searchRef.current.contains(event.target) &&
-      mobileSearchRef.current && !mobileSearchRef.current.contains(event.target) // <-- Mobile check jog holo
-    ) {
-      setShowList(false);
-    }
-  };
+    const handleClickOutside = (event) => {
+      if (
+        searchRef.current && !searchRef.current.contains(event.target) &&
+        mobileSearchRef.current && !mobileSearchRef.current.contains(event.target) // <-- Mobile check jog holo
+      ) {
+        setShowList(false);
+      }
+    };
 
-  document.addEventListener("mousedown", handleClickOutside);
-  return () => {
-    document.removeEventListener("mousedown", handleClickOutside);
-  };
-}, []);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   useEffect(() => {
     setSearch("");
@@ -341,7 +341,7 @@ const NavBarMain = () => {
 
       <nav
         ref={navbarRef}
-        className={`sticky top-0 z-30 bg-[#d8e2dc] transition-all duration-200 ${isSticky ? "" : "border-none"
+        className={`sticky top-0 z-30 bg-[#BFEBFF] transition-all duration-200 ${isSticky ? "" : "border-none"
           }`}
       >
         <section className="flex justify-between items-center  max-w-screen-xl mx-auto px-5 2xl:px-0">

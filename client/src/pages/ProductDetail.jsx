@@ -694,7 +694,7 @@ const ProductDetail = () => {
                       }}
                       className=" bg-secendary text-white px-4 py-2 rounded flex items-center gap-2 hover:bg-opacity-70 duration-200"
                     >
-                      <IoCartOutline /> Order Now
+                      <IoCartOutline /> এখনই অর্ডার করুন
                     </button>
                   </div>
                   {error && (
@@ -706,7 +706,7 @@ const ProductDetail = () => {
                       onClick={() => handleAddToCart(data)}
                       className="px-4 py-2 rounded flex justify-center items-center gap-2 border bg-gray-200 hover:bg-opacity-80 duration-200 w-full"
                     >
-                      <RiShoppingBag2Fill /> Add to cart
+                      <RiShoppingBag2Fill /> কার্ট এ যোগ করুন
                     </button>
                   </div>
 
@@ -794,7 +794,7 @@ const ProductDetail = () => {
                   Product Details
                 </h2>
                 <img src={lineimg} alt="" className="" />
-                <div className="py-10">{renderDetails()}</div>
+                <div className="py-5">{renderDetails()}</div>
               </div>
             )}
           </div>

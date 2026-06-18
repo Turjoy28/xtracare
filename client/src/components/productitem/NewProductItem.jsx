@@ -200,13 +200,13 @@ const NewProductItem = ({
 
               {discount > 0 && discountType === "amount" ? (
                 <div className="absolute right-3 top-8 p-2 rounded-full justify-center shadow-lg text-xs bg-red-500 text-white flex items-center gap-x-0.5">
-                  save <br/> {discount} ৳
+                  save <br /> {discount} ৳
                 </div>
               ) : (
                 discount > 0 &&
                 discountType === "percent" && (
                   <div className="absolute right-3 top-8 p-2 rounded-full justify-center shadow-lg text-xs bg-red-500 text-white flex items-center gap-x-0.5">
-                    save <br/> {discount}%
+                    save <br /> {discount}%
                   </div>
                 )
               )}
@@ -277,7 +277,7 @@ const NewProductItem = ({
                   }
                   className="border-secendary border hover:bg-secendary duration-200 hover:text-white text-secendary text-xs font-semibold md:px-2 py-2 w-full text-center "
                 >
-                  Add to Cart
+                  কার্ট এ যোগ করুন
                 </button>
               )}
             </div>
@@ -299,7 +299,7 @@ const NewProductItem = ({
                   }
                   className=" bg-secendary text-white hover:bg-customRed duration-200  text-xs font-semibold w-full text-center"
                 >
-                  Order Now
+                  এখনই অর্ডার করুন
                 </button>
               )}
             </div>

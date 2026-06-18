@@ -110,40 +110,40 @@ const RightPartProduct = () => {
             <span>
               <FaCheck />
             </span>
-            Order today and receive it within 01 - 02 days
+            আজই অর্ডার করুন এবং ০১ - ০২ দিনের মধ্যে ডেলিভারি নিন।
           </p>
           <p className="flex items-center gap-2">
             <span>
               <FaThumbsUp />
             </span>
-            Quality Product
+            গুণগত মানসম্পন্ন পণ্য।
           </p>
           <p className="flex items-center gap-2">
             <span>
               <FaHandshake />
             </span>
-            Cash On Delivery Available
+            ক্যাশ অন ডেলিভারি সুবিধা।
           </p>
           <p className="flex items-center gap-2">
             <span>
               <TbTruckDelivery />
             </span>
-            Delivery Charge Inside Dhaka 70TK
+            ঢাকার ভিতরে ডেলিভারি চার্জ ৬০ টাকা।
           </p>
           <p className="flex items-center gap-2">
             <span>
               <TbTruckDelivery />
             </span>
-            Delivery Charge Outside Dhaka 140TK
+            ঢাকার বাইরে ডেলিভারি চার্জ ১২০ টাকা।
           </p>
         </div>
       </div>
 
       <div className="border border-dashed border-[#262626] p-4 ">
         <div className="flex flex-col gap-2">
-          <h2 className="text-lg">
-            Have any question about this product? please call
-          </h2>
+          <p className="text-lg">
+            এই পণ্যটি সম্পর্কে আপনার কোনো প্রশ্ন থাকলে অনুগ্রহ করে কল করুন
+          </p>
           <p className="flex items-center gap-2">
             <span>
               <FaPhoneAlt />

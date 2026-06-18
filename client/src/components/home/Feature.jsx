@@ -7,7 +7,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation } from "swiper/modules";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
 import { FaRegArrowAltCircleRight } from "react-icons/fa";
-
+import lineimg from "../../assets/icons/star.jpg";
 const Feature = () => {
   const [categories, setCategories] = useState([]);
   const [error, setError] = useState(null);
@@ -41,10 +41,10 @@ const Feature = () => {
       const width = window.innerWidth;
       setShowNavigation(
         (width >= 1280 && categories.length > 6) ||
-          (width >= 1024 && categories.length > 5) ||
-          (width >= 768 && categories.length > 5) ||
-          (width >= 640 && categories.length > 4) ||
-          (width >= 370 && categories.length > 2)
+        (width >= 1024 && categories.length > 5) ||
+        (width >= 768 && categories.length > 5) ||
+        (width >= 640 && categories.length > 4) ||
+        (width >= 370 && categories.length > 2)
       );
     };
 
@@ -57,10 +57,15 @@ const Feature = () => {
   return (
     <section className="pt-12 font-inter px-5 2xl:px-0">
       <section className="max-w-screen-xl 2xl:max-w-screen-2xl mx-auto">
-        <div className="px-2">
-          <h3 className="lg:text-xl text-[18px] xl:text-[24px] font-bold text-texthead mt-1">
-            Trend All Categories
-          </h3>
+        <div className="flex flex-wrap justify-between items-center border-b pb-3">
+          <div className="px-2 flex justify-center w-full">
+            <div>
+              <h3 className="lg:text-xl text-[18px] xl:text-[24px] font-bold text-texthead mt-1 text-center">
+                All Categories
+              </h3>
+              <img src={lineimg} alt="" className="w-28 mx-auto" />
+            </div>
+          </div>
         </div>
 
         {error ? (
@@ -78,8 +83,8 @@ const Feature = () => {
               autoplay={{ delay: 3000, pauseOnMouseEnter: true }}
               pagination={{ clickable: true }}
               navigation={{
-                nextEl: ".swiper-button-next7",
-                prevEl: ".swiper-button-prev7",
+                nextEl: ".feature-categories-next",
+                prevEl: ".feature-categories-prev",
               }}
               breakpoints={{
                 370: { slidesPerView: 2 },
@@ -125,16 +130,12 @@ const Feature = () => {
             </Swiper>
 
             {/* Navigation Buttons */}
-            {showNavigation && (
-              <>
-                <div className="swiper-button-next7 absolute right-1 z-20 -top-16 -translate-y-1/2 w-8 h-8 lg:w-10 lg:h-10 border bg-white hover:bg-primary transition-all ease-linear hover:text-white cursor-pointer hover:border-primary border-[#b6b5b2] flex justify-center items-center text-[#858380] rounded-full">
-                  <FaChevronRight className="text-xs" />
-                </div>
-                <div className="swiper-button-prev7 absolute right-10 lg:right-14 z-20 -top-16 -translate-y-1/2 w-8 h-8 lg:w-10 lg:h-10 border bg-white hover:bg-primary transition-all ease-linear hover:text-white cursor-pointer hover:border-primary border-[#b6b5b2] flex justify-center items-center text-[#858380] rounded-full">
-                  <FaChevronLeft className="text-xs" />
-                </div>
-              </>
-            )}
+            <div className={`feature-categories-next absolute right-1 z-20 -top-16 -translate-y-1/2 w-8 h-8 lg:w-10 lg:h-10 border bg-white hover:bg-primary transition-all ease-linear hover:text-white cursor-pointer hover:border-primary border-[#b6b5b2] justify-center items-center text-[#858380] rounded-full ${showNavigation ? "flex" : "hidden"}`}>
+              <FaChevronRight className="text-xs" />
+            </div>
+            <div className={`feature-categories-prev absolute right-10 lg:right-14 z-20 -top-16 -translate-y-1/2 w-8 h-8 lg:w-10 lg:h-10 border bg-white hover:bg-primary transition-all ease-linear hover:text-white cursor-pointer hover:border-primary border-[#b6b5b2] justify-center items-center text-[#858380] rounded-full ${showNavigation ? "flex" : "hidden"}`}>
+              <FaChevronLeft className="text-xs" />
+            </div>
           </motion.div>
         )}
       </section>

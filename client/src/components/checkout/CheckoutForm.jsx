@@ -589,7 +589,7 @@ const CheckoutForm = () => {
                               order processing ...
                             </span>
                           ) : (
-                            "Order Now"
+                            "এখনই অর্ডার করুন"
                           )}
                         </button>
                       </div>

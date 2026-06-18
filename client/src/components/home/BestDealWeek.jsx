@@ -62,8 +62,8 @@ const BestDealWeek = () => {
                   clickable: true,
                 }}
                 navigation={{
-                  nextEl: ".swiper-button-next6",
-                  prevEl: ".swiper-button-prev2",
+                  nextEl: ".best-deal-week-next",
+                  prevEl: ".best-deal-week-prev",
                 }}
                 breakpoints={{
                   370: {
@@ -91,12 +91,12 @@ const BestDealWeek = () => {
               </Swiper>
               <div className="custom-pagination1"></div>
               <div
-                className="rounded-full swiper-button-next6 absolute z-20 right-1  -top-20 -translate-y-1/2 w-10 h-10 border bg-white hover:bg-primary
+                className="rounded-full best-deal-week-next absolute z-20 right-1  -top-20 -translate-y-1/2 w-10 h-10 border bg-white hover:bg-primary
               transition-all ease-linear hover:text-white cursor-pointer hover:border-primary border-[#b6b5b2] flex justify-center items-center text-[#858380]"
               >
                 <FaChevronRight className="text-xs" />
               </div>
-              <div className="rounded-full swiper-button-prev2 absolute z-20 right-14  -top-20 -translate-y-1/2 w-10 h-10 border bg-white hover:bg-texthead transition-all ease-linear hover:text-white cursor-pointer hover:border-texthead border-[#b6b5b2] flex justify-center items-center text-[#858380]">
+              <div className="rounded-full best-deal-week-prev absolute z-20 right-14  -top-20 -translate-y-1/2 w-10 h-10 border bg-white hover:bg-texthead transition-all ease-linear hover:text-white cursor-pointer hover:border-texthead border-[#b6b5b2] flex justify-center items-center text-[#858380]">
                 <FaChevronLeft className="text-xs" />
               </div>
             </div>

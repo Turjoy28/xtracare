@@ -103,8 +103,8 @@ const Brand = () => {
               autoplay={{ delay: 1000, pauseOnMouseEnter: true }}
               pagination={{ clickable: true }}
               navigation={{
-                nextEl: ".swiper-button-next7",
-                prevEl: ".swiper-button-prev7",
+                nextEl: ".brand-swiper-next",
+                prevEl: ".brand-swiper-prev",
               }}
               breakpoints={{
                 370: { slidesPerView: 3 },
@@ -132,16 +132,12 @@ const Brand = () => {
                 </SwiperSlide>
               ))}
             </Swiper>
-            {showNavigation && (
-              <>
-                <div className="rounded-full swiper-button-next7 absolute right-0 z-20 top-1/2 -translate-y-1/2 w-10 h-10 border bg-white hover:bg-texthead transition-all ease-linear hover:text-white cursor-pointer hover:border-texthead border-[#b6b5b2] flex justify-center items-center text-[#858380]">
-                  <FaChevronRight className="text-xs" />
-                </div>
-                <div className="rounded-full swiper-button-prev7 absolute left-0 z-20 top-1/2 -translate-y-1/2 w-10 h-10 border bg-white hover:bg-texthead transition-all ease-linear hover:text-white cursor-pointer hover:border-texthead border-[#b6b5b2] flex justify-center items-center text-[#858380]">
-                  <FaChevronLeft className="text-xs" />
-                </div>
-              </>
-            )}
+            <div className={`rounded-full brand-swiper-next absolute right-0 z-20 top-1/2 -translate-y-1/2 w-10 h-10 border bg-white hover:bg-texthead transition-all ease-linear hover:text-white cursor-pointer hover:border-texthead border-[#b6b5b2] justify-center items-center text-[#858380] ${showNavigation ? "flex" : "hidden"}`}>
+              <FaChevronRight className="text-xs" />
+            </div>
+            <div className={`rounded-full brand-swiper-prev absolute left-0 z-20 top-1/2 -translate-y-1/2 w-10 h-10 border bg-white hover:bg-texthead transition-all ease-linear hover:text-white cursor-pointer hover:border-texthead border-[#b6b5b2] justify-center items-center text-[#858380] ${showNavigation ? "flex" : "hidden"}`}>
+              <FaChevronLeft className="text-xs" />
+            </div>
           </motion.div>
         </section>
       </section>

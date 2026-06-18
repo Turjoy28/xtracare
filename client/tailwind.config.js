@@ -56,7 +56,7 @@ export default {
       },
       colors: {
         primary: "#ff8650",
-        secendary: "#BE1E2D",
+        secendary: "#EF4934",
         danger: "#173443",
         bancolor: "#FEF7F7",
         textgray: "#7C6D65",
@@ -66,7 +66,7 @@ export default {
         border: "#eae8e4",
         inputbg: "#F6F5F3",
         bestdealbg: "#fff6f6",
-        customRed: "#6d9157",
+        customRed: "#43A2CC",
         ...blackA,
         ...violet,
       },

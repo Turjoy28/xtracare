@@ -42,7 +42,7 @@ const cartSlice = createSlice({
         state.items[itemIndex].quantity += action.payload.quantity;
         toast.success("Item quantity updated in cart!", { autoClose: 500 });
       } else {
-        // Item does not exist, add to cart
+        // Item does not exist, কার্ট এ যোগ করুন 
         state.items.push({ ...action.payload, quantity: action.payload.quantity });
         toast.success("Item added to cart!", { autoClose: 500 });
       }

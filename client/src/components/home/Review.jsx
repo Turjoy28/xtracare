@@ -66,8 +66,8 @@ const Review = () => {
             loop={true}
             autoplay={{ delay: 5000, pauseOnMouseEnter: true }}
             navigation={{
-              nextEl: ".swiper-button-next4",
-              prevEl: ".swiper-button-prev4",
+              nextEl: ".home-review-next",
+              prevEl: ".home-review-prev",
             }}
             breakpoints={{
               370: {
@@ -130,10 +130,10 @@ const Review = () => {
               );
             })}
           </Swiper>
-          <div className="swiper-button-next4 absolute z-20 -right-5 lg:-right-12 top-1/2 -translate-y-1/2 w-10 h-10 border bg-white hover:bg-texthead transition-all ease-linear hover:text-white cursor-pointer hover:border-texthead border-[#b6b5b2] flex justify-center items-center text-[#858380] ">
+          <div className="home-review-next absolute z-20 -right-5 lg:-right-12 top-1/2 -translate-y-1/2 w-10 h-10 border bg-white hover:bg-texthead transition-all ease-linear hover:text-white cursor-pointer hover:border-texthead border-[#b6b5b2] flex justify-center items-center text-[#858380] ">
             <FaChevronRight className="text-xs" />
           </div>
-          <div className="swiper-button-prev4 absolute z-20 -left-5 lg:-left-12 top-1/2 -translate-y-1/2 w-10 h-10 border bg-white hover:bg-texthead transition-all ease-linear hover:text-white cursor-pointer hover:border-texthead border-[#b6b5b2] flex justify-center items-center text-[#858380]">
+          <div className="home-review-prev absolute z-20 -left-5 lg:-left-12 top-1/2 -translate-y-1/2 w-10 h-10 border bg-white hover:bg-texthead transition-all ease-linear hover:text-white cursor-pointer hover:border-texthead border-[#b6b5b2] flex justify-center items-center text-[#858380]">
             <FaChevronLeft className="text-xs" />
           </div>
         </motion.div>

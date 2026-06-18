@@ -98,8 +98,8 @@ const BestSell = () => {
               speed={1000}
               autoplay={{ delay: 3000, pauseOnMouseEnter: true }}
               navigation={{
-                nextEl: ".swiper-button-next1",
-                prevEl: ".swiper-button-prev1",
+                nextEl: ".best-sell-next",
+                prevEl: ".best-sell-prev",
               }}
               breakpoints={{
                 370: { slidesPerView: 2 },
@@ -139,22 +139,22 @@ const BestSell = () => {
               ))}
             </Swiper>
 
-            {isNavigationVisible && (
-              <>
-                <div
-                  className="swiper-button-next1 z-20 absolute rounded-full right-1 -top-20 -translate-y-1/2 w-8 h-8 lg:w-10 lg:h-10 border bg-white 
-                hover:bg-primary transition-all ease-linear hover:text-white cursor-pointer hover:border-primary border-[#b6b5b2] flex justify-center items-center text-[#858380]"
-                >
-                  <FaChevronRight className="text-xs" />
-                </div>
-                <div
-                  className="swiper-button-prev1 absolute z-20 rounded-full right-10 lg:right-14 -top-20 -translate-y-1/2 w-8 h-8 lg:w-10 lg:h-10 border bg-white 
-                hover:bg-primary transition-all ease-linear hover:text-white cursor-pointer hover:border-primary border-[#b6b5b2] flex justify-center items-center text-[#858380]"
-                >
-                  <FaChevronLeft className="text-xs" />
-                </div>
-              </>
-            )}
+            <div
+              className={`best-sell-next z-20 absolute rounded-full right-1 -top-20 -translate-y-1/2 w-8 h-8 lg:w-10 lg:h-10 border bg-white 
+            hover:bg-primary transition-all ease-linear hover:text-white cursor-pointer hover:border-primary border-[#b6b5b2] justify-center items-center text-[#858380] ${
+              isNavigationVisible ? "flex" : "hidden"
+            }`}
+            >
+              <FaChevronRight className="text-xs" />
+            </div>
+            <div
+              className={`best-sell-prev absolute z-20 rounded-full right-10 lg:right-14 -top-20 -translate-y-1/2 w-8 h-8 lg:w-10 lg:h-10 border bg-white 
+            hover:bg-primary transition-all ease-linear hover:text-white cursor-pointer hover:border-primary border-[#b6b5b2] justify-center items-center text-[#858380] ${
+              isNavigationVisible ? "flex" : "hidden"
+            }`}
+            >
+              <FaChevronLeft className="text-xs" />
+            </div>
           </div>
           <div className="flex justify-center">
             <p

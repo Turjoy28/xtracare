@@ -9,68 +9,68 @@ const TermsCondition = () => {
 
   return (
     <>
-      <BradCumbs title="Terms & Conditions" />
+      <BradCumbs title="শর্তাবলী" />
       <div className="bg-gray-50 py-12 sm:py-16 md:py-20 font-inter">
         <Containar>
           <div className="max-w-4xl mx-auto bg-white shadow-sm border border-gray-100 rounded-2xl p-6 sm:p-10 md:p-12">
             <div className="flex justify-between items-baseline border-b border-gray-100 pb-4 mb-8">
               <h1 className="text-3xl font-extrabold text-texthead tracking-tight">
-                Terms & Conditions
+                শর্তাবলী
               </h1>
               <span className="text-xs font-semibold text-primary bg-primary/10 px-3 py-1 rounded-full">
-                Effective: June 2026
+                কার্যকরী: জুন ২০২৬
               </span>
             </div>
 
             <p className="text-paracolor text-base leading-relaxed mb-8">
-              By accessing or purchasing from RPC World BD, you agree to the following Terms & Conditions.
+              আরপিসি ওয়ার্ল্ড বিডি-তে প্রবেশ করার মাধ্যমে বা এখান থেকে কেনাকাটা করার মাধ্যমে আপনি নিম্নলিখিত শর্তাবলীতে সম্মত হচ্ছেন।
             </p>
 
             <div className="space-y-8">
               <section>
                 <h2 className="text-xl font-bold text-texthead mb-3 flex items-center gap-2">
-                  <span className="text-primary font-extrabold">1.</span>
-                  General
+                  <span className="text-primary font-extrabold">১.</span>
+                  সাধারণ নিয়মাবলী
                 </h2>
                 <p className="text-paracolor text-base leading-relaxed pl-6">
-                  RPC World BD reserves the right to modify, suspend, or discontinue any service, product, or policy at any time without prior notice.
+                  আরপিসি ওয়ার্ল্ড বিডি পূর্ব নোটিশ ছাড়াই যেকোনো সময় যেকোনো সেবা, পণ্য বা পলিসি পরিবর্তন, স্থগিত বা বন্ধ করার অধিকার সংরক্ষণ করে।
                 </p>
               </section>
 
               <section>
                 <h2 className="text-xl font-bold text-texthead mb-3 flex items-center gap-2">
-                  <span className="text-primary font-extrabold">2.</span>
-                  Product Information
+                  <span className="text-primary font-extrabold">২.</span>
+                  পণ্যের তথ্য
                 </h2>
                 <p className="text-paracolor text-base leading-relaxed pl-6">
-                  We make every effort to ensure that product descriptions, pricing, and availability are accurate. However, errors may occasionally occur, and we reserve the right to correct them without prior notice.
+                  আমরা পণ্যের বিবরণ, মূল্য এবং প্রাপ্যতা সঠিক তা নিশ্চিত করার জন্য সব ধরনের প্রচেষ্টা চালাই। তবুও, মাঝে মাঝে কিছু ভুলত্রুটি হতে পারে এবং পূর্ব নোটিশ ছাড়াই তা সংশোধন করার অধিকার আমরা সংরক্ষণ করি।
                 </p>
               </section>
 
               <section>
                 <h2 className="text-xl font-bold text-texthead mb-3 flex items-center gap-2">
-                  <span className="text-primary font-extrabold">3.</span>
-                  Orders
+                  <span className="text-primary font-extrabold">৩.</span>
+                  অর্ডার
                 </h2>
                 <p className="text-paracolor text-base leading-relaxed pl-6">
-                  All orders are subject to acceptance and availability. RPC World BD reserves the right to refuse or cancel any order for any reason.
+                  সমস্ত অর্ডার গ্রহণ এবং পণ্যের স্টক থাকার ওপর নির্ভরশীল। আরপিসি ওয়ার্ল্ড বিডি যেকোনো কারণে যেকোনো অর্ডার বাতিল বা প্রত্যাখ্যান করার অধিকার সংরক্ষণ করে।
                 </p>
               </section>
 
               <section>
                 <h2 className="text-xl font-bold text-texthead mb-3 flex items-center gap-2">
-                  <span className="text-primary font-extrabold">4.</span>
-                  Pricing and Payments
+                  <span className="text-primary font-extrabold">৪.</span>
+                  মূল্য এবং পেমেন্ট
                 </h2>
                 <div className="pl-6 space-y-3">
                   <p className="text-paracolor text-base leading-relaxed">
-                    Our policies regarding prices and transactions include:
+                    মূল্য ও লেনদেন সংক্রান্ত আমাদের নীতিসমূহ নিচে দেওয়া হলো:
                   </p>
                   <ul className="space-y-2">
                     {[
-                      "All prices are listed in Bangladeshi Taka (BDT).",
-                      "Prices may change without prior notice.",
-                      "Orders will be processed after payment confirmation where applicable.",
+                      "সমস্ত মূল্য বাংলাদেশী টাকায় (BDT) উল্লেখ করা হয়েছে।",
+                      "পূর্ব ঘোষণা ছাড়াই যেকোনো সময় মূল্য পরিবর্তিত হতে পারে।",
+                      "প্রযোজ্য ক্ষেত্রে পেমেন্ট নিশ্চিত হওয়ার পর অর্ডার প্রসেস করা হবে।",
                     ].map((item, idx) => (
                       <li key={idx} className="flex items-start gap-3 text-paracolor text-base">
                         <span className="w-1.5 h-1.5 rounded-full bg-primary/80 mt-2.5 flex-shrink-0"></span>
@@ -83,83 +83,83 @@ const TermsCondition = () => {
 
               <section>
                 <h2 className="text-xl font-bold text-texthead mb-3 flex items-center gap-2">
-                  <span className="text-primary font-extrabold">5.</span>
-                  Shipping and Delivery
+                  <span className="text-primary font-extrabold">৫.</span>
+                  শিপিং ও ডেলিভারি
                 </h2>
                 <p className="text-paracolor text-base leading-relaxed pl-6">
-                  Delivery times are estimates and may vary. RPC World BD is not liable for delays caused by third-party courier services or circumstances beyond our control.
+                  ডেলিভারির সময়টি আনুমানিক এবং এটি পরিবর্তিত হতে পারে। তৃতীয় পক্ষের কুরিয়ার সার্ভিস বা আমাদের নিয়ন্ত্রণের বাইরের পরিস্থিতির কারণে সৃষ্ট কোনো বিলম্বের জন্য আরপিসি ওয়ার্ল্ড বিডি দায়ী থাকবে না।
                 </p>
               </section>
 
               <section>
                 <h2 className="text-xl font-bold text-texthead mb-3 flex items-center gap-2">
-                  <span className="text-primary font-extrabold">6.</span>
-                  Returns and Refunds
+                  <span className="text-primary font-extrabold">৬.</span>
+                  রিটার্ন ও রিফান্ড
                 </h2>
                 <p className="text-paracolor text-base leading-relaxed pl-6">
-                  Returns and refunds are subject to our Refund Policy.
+                  রিটার্ন এবং রিফান্ড আমাদের রিফান্ড পলিসি অনুযায়ী পরিচালিত হবে।
                 </p>
               </section>
 
               <section>
                 <h2 className="text-xl font-bold text-texthead mb-3 flex items-center gap-2">
-                  <span className="text-primary font-extrabold">7.</span>
-                  Intellectual Property
+                  <span className="text-primary font-extrabold">৭.</span>
+                  বুদ্ধিবৃত্তিক সম্পত্তি
                 </h2>
                 <p className="text-paracolor text-base leading-relaxed pl-6">
-                  All content, logos, images, trademarks, and materials used by RPC World BD are the property of RPC World BD and may not be copied, reproduced, or used without written permission.
+                  আরপিসি ওয়ার্ল্ড বিডি দ্বারা ব্যবহৃত সমস্ত কনটেন্ট, লোগো, ছবি, ট্রেডমার্ক এবং অন্যান্য উপাদান আরপিসি ওয়ার্ল্ড বিডি-র নিজস্ব সম্পত্তি এবং লিখিত অনুমতি ছাড়া এগুলো কপি, পুনরায় ব্যবহার বা ব্যবহার করা যাবে না।
                 </p>
               </section>
 
               <section>
                 <h2 className="text-xl font-bold text-texthead mb-3 flex items-center gap-2">
-                  <span className="text-primary font-extrabold">8.</span>
-                  Limitation of Liability
+                  <span className="text-primary font-extrabold">৮.</span>
+                  দায়বদ্ধতার সীমাবদ্ধতা
                 </h2>
                 <p className="text-paracolor text-base leading-relaxed pl-6">
-                  RPC World BD shall not be liable for any indirect, incidental, special, or consequential damages arising from the use of our products or services.
+                  আমাদের পণ্য বা সেবা ব্যবহারের ফলে সৃষ্ট যেকোনো পরোক্ষ, আনুষঙ্গিক, বিশেষ বা ফলস্বরূপ ক্ষতির জন্য আরপিসি ওয়ার্ল্ড বিডি দায়ী থাকবে না।
                 </p>
               </section>
 
               <section>
                 <h2 className="text-xl font-bold text-texthead mb-3 flex items-center gap-2">
-                  <span className="text-primary font-extrabold">9.</span>
-                  Governing Law
+                  <span className="text-primary font-extrabold">৯.</span>
+                  প্রযোজ্য আইন
                 </h2>
                 <p className="text-paracolor text-base leading-relaxed pl-6">
-                  These Terms & Conditions shall be governed by and interpreted in accordance with the laws of Bangladesh.
+                  এই শর্তাবলী বাংলাদেশের আইন অনুযায়ী পরিচালিত এবং ব্যাখ্যা করা হবে।
                 </p>
               </section>
 
               <section className="pt-6 border-t border-gray-100">
                 <h2 className="text-xl font-bold text-texthead mb-4 flex items-center gap-2">
                   <span className="w-1.5 h-6 bg-primary rounded-full inline-block"></span>
-                  Contact Information
+                  যোগাযোগের ঠিকানা
                 </h2>
                 <div className="bg-gray-50 rounded-xl p-6 space-y-3 border border-gray-100">
                   <p className="text-texthead text-base">
                     <strong>RPC World BD</strong>
                   </p>
                   <p className="text-paracolor text-base flex flex-wrap gap-x-2">
-                    <strong>Phone:</strong>
+                    <strong>ফোন:</strong>
                     <a href="tel:+8801718674140" className="text-primary hover:underline font-medium">
                       +8801718674140
                     </a>
                   </p>
                   <p className="text-paracolor text-base flex flex-wrap gap-x-2">
-                    <strong>Email:</strong>
+                    <strong>ইমেইল:</strong>
                     <a href="mailto:rpcworldbd@gmail.com" className="text-primary hover:underline font-medium">
                       rpcworldbd@gmail.com
                     </a>
                   </p>
                   <p className="text-paracolor text-base">
-                    <strong>Address:</strong> Dhaka Cantonment, Dhaka, Bangladesh
+                    <strong>ঠিকানা:</strong> নানীখির, নানীখির, মুকসুদপুর, গোপালগঞ্জ
                   </p>
                 </div>
               </section>
 
               <p className="text-paracolor text-sm italic mt-8 text-center border-t border-gray-100 pt-6">
-                By using our services, you acknowledge that you have read, understood, and agreed to these Terms & Conditions, Privacy Policy, Refund Policy, and Delivery Policy.
+                আমাদের সেবাগুলো ব্যবহার করার মাধ্যমে আপনি স্বীকার করছেন যে আপনি এই শর্তাবলী, প্রাইভেসি পলিসি, রিফান্ড পলিসি এবং ডেলিভারি পলিসি পড়েছেন, বুঝেছেন এবং এতে সম্মত হয়েছেন।
               </p>
             </div>
           </div>

@@ -141,7 +141,7 @@ const ProductItem = ({
   const handleAddToCart = (currentOptions = options) => {
     if (product?.isBundle) {
       const selectedOption = currentOptions[0];
-  console.log("selected option", selectedOption)
+      console.log("selected option", selectedOption)
       const item = {
         ...product,
         id: product?._id,
@@ -161,37 +161,37 @@ const ProductItem = ({
           freeShipping: selectedOption?.freeShipping,
         },
       };
-      console.log("item",item)
+      console.log("item", item)
 
       dispatch(addToCart(item));
     } else {
-    // For non-bundle products, handle size selection
-    console.log("Product", currentOptions);
-    const selectedOption = currentOptions.find(
-      (option) => option.size === "" || option.size === selectedSize
-    );
+      // For non-bundle products, handle size selection
+      console.log("Product", currentOptions);
+      const selectedOption = currentOptions.find(
+        (option) => option.size === "" || option.size === selectedSize
+      );
 
-    const item = {
-      ...product,
-      id: product?._id,
-      quantity: 1,
-      photos: product?.photos,
-      name: product?.name,
-      colorOptionId: selectedOption?._id,
-      selectedOption: {
-        _id: selectedOption?._id,
-        sku: selectedOption?.sku,
-        size: selectedOption?.size,
-        price: selectedOption?.price,
-        salePrice: selectedOption?.salePrice,
-        stock: selectedOption?.stock,
-        discountType: selectedOption?.discountType,
-        discountValue: selectedOption?.discountValue,
-        freeShipping: selectedOption?.freeShipping,
-      },
-    };
+      const item = {
+        ...product,
+        id: product?._id,
+        quantity: 1,
+        photos: product?.photos,
+        name: product?.name,
+        colorOptionId: selectedOption?._id,
+        selectedOption: {
+          _id: selectedOption?._id,
+          sku: selectedOption?.sku,
+          size: selectedOption?.size,
+          price: selectedOption?.price,
+          salePrice: selectedOption?.salePrice,
+          stock: selectedOption?.stock,
+          discountType: selectedOption?.discountType,
+          discountValue: selectedOption?.discountValue,
+          freeShipping: selectedOption?.freeShipping,
+        },
+      };
 
-    dispatch(addToCart(item));
+      dispatch(addToCart(item));
     }
   };
 
@@ -325,11 +325,10 @@ const ProductItem = ({
           ) :  */}
           <div className="flex gap-3 md:gap-5">
             <div
-              className={`relative group duration-200 w-full ${
-                isProductAvailable
-                  ? "cursor-pointer hover:bg-secendary text-secendary  hover:text-white"
-                  : "cursor-not-allowed text-gray-400"
-              } flex justify-center`}
+              className={`relative group duration-200 w-full ${isProductAvailable
+                ? "cursor-pointer hover:bg-secendary text-secendary  hover:text-white"
+                : "cursor-not-allowed text-gray-400"
+                } flex justify-center`}
             >
               {isProductAvailable && (
                 <button
@@ -340,7 +339,7 @@ const ProductItem = ({
                   }
                   className="border-secendary border hover:bg-secendary duration-200 hover:text-white text-secendary text-xs font-semibold md:px-2 py-2 w-full text-center "
                 >
-                  Add to Cart
+                  কার্ট এ যোগ করুন
                 </button>
               )}
             </div>
@@ -349,11 +348,10 @@ const ProductItem = ({
               style={{
                 animation: "zoom 1s ease-in-out infinite",
               }}
-              className={`relative group duration-200 w-full ${
-                isProductAvailable
-                  ? "cursor-pointer hover:bg-customRed text-gray-500  hover:text-white"
-                  : "cursor-not-allowed text-gray-400"
-              } flex justify-center`}
+              className={`relative group duration-200 w-full ${isProductAvailable
+                ? "cursor-pointer hover:bg-customRed text-gray-500  hover:text-white"
+                : "cursor-not-allowed text-gray-400"
+                } flex justify-center`}
             >
               {isProductAvailable && (
                 <button
@@ -365,7 +363,7 @@ const ProductItem = ({
                   }
                   className=" bg-secendary text-white hover:bg-primary duration-200  text-xs font-semibold w-full text-center"
                 >
-                  Order Now
+                  এখনই অর্ডার করুন
                 </button>
               )}
             </div>

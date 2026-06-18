@@ -136,8 +136,7 @@
 // };
 
 // export default Banner;
-import React, { useState, useEffect, useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect, useContext } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import { Autoplay, Pagination, EffectFade } from "swiper/modules";
@@ -154,7 +153,6 @@ const Banner = () => {
 
   const [currentSlide, setCurrentSlide] = useState(0);
   const [error, setError] = useState(null);
-  const navigate = useNavigate();
   const baseApi = useContext(ApiContext);
 
   useEffect(() => {
@@ -208,10 +206,9 @@ const Banner = () => {
                   <div>
                     {currentSlide === i && (
                       <img
-                        className="w-full h-[250px] md:h-[350px] lg:h-[450px] xl:h-[550px] 2xl:h-[750px] cursor-pointer rounded-lg"
+                        className="w-full h-[250px] md:h-[350px] lg:h-[450px] xl:h-[550px] 2xl:h-[750px] rounded-lg"
                         src={item?.photo}
                         alt="banner"
-                        onClick={() => navigate(item?.link)}
                       />
                     )}
                   </div>
