@@ -11,7 +11,7 @@ import { FaChevronRight } from "react-icons/fa6";
 import { TbTruckDelivery } from "react-icons/tb";
 import { RiSecurePaymentLine } from "react-icons/ri";
 import { MdCheckCircleOutline } from "react-icons/md";
-import { LiaHandsHelpingSolid } from "react-icons/lia";
+import { LiaHandsHelpingSolid, LiaLinkedin } from "react-icons/lia";
 import { PhotoProvider, PhotoView } from "react-photo-view";
 import "react-photo-view/dist/react-photo-view.css";
 import { socialList } from "../components/constants";
@@ -735,14 +735,22 @@ const ProductDetail = () => {
                       let Icon = item.logo;
                       const bgColor =
                         item.name === "facebook"
-                          ? "bg-[#000000] hover:bg-opacity-10"
+                          ? "bg-[#074888] hover:bg-opacity-10"
                           : item.name === "instagram"
-                            ? "bg-[#000000] hover:bg-opacity-10"
+                            ? "bg-[#ff8650] hover:bg-opacity-10"
                             : item.name === "youtube"
-                              ? "bg-[#000000] hover:bg-opacity-10"
+                              ? "bg-[#ff8650] hover:bg-opacity-10"
                               : item.name === "tiktok"
-                                ? "bg-[#000000] hover:bg-opacity-10"
-                                : "bg-[#000000] hover:bg-opacity-10";
+                                ? "bg-[#ff8650] hover:bg-opacity-10"
+                                : item.name === "whatsapp"
+                                  ? "bg-[#25d366] hover:bg-opacity-10"
+                                  : item.name === "twitter"
+                                    ? "bg-[#000000] hover:bg-opacity-10"
+                                    : item.name === "x"
+                                      ? "bg-[#25d366] hover:bg-opacity-10"
+                                      : item.name === "linkedin"
+                                        ? "bg-[#1161AC] hover:bg-opacity-10"
+                                        : "bg-[#1161AC] hover:bg-opacity-10";
                       return (
                         <Link
                           key={index}

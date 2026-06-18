@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const axios = require("axios");
 const Order = require("../models/orderModel");
 const Option = require("../models/optionModel");
 const Coupon = require("../models/couponModel");
@@ -323,3 +324,109 @@ exports.updateOrderController = catchAsync(async (req, res, next) => {
 });
 
 exports.deleteOrderController = deleteOne(Order);
+
+exports.shipSteadfastOrderController = catchAsync(async (req, res, next) => {
+  const order = await Order.findById(req.params.id);
+  if (!order) return next(new AppError("No order found with that ID!", 404));
+
+  const { name, phone, streetAddress, totalCost, bundleOffer } = order;
+  const invoice = `${order._id.toString().slice(-6)}`;
+
+  const bundleDiscount = Math.round(bundleOffer || 0);
+  const grandTotal = Math.round(totalCost - bundleDiscount);
+  const codAmount = grandTotal > 0 ? grandTotal : 0;
+
+  const payload = {
+    invoice,
+    recipient_name: name,
+    recipient_phone: phone,
+    recipient_address: streetAddress,
+    cod_amount: codAmount,
+    note: order.notes || "",
+  };
+
+  const baseUrl = (
+    process.env.STEADFAST_BASE_URL || 
+    process.env.STEEDFAST_BASE_URL || 
+    process.env["STEADFAST_BASE_URL "] ||
+    process.env["STEEDFAST_BASE_URL "] ||
+    "https://portal.packzy.com/api/v1"
+  ).trim();
+
+  const apiKey = (
+    process.env.STEADFAST_API_KEY || 
+    process.env.STEEDFAST_API_KEY || 
+    process.env["STEADFAST_API_KEY "] || 
+    process.env["STEEDFAST_API_KEY "] || 
+    ""
+  ).trim();
+
+  const secretKey = (
+    process.env.STEADFAST_SECRET_KEY || 
+    process.env.STEEDFAST_SECRET_KEY || 
+    process.env["STEADFAST_SECRET_KEY "] || 
+    process.env["STEEDFAST_SECRET_KEY "] || 
+    ""
+  ).trim();
+
+  let response;
+  try {
+    response = await axios.post(
+      `${baseUrl}/create_order`,
+      payload,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          "Api-Key": apiKey,
+          "Secret-Key": secretKey,
+        },
+      }
+    );
+  } catch (error) {
+    console.error("Steadfast API call failed:", error.response?.data || error.message);
+    const apiError = error.response?.data?.message || error.response?.data?.errors || error.message;
+    return next(new AppError(`Steadfast API error: ${typeof apiError === 'object' ? JSON.stringify(apiError) : apiError}`, 400));
+  }
+
+  if (response?.data?.status !== 200) {
+    const errorDetails = response?.data?.errors;
+    const errorMsg = errorDetails ? (typeof errorDetails === 'object' ? JSON.stringify(errorDetails) : errorDetails) : "Failed to create order with Steadfast";
+    return next(new AppError(errorMsg, 400));
+  }
+
+  // Update order status and courier in database
+  order.courier = "Steadfast";
+  order.orderStatus = "shipped";
+  await order.save();
+
+  // Send invoice email since status changed to shipped
+  const orderUrl = `${req.protocol}://localhost:5173/orders/${order._id}`;
+  const email = new Email({ email: order.email, name: order.name }, orderUrl);
+  try {
+    const populatedOrder = await Order.findById(order._id).populate([
+      {
+        path: "products.option",
+        select: "sku size price salePrice discountType discountValue",
+        populate: {
+          path: "product variant",
+          select: "name colorName colorCode",
+        },
+      },
+      {
+        path: "products.product",
+        select: "name price isBundle",
+      },
+    ]);
+    await email.sendInvoice(populatedOrder);
+  } catch (err) {
+    console.error("Failed to send order invoice email:", err);
+  }
+
+  res.status(200).json({
+    status: "success",
+    message: "Order placed with Steadfast successfully",
+    data: {
+      order,
+    },
+  });
+});

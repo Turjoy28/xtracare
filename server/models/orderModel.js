@@ -111,6 +111,11 @@ const orderSchema = new Schema(
       default: "cash_on_delivery",
     },
 
+    courier: {
+      type: String,
+      default: null,
+    },
+
     notes: {
       type: String,
       default: "",

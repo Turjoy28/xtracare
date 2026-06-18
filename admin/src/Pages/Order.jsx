@@ -22,7 +22,6 @@ const Order = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentOrder, setCurrentOrder] = useState(null);
   const [form] = Form.useForm();
-
   const fetchOrders = async () => {
     try {
       const response = await axios.get("/order");
@@ -124,37 +123,14 @@ const Order = () => {
   const handleCourierChange = async (order, courier) => {
     if (courier === "Steadfast") {
       try {
-        const { name, phone, streetAddress, totalCost } = order;
-        const invoice = `${order._id.slice(-6)}`;
-
-        const payload = {
-          invoice,
-          recipient_name: name,
-          recipient_phone: phone,
-          recipient_address: `${streetAddress}`,
-          cod_amount: totalCost,
-        };
-
-        const response = await axios.post(
-          "https://portal.packzy.com/api/v1/create_order",
-          payload,
-          {
-            headers: {
-              "Content-Type": "application/json",
-              "Api-Key": "mstshryvc9q8bkrz3iu431uuvo2c39tv",
-              "Secret-Key": "iksacduggxpserl2x9nh6str",
-            },
-          }
-        );
-
-        if (response?.data?.status === 200) {
-          return message.success("Order placed with Steadfast successfully");
-        }
-        if (response?.data?.status === 400) {
-          return message.error(response?.data?.errors.invoice);
+        const response = await axios.post(`/order/ship-steadfast/${order._id}`);
+        if (response?.status === 200 || response?.data?.status === "success") {
+          message.success("Order placed with Steadfast and status updated to Shipped");
+          fetchOrders();
         }
       } catch (error) {
-        message.error("Error placing order with Steadfast");
+        const errMsg = error?.response?.data?.message || "Error placing order with Steadfast";
+        message.error(errMsg);
         console.error("Error placing Steadfast order:", error);
       }
     }

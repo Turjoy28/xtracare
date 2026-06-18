@@ -6,12 +6,15 @@ const {
   getOrderController,
   updateOrderController,
   deleteOrderController,
+  shipSteadfastOrderController,
 } = require("../../controllers/orderController");
 
 const router = express.Router();
 
 // With Coupons
 router.route("/withCoupon").post(createOrderWithCouponController);
+
+router.route("/ship-steadfast/:id").post(shipSteadfastOrderController);
 
 router.route("/").post(createOrderController).get(getAllOrdersController);
 
