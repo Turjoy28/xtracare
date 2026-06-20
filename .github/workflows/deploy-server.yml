@@ -48,6 +48,20 @@ jobs:
           port: ${{ secrets.FTP_PORT || 21 }}
           local-dir: ./server/dist/
           server-dir: ./api.rpcworld-bd.com/
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/.env
+            **/uploads/**
+            **/node_modules/**
+            **/config/**
+            **/controllers/**
+            **/middlewares/**
+            **/models/**
+            **/routes/**
+            **/utils/**
+            **/app.js
+            **/eslint.config.mjs
 
 
 
