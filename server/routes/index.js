@@ -1,5 +1,5 @@
 const express = require("express");
-const baseURL = process.env.BASE_URL;
+const baseURL = process.env.BASE_URL || "/api/v1";
 const apiRoutes = require("./api");
 const errorRouteMiddleware = require("../middlewares/errorRouteMiddleware");
 

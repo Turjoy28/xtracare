@@ -1,7 +1,15 @@
 const dns = require("dns");
 dns.setServers(["8.8.8.8", "8.8.4.4"])
-/* eslint-disable no-unused-vars */
 require("dotenv").config();
+
+// Verify critical environment variables
+const requiredEnv = ["DATABASE", "JWT_SECRET", "JWT_EXPIRES_IN"];
+requiredEnv.forEach((key) => {
+  if (!process.env[key]) {
+    console.error(`CRITICAL SERVER STARTUP WARNING: Environment variable "${key}" is not set!`);
+  }
+});
+
 const mongoose = require("mongoose");
 
 // UNCAUGHT EXCEPTION:

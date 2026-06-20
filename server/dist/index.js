@@ -5169,7 +5169,7 @@ var require_errorRouteMiddleware = __commonJS({
 var require_routes = __commonJS({
   "routes/index.js"(exports2, module2) {
     var express = require("express");
-    var baseURL = process.env.BASE_URL;
+    var baseURL = process.env.BASE_URL || "/api/v1";
     var apiRoutes = require_api();
     var errorRouteMiddleware = require_errorRouteMiddleware();
     var router = express.Router();
@@ -5223,6 +5223,12 @@ var require_app = __commonJS({
 var dns = require("dns");
 dns.setServers(["8.8.8.8", "8.8.4.4"]);
 require("dotenv").config();
+var requiredEnv = ["DATABASE", "JWT_SECRET", "JWT_EXPIRES_IN"];
+requiredEnv.forEach((key) => {
+  if (!process.env[key]) {
+    console.error(`CRITICAL SERVER STARTUP WARNING: Environment variable "${key}" is not set!`);
+  }
+});
 var mongoose = require("mongoose");
 var app = require_app();
 var User = require_userModel();
