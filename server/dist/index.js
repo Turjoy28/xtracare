@@ -5212,6 +5212,51 @@ var require_app = __commonJS({
     app2.use(express.json({ limit: "10kb" }));
     app2.use(cookieParser());
     app2.use(monogoSanitize());
+    app2.get("/api/v1/debug", async (req, res) => {
+      const dns2 = require("dns");
+      const net = require("net");
+      const mongoose2 = require("mongoose");
+      const debugInfo = {
+        envDatabaseExists: !!process.env.DATABASE,
+        databaseUriMasked: process.env.DATABASE ? process.env.DATABASE.replace(/:([^@\s/]+)@/, ":xxxx@") : null,
+        mongooseConnectionState: mongoose2.connection.readyState
+        // 0 = disconnected, 1 = connected, 2 = connecting, 3 = disconnecting
+      };
+      try {
+        const dnsResolve = await new Promise((resolve) => {
+          dns2.resolveTxt("_mongodb._tcp.cluster0.trn515p.mongodb.net", (err, addresses) => {
+            if (err) {
+              resolve({ success: false, error: err.message });
+            } else {
+              resolve({ success: true, addresses });
+            }
+          });
+        });
+        debugInfo.dnsTest = dnsResolve;
+        if (dnsResolve.success && dnsResolve.addresses.length > 0) {
+          const host = "cluster0-shard-00-00.trn515p.mongodb.net";
+          const tcpConnect = await new Promise((resolve) => {
+            const client = net.connect({ host, port: 27017, timeout: 5e3 }, () => {
+              client.end();
+              resolve({ success: true, message: `TCP Connection to ${host}:27017 succeeded!` });
+            });
+            client.on("error", (err) => {
+              resolve({ success: false, message: `TCP Connection to ${host}:27017 failed: ${err.message}` });
+            });
+            client.on("timeout", () => {
+              client.destroy();
+              resolve({ success: false, message: `TCP Connection to ${host}:27017 timed out after 5 seconds` });
+            });
+          });
+          debugInfo.tcpTest = tcpConnect;
+        } else {
+          debugInfo.tcpTest = { success: false, message: "Could not perform TCP test because DNS resolution failed or returned empty." };
+        }
+      } catch (err) {
+        debugInfo.dnsTest = { success: false, error: err.message };
+      }
+      return res.json(debugInfo);
+    });
     app2.get("/", (req, res) => {
       return res.send("hello from okobiz");
     });
