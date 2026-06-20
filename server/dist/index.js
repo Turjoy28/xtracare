@@ -80,7 +80,9 @@ var require_globalErrorMiddleware = __commonJS({
         console.error("ERROR --> ", err);
         return res.status(500).json({
           status: "error",
-          message: "Something went wrong, Try again!"
+          message: err.message || "Something went wrong, Try again!",
+          error: err,
+          stack: err.stack
         });
       }
     };
