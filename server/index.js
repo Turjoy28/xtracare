@@ -21,13 +21,8 @@ const mongoose = require("mongoose");
 
 const app = require("./app");
 const User = require("./models/userModel");
-// const { DB_URL } = require("./config/config");
 
-// const DB = process.env.DATABASE.replace(
-//   "<PASSWORD>",
-//   process.env.DATABASE_PASSWORD
-// );
-// console.log("dfsf", process.env.DATABASE)
+
 mongoose.connect(process.env.DATABASE)
   .then(() => {
     console.log("Database Connected ✓")
@@ -67,7 +62,7 @@ async function seedAdmin() {
 }
 
 const PORT = process.env.PORT || 5000;
-const server = app.listen(PORT, async() =>{
+const server = app.listen(PORT, async () => {
   console.log(`SERVER IS RUNNING ON PORT ${PORT}`)
   await seedAdmin();
 });
