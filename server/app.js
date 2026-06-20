@@ -55,10 +55,22 @@ app.get("/api/v1/debug", async (req, res) => {
     mongooseConnectionState: mongoose.connection.readyState, // 0 = disconnected, 1 = connected, 2 = connecting, 3 = disconnecting
   };
 
-  // Test DNS SRV resolution
+  // Test DNS SRV resolution dynamically from process.env.DATABASE
   try {
+    const dbUri = process.env.DATABASE || "";
+    const hostMatch = dbUri.match(/@([^/\s?]+)/);
+    const host = hostMatch ? hostMatch[1] : null;
+
+    if (!host) {
+      debugInfo.dnsTest = { success: false, error: "Could not parse host from DATABASE environment variable." };
+      debugInfo.tcpTest = { success: false, message: "TCP test skipped due to invalid hostname." };
+      return res.json(debugInfo);
+    }
+
+    debugInfo.parsedHost = host;
+
     const dnsResolve = await new Promise((resolve) => {
-      dns.resolveSrv("_mongodb._tcp.cluster0.trn515p.mongodb.net", (err, addresses) => {
+      dns.resolveSrv(`_mongodb._tcp.${host}`, (err, addresses) => {
         if (err) {
           resolve({ success: false, error: err.message });
         } else {

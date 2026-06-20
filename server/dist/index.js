@@ -5223,8 +5223,17 @@ var require_app = __commonJS({
         // 0 = disconnected, 1 = connected, 2 = connecting, 3 = disconnecting
       };
       try {
+        const dbUri = process.env.DATABASE || "";
+        const hostMatch = dbUri.match(/@([^/\s?]+)/);
+        const host = hostMatch ? hostMatch[1] : null;
+        if (!host) {
+          debugInfo.dnsTest = { success: false, error: "Could not parse host from DATABASE environment variable." };
+          debugInfo.tcpTest = { success: false, message: "TCP test skipped due to invalid hostname." };
+          return res.json(debugInfo);
+        }
+        debugInfo.parsedHost = host;
         const dnsResolve = await new Promise((resolve) => {
-          dns2.resolveSrv("_mongodb._tcp.cluster0.trn515p.mongodb.net", (err, addresses) => {
+          dns2.resolveSrv(`_mongodb._tcp.${host}`, (err, addresses) => {
             if (err) {
               resolve({ success: false, error: err.message });
             } else {
