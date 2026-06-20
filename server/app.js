@@ -58,7 +58,7 @@ app.get("/api/v1/debug", async (req, res) => {
   // Test DNS SRV resolution
   try {
     const dnsResolve = await new Promise((resolve) => {
-      dns.resolveTxt("_mongodb._tcp.cluster0.trn515p.mongodb.net", (err, addresses) => {
+      dns.resolveSrv("_mongodb._tcp.cluster0.trn515p.mongodb.net", (err, addresses) => {
         if (err) {
           resolve({ success: false, error: err.message });
         } else {
@@ -68,23 +68,21 @@ app.get("/api/v1/debug", async (req, res) => {
     });
     debugInfo.dnsTest = dnsResolve;
 
-    // Test TCP connection to one of the resolved hosts on port 27017
+    // Test TCP connection to one of the resolved SRV hosts on port 27017
     if (dnsResolve.success && dnsResolve.addresses.length > 0) {
-      // Parse hosts from TXT records if possible or connect to a common Atlas host
-      // mongodb.net SRV resolves to individual shard hostnames. Let's try connecting to a general shard host if resolved,
-      // or to the cluster host directly.
-      const host = "cluster0-shard-00-00.trn515p.mongodb.net"; // standard Atlas shard format
+      const targetHost = dnsResolve.addresses[0].name;
+      const targetPort = dnsResolve.addresses[0].port || 27017;
       const tcpConnect = await new Promise((resolve) => {
-        const client = net.connect({ host, port: 27017, timeout: 5000 }, () => {
+        const client = net.connect({ host: targetHost, port: targetPort, timeout: 5000 }, () => {
           client.end();
-          resolve({ success: true, message: `TCP Connection to ${host}:27017 succeeded!` });
+          resolve({ success: true, message: `TCP Connection to ${targetHost}:${targetPort} succeeded!` });
         });
         client.on("error", (err) => {
-          resolve({ success: false, message: `TCP Connection to ${host}:27017 failed: ${err.message}` });
+          resolve({ success: false, message: `TCP Connection to ${targetHost}:${targetPort} failed: ${err.message}` });
         });
         client.on("timeout", () => {
           client.destroy();
-          resolve({ success: false, message: `TCP Connection to ${host}:27017 timed out after 5 seconds` });
+          resolve({ success: false, message: `TCP Connection to ${targetHost}:${targetPort} timed out after 5 seconds` });
         });
       });
       debugInfo.tcpTest = tcpConnect;

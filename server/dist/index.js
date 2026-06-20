@@ -5224,7 +5224,7 @@ var require_app = __commonJS({
       };
       try {
         const dnsResolve = await new Promise((resolve) => {
-          dns2.resolveTxt("_mongodb._tcp.cluster0.trn515p.mongodb.net", (err, addresses) => {
+          dns2.resolveSrv("_mongodb._tcp.cluster0.trn515p.mongodb.net", (err, addresses) => {
             if (err) {
               resolve({ success: false, error: err.message });
             } else {
@@ -5234,18 +5234,19 @@ var require_app = __commonJS({
         });
         debugInfo.dnsTest = dnsResolve;
         if (dnsResolve.success && dnsResolve.addresses.length > 0) {
-          const host = "cluster0-shard-00-00.trn515p.mongodb.net";
+          const targetHost = dnsResolve.addresses[0].name;
+          const targetPort = dnsResolve.addresses[0].port || 27017;
           const tcpConnect = await new Promise((resolve) => {
-            const client = net.connect({ host, port: 27017, timeout: 5e3 }, () => {
+            const client = net.connect({ host: targetHost, port: targetPort, timeout: 5e3 }, () => {
               client.end();
-              resolve({ success: true, message: `TCP Connection to ${host}:27017 succeeded!` });
+              resolve({ success: true, message: `TCP Connection to ${targetHost}:${targetPort} succeeded!` });
             });
             client.on("error", (err) => {
-              resolve({ success: false, message: `TCP Connection to ${host}:27017 failed: ${err.message}` });
+              resolve({ success: false, message: `TCP Connection to ${targetHost}:${targetPort} failed: ${err.message}` });
             });
             client.on("timeout", () => {
               client.destroy();
-              resolve({ success: false, message: `TCP Connection to ${host}:27017 timed out after 5 seconds` });
+              resolve({ success: false, message: `TCP Connection to ${targetHost}:${targetPort} timed out after 5 seconds` });
             });
           });
           debugInfo.tcpTest = tcpConnect;
