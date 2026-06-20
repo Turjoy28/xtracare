@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-const FeaturedProduct = require("../models/FeaturedProductModel");
+const FeaturedProduct = require("../models/featuredProductModel");
 const Option = require("../models/optionModel");
 const Product = require("../models/productModel");
 const Variant = require("../models/variantModel");

@@ -16,10 +16,28 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Create Restart Trigger File
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Dependencies
         run: |
-          mkdir -p server/tmp
-          touch server/tmp/restart.txt
+          cd server
+          npm ci
+
+      - name: Build Server Bundle
+        run: |
+          cd server
+          npm run build
+
+      - name: Prepare Deployment Directory
+        run: |
+          cd server
+          cp package.json dist/
+          cp package-lock.json dist/
+          mkdir -p dist/tmp
+          touch dist/tmp/restart.txt
 
       - name: Deploy to cPanel via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
@@ -28,14 +46,8 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           port: ${{ secrets.FTP_PORT || 21 }}
-          local-dir: ./server/
+          local-dir: ./server/dist/
           server-dir: ./api.rpcworld-bd.com/
-          exclude: |
-            **/.git*
-            **/.git*/**
-            **/.env
-            **/uploads/**
-            **/node_modules/**
 
 
 

@@ -8,7 +8,7 @@ const AppError = require("../utils/AppError");
 const catchAsync = require("../utils/catchAsync");
 const deleteFile = require("../utils/deleteFile");
 const { getAll, getOne } = require("../utils/handleFactory");
-const FeaturedProduct = require("../models/FeaturedProductModel");
+const FeaturedProduct = require("../models/featuredProductModel");
 
 exports.createFeaturedProductController = catchAsync(async (req, res, next) => {
   const body = req.body;
