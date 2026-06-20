@@ -5193,7 +5193,14 @@ var require_app = __commonJS({
     var routes = require_routes();
     var app2 = express();
     app2.use(cors({
-      origin: ["http://localhost:5174", "http://localhost:5173"],
+      origin: [
+        "http://localhost:5173",
+        "http://localhost:5174",
+        "http://localhost:5175",
+        "https://rpcworld-bd.com",
+        "https://www.rpcworld-bd.com",
+        "https://admin.rpcworld-bd.com"
+      ],
       credentials: true
     }));
     app2.use(bodyParser.json());
