@@ -56,6 +56,14 @@ app.get("/api/v1/debug", async (req, res) => {
     mongooseLastError: mongoose.connection.lastError || null,
   };
 
+  try {
+    const axios = require("axios");
+    const ipRes = await axios.get("https://api.ipify.org?format=json", { timeout: 3000 });
+    debugInfo.serverPublicIp = ipRes.data.ip;
+  } catch (ipErr) {
+    debugInfo.serverPublicIp = `Failed to fetch IP: ${ipErr.message}`;
+  }
+
   // Test DNS SRV resolution dynamically from process.env.DATABASE
   try {
     const dbUri = process.env.DATABASE || "";

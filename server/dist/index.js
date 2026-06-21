@@ -5224,6 +5224,13 @@ var require_app = __commonJS({
         mongooseLastError: mongoose2.connection.lastError || null
       };
       try {
+        const axios = require("axios");
+        const ipRes = await axios.get("https://api.ipify.org?format=json", { timeout: 3e3 });
+        debugInfo.serverPublicIp = ipRes.data.ip;
+      } catch (ipErr) {
+        debugInfo.serverPublicIp = `Failed to fetch IP: ${ipErr.message}`;
+      }
+      try {
         const dbUri = process.env.DATABASE || "";
         const hostMatch = dbUri.match(/@([^/\s?]+)/);
         const host = hostMatch ? hostMatch[1] : null;
