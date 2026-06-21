@@ -92,7 +92,7 @@ const MiddleFooter = () => {
               <div className="mt-4">
                 <p className="text-white font-bold underline">Address</p>
                 <p className="text-white">
-                  Nanikhir, Nanikhir, Mukshudpur, Gopalganj
+                  Ashkona, Hazi school road, Dakshinkhan, Dhaka 1230
                 </p>
                 <p className="text-white font-bold underline">Phone</p>
                 <a className="text-white" href="tel:+01755599108">
