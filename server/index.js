@@ -25,9 +25,13 @@ const User = require("./models/userModel");
 
 mongoose.connect(process.env.DATABASE)
   .then(() => {
-    console.log("Database Connected ✓")
+    console.log("Database Connected ✓");
+    mongoose.connection.lastError = null;
   })
-  .catch((err) => console.log("DB Connection Error", "-->", err.message));
+  .catch((err) => {
+    console.log("DB Connection Error", "-->", err.message);
+    mongoose.connection.lastError = err.message || String(err);
+  });
 
 
 // Function to seed the admin

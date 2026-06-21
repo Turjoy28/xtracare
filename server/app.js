@@ -53,6 +53,7 @@ app.get("/api/v1/debug", async (req, res) => {
       ? process.env.DATABASE.replace(/:([^@\s/]+)@/, ":xxxx@")
       : null,
     mongooseConnectionState: mongoose.connection.readyState, // 0 = disconnected, 1 = connected, 2 = connecting, 3 = disconnecting
+    mongooseLastError: mongoose.connection.lastError || null,
   };
 
   // Test DNS SRV resolution dynamically from process.env.DATABASE
