@@ -6,7 +6,7 @@ module.exports = class Email {
     this.to = user.email;
     this.firstName = user.name.split(" ")[0];
     this.url = url;
-    this.from = `RPC World BD <${process.env.EMAIL_FROM}>`;
+    this.from = `Extracare BD <${process.env.EMAIL_FROM}>`;
   }
 
   newTransport() {
@@ -35,12 +35,12 @@ module.exports = class Email {
 
   async sendWelcome() {
     const html = `
-      <h1>Welcome to the RPC World BD Family, ${this.firstName}!</h1>
+      <h1>Welcome to the Extracare BD Family, ${this.firstName}!</h1>
       <p>We are excited to have you onboard.</p>
       <p>Click <a href="${this.url}">here</a> to get started.</p>
     `;
 
-    await this.send(html, "Welcome to the RPC World BD Family!");
+    await this.send(html, "Welcome to the Extracare BD Family!");
   }
 
   async sendPasswordReset() {
@@ -51,7 +51,7 @@ module.exports = class Email {
     <p><a href="${this.url}">Reset your password</a></p>
     <p>If you did not request a password reset, please ignore this email.</p>
     <p>Thanks,</p>
-    <p>RPC World BD Team</p>
+    <p>Extracare BD Team</p>
   `;
 
     await this.send(

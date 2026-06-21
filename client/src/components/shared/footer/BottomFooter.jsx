@@ -10,7 +10,7 @@ const BottomFooter = () => {
         <div className="flex justify-center items-center">
           <p className="text-sm text-gray-400 text-center flex items-center justify-between w-full gap-x-2">
             {/* Take Current Year dynamically */}
-            <span>  © {new Date().getFullYear()} RPC World BD, All rights reserved.</span>
+            <span>  © {new Date().getFullYear()} Extracare BD, All rights reserved.</span>
             <span className="text-white mx-2">
               <Link target="_blanck" to={"https://www.okobiz.com/"}>
                 Developed by okobiz.

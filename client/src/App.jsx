@@ -47,7 +47,7 @@ const router = createBrowserRouter(
         element={
           <Suspense fallback={<div></div>}>
             <Helmet>
-              <title>RPC World BD -আরপিসি ওয়ার্ল্ড বিডি</title>
+              <title>Extracare BD -এক্সট্রা কেয়ার বিডি</title>
               <link rel="canonical" href="/" />
             </Helmet>
             <Home />
