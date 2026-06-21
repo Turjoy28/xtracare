@@ -110,7 +110,7 @@ app.get("/api/v1/debug", async (req, res) => {
 });
 
 app.get("/", (req, res) => {
-  return res.send("hello from okobiz");
+  return res.send("hello from okobiz - build 2026-06-21-v1");
 });
 
 app.use(routes);

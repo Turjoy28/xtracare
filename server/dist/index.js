@@ -5269,7 +5269,7 @@ var require_app = __commonJS({
       return res.json(debugInfo);
     });
     app2.get("/", (req, res) => {
-      return res.send("hello from okobiz");
+      return res.send("hello from okobiz - build 2026-06-21-v1");
     });
     app2.use(routes);
     app2.use(globalErrorMiddleware);
