@@ -35,19 +35,19 @@ import signImage from "../assets/logos/sign.png";
 
 // ─── Status config ────────────────────────────────────────────────────────────
 const STATUS_CONFIG = {
-  pending:   { color: "#f59e0b", bg: "#fef3c7", label: "Pending",   icon: <ClockCircleOutlined /> },
-  approved:  { color: "#3b82f6", bg: "#dbeafe", label: "Approved",  icon: <CheckCircleOutlined /> },
-  shipped:   { color: "#8b5cf6", bg: "#ede9fe", label: "Shipped",   icon: <CarOutlined /> },
+  pending: { color: "#f59e0b", bg: "#fef3c7", label: "Pending", icon: <ClockCircleOutlined /> },
+  approved: { color: "#3b82f6", bg: "#dbeafe", label: "Approved", icon: <CheckCircleOutlined /> },
+  shipped: { color: "#8b5cf6", bg: "#ede9fe", label: "Shipped", icon: <CarOutlined /> },
   delivered: { color: "#10b981", bg: "#d1fae5", label: "Delivered", icon: <CheckSquareOutlined /> },
-  canceled:  { color: "#ef4444", bg: "#fee2e2", label: "Canceled",  icon: <StopOutlined /> },
+  canceled: { color: "#ef4444", bg: "#fee2e2", label: "Canceled", icon: <StopOutlined /> },
 };
 
 const STATUS_OPTIONS = [
-  { label: "Pending",   value: "pending" },
-  { label: "Approved",  value: "approved" },
-  { label: "Shipped",   value: "shipped" },
+  { label: "Pending", value: "pending" },
+  { label: "Approved", value: "approved" },
+  { label: "Shipped", value: "shipped" },
   { label: "Delivered", value: "delivered" },
-  { label: "Canceled",  value: "canceled" },
+  { label: "Canceled", value: "canceled" },
 ];
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -78,7 +78,7 @@ const getDeliveryCharge = (record) => {
 function numberToWords(num) {
   const units = ["", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine"];
   const teens = ["Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"];
-  const tens  = ["", "Ten", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"];
+  const tens = ["", "Ten", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"];
   if (num === 0) return "Zero";
   if (num < 10) return units[num];
   if (num >= 10 && num < 20) return teens[num - 10];
@@ -107,28 +107,28 @@ const StatusBadge = ({ status }) => {
 
 // ─── Main Component ───────────────────────────────────────────────────────────
 const Order = () => {
-  const [data, setData]                       = useState([]);
-  const [filteredData, setFilteredData]       = useState([]);
-  const [searchTerm, setSearchTerm]           = useState("");
-  const [statusFilter, setStatusFilter]       = useState(null);
+  const [data, setData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [statusFilter, setStatusFilter] = useState(null);
 
   // Edit modal
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
-  const [currentOrder, setCurrentOrder]             = useState(null);
-  const [form]                                      = Form.useForm();
+  const [currentOrder, setCurrentOrder] = useState(null);
+  const [form] = Form.useForm();
 
   // View Details modal
-  const [viewOrder, setViewOrder]                   = useState(null);
-  const [isDetailVisible, setIsDetailVisible]       = useState(false);
+  const [viewOrder, setViewOrder] = useState(null);
+  const [isDetailVisible, setIsDetailVisible] = useState(false);
 
   // Bulk selection
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-  const [selectedRows, setSelectedRows]       = useState([]);
-  const [bulkStatus, setBulkStatus]           = useState(null);
+  const [selectedRows, setSelectedRows] = useState([]);
+  const [bulkStatus, setBulkStatus] = useState(null);
 
   // Sorting & pagination
-  const [sortedInfo, setSortedInfo]   = useState({ columnKey: "createdAt", order: "descend" });
-  const [pageSize, setPageSize]       = useState(10);
+  const [sortedInfo, setSortedInfo] = useState({ columnKey: "createdAt", order: "descend" });
+  const [pageSize, setPageSize] = useState(10);
 
   // Steadfast progress
   const [shipProgress, setShipProgress] = useState(null); // {done, total, failed}
@@ -137,7 +137,7 @@ const Order = () => {
   const fetchOrders = async () => {
     try {
       const response = await axios.get("/order");
-      const orders   = response.data.data.doc;
+      const orders = response.data.data.doc;
       setData(orders);
       applyFilters(orders, searchTerm, statusFilter);
     } catch (error) {
@@ -153,9 +153,9 @@ const Order = () => {
     const trimmed = (search || "").trim().toLowerCase();
     if (trimmed) {
       result = result.filter((order) => {
-        const idMatch    = order._id.slice(-6).toLowerCase().includes(trimmed);
+        const idMatch = order._id.slice(-6).toLowerCase().includes(trimmed);
         const phoneMatch = (order.phone || "").toLowerCase().includes(trimmed);
-        const nameMatch  = (order.name  || "").toLowerCase().includes(trimmed);
+        const nameMatch = (order.name || "").toLowerCase().includes(trimmed);
         return idMatch || phoneMatch || nameMatch;
       });
     }
@@ -301,8 +301,8 @@ const Order = () => {
 
   // ── Invoice printing ─────────────────────────────────────────────────────────
   const handlePrintInvoice = async (order) => {
-    const response   = await axios.get(`/order/${order._id}`);
-    const anOrder    = response?.data?.data?.doc;
+    const response = await axios.get(`/order/${order._id}`);
+    const anOrder = response?.data?.data?.doc;
     const isFreeShipping = anOrder.products.every((p) => p.option?.freeShipping === true);
     const deliveryCharge = isFreeShipping ? 0 : anOrder.shippingCost;
 
@@ -313,9 +313,9 @@ const Order = () => {
       return { ...product, totalPrice: Math.round(unitPrice * product.quantity) };
     });
 
-    const subTotal   = productsWithTotalPrice.reduce((sum, p) => sum + p.totalPrice, 0);
+    const subTotal = productsWithTotalPrice.reduce((sum, p) => sum + p.totalPrice, 0);
     const bundleOffer = Math.round(anOrder?.bundleOffer || 0);
-    const grandTotal  = subTotal + deliveryCharge - bundleOffer;
+    const grandTotal = subTotal + deliveryCharge - bundleOffer;
     const grandTotalInWords = numberToWords(grandTotal);
 
     const invoiceContent = `
@@ -360,7 +360,7 @@ const Order = () => {
     <p style="font-size:12px"><i>Thank you for shopping with us!</i></p>
     <div class="signature-section"><div><img src="${signImage}" alt="Sign" style="height:60px;"/><br/><span class="sellerSig">Seller's Signature</span><br/>(auto generated Signature)</div>
     <div class="signature-box">Customer's Signature</div></div>
-    <div class="qrlogo"><p>More Shopping, SCAN ME!</p><img src="${qrImg}" alt="QR" style="height:200px;"/><br/><span style="font-size:14px;margin-left:30px;">www.rpcworld-bd.com</span></div>
+    <div class="qrlogo"><p>More Shopping, SCAN ME!</p><img src="${qrImg}" alt="QR" style="height:200px;"/><br/><span style="font-size:14px;margin-left:30px;">www.xtracarebd.com</span></div>
     </body></html>`;
 
     const iframe = document.createElement("iframe");
@@ -477,7 +477,7 @@ const Order = () => {
       title: "Products",
       width: 180,
       render: (_, record) => {
-        const count     = record.products?.length || 0;
+        const count = record.products?.length || 0;
         const firstName = record.products?.[0]?.product?.isBundle
           ? record.products?.[0]?.product?.name
           : record.products?.[0]?.option?.product?.name;
@@ -628,8 +628,8 @@ const Order = () => {
       border: "none", cursor: "pointer", padding: "6px 14px",
       transition: "all 0.2s",
     };
-    if (variant === "danger")  return { ...base, background: "#ef4444", color: "#fff" };
-    if (variant === "purple")  return { ...base, background: "#8b5cf6", color: "#fff" };
+    if (variant === "danger") return { ...base, background: "#ef4444", color: "#fff" };
+    if (variant === "purple") return { ...base, background: "#8b5cf6", color: "#fff" };
     if (variant === "success") return { ...base, background: "#10b981", color: "#fff" };
     return { ...base, background: "rgba(255,255,255,0.15)", color: "#fff", border: "1px solid rgba(255,255,255,0.3)" };
   };
@@ -953,14 +953,14 @@ const Order = () => {
 
 // ─── OrderDetailView sub-component ───────────────────────────────────────────
 const OrderDetailView = ({ order, onEdit, onPrint, onShip, onStatusChange, onClose }) => {
-  const subTotal      = calcSubTotal(order);
+  const subTotal = calcSubTotal(order);
   const deliveryCharge = getDeliveryCharge(order);
   const bundleDiscount = Math.round(order.bundleOffer || 0);
-  const grandTotal     = calcGrandTotal(order);
+  const grandTotal = calcGrandTotal(order);
 
   const sectionHead = { fontSize: 11, fontWeight: 700, color: "#94a3b8", textTransform: "uppercase", letterSpacing: "0.7px", marginBottom: 10 };
-  const labelStyle  = { fontSize: 12, color: "#94a3b8", marginBottom: 2 };
-  const valueStyle  = { fontSize: 13, color: "#1e293b", fontWeight: 500, marginBottom: 10 };
+  const labelStyle = { fontSize: 12, color: "#94a3b8", marginBottom: 2 };
+  const valueStyle = { fontSize: 13, color: "#1e293b", fontWeight: 500, marginBottom: 10 };
 
   return (
     <div style={{ fontFamily: "'Inter', -apple-system, sans-serif" }}>
@@ -1052,9 +1052,9 @@ const OrderDetailView = ({ order, onEdit, onPrint, onShip, onStatusChange, onClo
               <tbody>
                 {order.products?.map((product, idx) => {
                   const isBundle = product?.product?.isBundle;
-                  const name     = isBundle ? product?.product?.name : product?.option?.product?.name;
+                  const name = isBundle ? product?.product?.name : product?.option?.product?.name;
                   const unitPrice = isBundle ? product?.product?.price : product?.option?.salePrice || product?.option?.price || 0;
-                  const total    = Math.round(unitPrice * (product.quantity || 1));
+                  const total = Math.round(unitPrice * (product.quantity || 1));
                   return (
                     <tr key={idx} style={{ borderTop: idx > 0 ? "1px solid #f1f5f9" : "none", background: idx % 2 === 0 ? "#fff" : "#fafbff" }}>
                       <td style={{ padding: "10px 14px", fontWeight: 600, color: "#1e293b" }}>

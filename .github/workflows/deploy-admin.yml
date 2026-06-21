@@ -43,5 +43,5 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           port: ${{ secrets.FTP_PORT || 21 }}
           local-dir: ./admin/dist/
-          server-dir: ./admin.rpcworld-bd.com/
+          server-dir: ./admin.xtracarebd.com/
 

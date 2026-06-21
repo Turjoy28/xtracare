@@ -134,7 +134,7 @@ var require_userModel = __commonJS({
           type: String,
           required: [true, "Phone number is required"],
           validate: {
-            validator: function(v) {
+            validator: function (v) {
               return validator.isMobilePhone(v);
             },
             message: (props) => `${props.value} is not a valid phone number!`
@@ -152,7 +152,7 @@ var require_userModel = __commonJS({
           type: String,
           required: [true, "Please provide a password"],
           validate: {
-            validator: function(val) {
+            validator: function (val) {
               return /^\S*$/.test(val);
             },
             message: "Space is not allowed in password"
@@ -166,7 +166,7 @@ var require_userModel = __commonJS({
           required: [true, "Confirm your password please"],
           validate: {
             // This only works on CREATE and SAVE!
-            validator: function(val) {
+            validator: function (val) {
               return val === this.password;
             },
             message: "Password does not matched"
@@ -189,25 +189,25 @@ var require_userModel = __commonJS({
         timestamps: true
       }
     );
-    userSchema.pre("save", async function(next) {
+    userSchema.pre("save", async function (next) {
       if (!this.isModified("password")) return next();
       this.password = await bcrypt.hash(this.password, 10);
       this.confirmPassword = void 0;
       next();
     });
-    userSchema.pre("save", function(next) {
+    userSchema.pre("save", function (next) {
       if (!this.isModified("password") || this.isNew) return next();
       this.passwordChangedAt = Date.now() - 1e3;
       next();
     });
-    userSchema.pre(/^find/, function(next) {
+    userSchema.pre(/^find/, function (next) {
       this.find({ active: { $ne: false } });
       next();
     });
-    userSchema.methods.correctPassword = async function(candidatePassword, userPassword) {
+    userSchema.methods.correctPassword = async function (candidatePassword, userPassword) {
       return await bcrypt.compare(candidatePassword, userPassword);
     };
-    userSchema.methods.changedPasswordAfter = function(JWTIssuedTime) {
+    userSchema.methods.changedPasswordAfter = function (JWTIssuedTime) {
       if (this.passwordChangedAt) {
         const passwordChangeTime = parseInt(
           this.passwordChangedAt.getTime() / 1e3,
@@ -217,7 +217,7 @@ var require_userModel = __commonJS({
       }
       return false;
     };
-    userSchema.methods.createPasswordResetToken = function() {
+    userSchema.methods.createPasswordResetToken = function () {
       const resetToken = crypto.randomBytes(32).toString("hex");
       this.passwordResetToken = crypto.createHash("sha256").update(resetToken).digest("hex");
       this.passwordResetExpires = Date.now() + 10 * 60 * 1e3;
@@ -694,7 +694,7 @@ var require_categoryModel = __commonJS({
         timestamps: true
       }
     );
-    categorySchema.pre("save", function(next) {
+    categorySchema.pre("save", function (next) {
       this.slug = slugify(this.title, { lower: true });
       next();
     });
@@ -795,7 +795,7 @@ var require_brandModel = __commonJS({
         timestamps: true
       }
     );
-    brandSchema.pre("save", function(next) {
+    brandSchema.pre("save", function (next) {
       this.slug = slugify(this.title, { lower: true });
       next();
     });
@@ -878,13 +878,13 @@ var require_productModel = __commonJS({
         timestamps: true
       }
     );
-    productSchema.pre("validate", function(next) {
+    productSchema.pre("validate", function (next) {
       if (this.isNew && (!this.photos || this.photos.length === 0)) {
         this.invalidate("photos", "At least one photo is required");
       }
       next();
     });
-    productSchema.pre("save", function(next) {
+    productSchema.pre("save", function (next) {
       this.slug = slugify(this.name, { lower: true });
       next();
     });
@@ -907,13 +907,13 @@ var require_variantModel = __commonJS({
         type: String,
         validate: [
           {
-            validator: function(value) {
+            validator: function (value) {
               return !value || value.length >= 4 && value.length <= 7;
             },
             message: "Color code length must be between 4 and 7 characters if provided"
           },
           {
-            validator: function(value) {
+            validator: function (value) {
               return !value || /^#([0-9A-Fa-f]{3}){1,2}$/.test(value);
             },
             message: (props) => `${props.value} is not a valid hexadecimal color code!`
@@ -1045,7 +1045,7 @@ var require_optionModel = __commonJS({
       }
     });
     optionSchema.index({ variant: 1, size: 1 }, { unique: true });
-    optionSchema.pre("save", function(next) {
+    optionSchema.pre("save", function (next) {
       this.size = this?.size?.toUpperCase();
       next();
     });
@@ -3411,7 +3411,7 @@ var require_couponModel = __commonJS({
           type: Date,
           required: [true, "End date is required"],
           validate: {
-            validator: function(value) {
+            validator: function (value) {
               return value >= this.validFrom;
             },
             message: "valid Until date must be after or equal to validFrom date"
@@ -5199,9 +5199,9 @@ var require_app = __commonJS({
         "http://localhost:5173",
         "http://localhost:5174",
         "http://localhost:5175",
-        "https://rpcworld-bd.com",
-        "https://www.rpcworld-bd.com",
-        "https://admin.rpcworld-bd.com"
+        "https://xtracarebd.com",
+        "https://www.xtracarebd.com",
+        "https://admin.xtracarebd.com"
       ],
       credentials: true
     }));

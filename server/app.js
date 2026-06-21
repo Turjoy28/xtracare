@@ -18,9 +18,9 @@ app.use(cors({
     "http://localhost:5173",
     "http://localhost:5174",
     "http://localhost:5175",
-    "https://rpcworld-bd.com",
-    "https://www.rpcworld-bd.com",
-    "https://admin.rpcworld-bd.com"
+    "https://xtracarebd.com",
+    "https://www.xtracarebd.com",
+    "https://admin.xtracarebd.com"
   ],
   credentials: true,
 }));
@@ -49,8 +49,8 @@ app.get("/api/v1/debug", async (req, res) => {
 
   const debugInfo = {
     envDatabaseExists: !!process.env.DATABASE,
-    databaseUriMasked: process.env.DATABASE 
-      ? process.env.DATABASE.replace(/:([^@\s/]+)@/, ":xxxx@") 
+    databaseUriMasked: process.env.DATABASE
+      ? process.env.DATABASE.replace(/:([^@\s/]+)@/, ":xxxx@")
       : null,
     mongooseConnectionState: mongoose.connection.readyState, // 0 = disconnected, 1 = connected, 2 = connecting, 3 = disconnecting
   };
