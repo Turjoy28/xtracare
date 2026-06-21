@@ -832,7 +832,8 @@ const CheckoutForm = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="mt-5">
+                    {/* Bundle Discount */}
+                    {/* <div className="mt-5">
                       <h2 className="px-6 uppercase text-texthead font-medium">
                         Bundle Discount
                       </h2>
@@ -874,7 +875,7 @@ const CheckoutForm = () => {
                           No bundle offer available
                         </div>
                       )}
-                    </div>
+                    </div> */}
                   </div>
 
                   <div className="py-3 border-b border-b-border flex justify-between">
