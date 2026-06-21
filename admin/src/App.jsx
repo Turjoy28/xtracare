@@ -11,7 +11,7 @@ import Home from "./Pages/DashBoardHome";
 import EditProduct from "./Pages/EditProduct";
 import Forgot from "./Pages/Forgot";
 import ResetPassword from "./Pages/ResetPassword";
-
+import NotFound from "./Pages/NotFound";
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route>
@@ -23,6 +23,7 @@ const router = createBrowserRouter(
       <Route path="/dashboard" element={<MainLayout />}>
         <Route index element={<Home />} />
       </Route>
+      <Route path="*" element={<NotFound />} />
     </Route>
   )
 );
