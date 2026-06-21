@@ -142,14 +142,14 @@ const TermsCondition = () => {
                   </p>
                   <p className="text-paracolor text-base flex flex-wrap gap-x-2">
                     <strong>ফোন:</strong>
-                    <a href="tel:+8801718674140" className="text-primary hover:underline font-medium">
-                      +8801718674140
+                    <a href="tel:+8801577498985" className="text-primary hover:underline font-medium">
+                      +8801577498985
                     </a>
                   </p>
                   <p className="text-paracolor text-base flex flex-wrap gap-x-2">
                     <strong>ইমেইল:</strong>
-                    <a href="mailto:rpcworldbd@gmail.com" className="text-primary hover:underline font-medium">
-                      rpcworldbd@gmail.com
+                    <a href="mailto:sahanazmoni.sm@gmail.com" className="text-primary hover:underline font-medium">
+                      sahanazmoni.sm@gmail.com
                     </a>
                   </p>
                   <p className="text-paracolor text-base">

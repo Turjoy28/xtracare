@@ -39,7 +39,7 @@ export const socialList = [
   {
     name: "facebook",
     logo: FaFacebookF,
-    link: "https://www.facebook.com/share/1FzSV1kDPe/",
+    link: "https://www.facebook.com/share/1BXqaPoDoc/",
   },
   {
     name: "linkedIn",

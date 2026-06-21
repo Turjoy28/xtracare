@@ -31,7 +31,7 @@ const MessengerBtn = () => {
         <div className="absolute -top-32 right-0 mt-2 flex flex-col space-y-2">
           {/* WhatsApp Button */}
           <a
-            href="https://wa.me/8801715630804"
+            href="https://wa.me/8801577498985"
             target="_blank"
             rel="noopener noreferrer"
             className="bg-green-500 text-white w-12 h-12 mx-auto flex justify-center items-center rounded-full shadow-md hover:scale-110  transition duration-300"
@@ -42,7 +42,7 @@ const MessengerBtn = () => {
           {/* Messenger Button */}
           <Link
 
-            to={"https://www.facebook.com/1FzSV1kDPe/"}
+            to={"https://www.facebook.com/share/1BXqaPoDoc/"}
             target="_blank"
             rel="noopener noreferrer"
             className="bg-blue-500 text-white w-12 h-12 mx-auto flex justify-center items-center rounded-full shadow-md hover:scale-110 hover:bg-opacity-80 transition duration-300"

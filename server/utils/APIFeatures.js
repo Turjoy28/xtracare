@@ -12,15 +12,12 @@ class APIFeatures {
     let queryStr = JSON.stringify(queryObj);
     queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`);
 
-    // ১. প্রথমে স্ট্রিং থেকে অবজেক্টে ব্যাক করুন
     const parsedQuery = JSON.parse(queryStr);
 
-    // ২. যদি কুয়েরির মধ্যে 'title' বা কোনো স্ট্রিং থাকে, সেটিকে Case-Insensitive Regex বানিয়ে দিন
     if (parsedQuery.title && typeof parsedQuery.title === 'string') {
       parsedQuery.title = { $regex: `^${parsedQuery.title}$`, $options: 'i' };
     }
 
-    // ৩. ফাইনাল অবজেক্টটি মঙ্গুজের find() মেথডে পাস করুন
     this.query = this.query.find(parsedQuery);
     return this;
   }
@@ -49,8 +46,7 @@ class APIFeatures {
     const page = this.queryString.page * 1 || 1;
     const limit = this.queryString.limit * 1 || 10000;
     const skip = (page - 1) * limit;
-
-    this.query = this.query.skip(skip).limit(limit); 
+    this.query = this.query.skip(skip).limit(limit);
     return this;
   }
 }

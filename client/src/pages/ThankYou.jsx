@@ -88,15 +88,15 @@ const ThankYou = () => {
                   to={"tel:-01755599108"}
                   className="flex items-center gap-x-2"
                 >
-                  <FaPhoneAlt /> +8801718674140
+                  <FaPhoneAlt /> +8801577498985
                 </Link>
               </h4>
               <h4 className="text-base mt-5 text-center flex justify-center text-texthead">
                 <Link
-                  to={"mailto:rpcworldbd@gmail.com"}
+                  to={"mailto:sahanazmoni.sm@gmail.com"}
                   className="flex items-center gap-x-2"
                 >
-                  <MdOutlineMail /> rpcworldbd@gmail.com
+                  <MdOutlineMail /> sahanazmoni.sm@gmail.com
                 </Link>
               </h4>
               <p className="text-center mt-5">You can buy more products.</p>

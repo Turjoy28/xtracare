@@ -341,7 +341,7 @@ const Order = () => {
     .sellerSig{font-weight:bold;}
     </style></head><body>
     <div class="header"><div class="logo"><img src="${logoImage}" alt="Logo" style="height:80px;"/></div><div class="invoice-title">INVOICE</div></div>
-    <div class="billing-section"><div class="billing-info"><p><strong><b>COMPANY:</b></strong></p><p>Extracare BD</p><p>+8801718674140</p><p>rpcworldbd@gmail.com</p></div></div>
+    <div class="billing-section"><div class="billing-info"><p><strong><b>COMPANY:</b></strong></p><p>Extracare BD</p><p>+8801577498985</p><p>sahanazmoni.sm@gmail.com</p></div></div>
     <div class="billing-section"><div class="billing-info"><p><strong>BILL TO:</strong></p><p>${anOrder.name}</p><p>${anOrder.phone}</p><p>${anOrder.email}</p><p>${anOrder.streetAddress}</p></div>
     <div class="order-info"><p><strong>Invoice No.:</strong> ${anOrder._id.slice(-6)}</p><p><strong>Date:</strong> ${new Date(anOrder.createdAt).toLocaleDateString()}</p></div></div>
     <table><thead><tr><th>Products</th><th>Quantity</th><th>Unit Price</th><th>Total Price</th></tr></thead><tbody>

@@ -96,11 +96,11 @@ const MiddleFooter = () => {
                 </p>
                 <p className="text-white font-bold underline">Phone</p>
                 <a className="text-white" href="tel:+01755599108">
-                  +8801718674140
+                  +8801577498985
                 </a>
                 <p className="text-white font-bold underline">Email</p>
-                <a className="text-white" href="mailto:rpcworldbd@gmail.com">
-                  rpcworldbd@gmail.com
+                <a className="text-white" href="mailto:sahanazmoni.sm@gmail.com">
+                  sahanazmoni.sm@gmail.com
                 </a>
                 <ul className="flex items-center gap-x-5 mt-5">
                   {socialList.map((item, index) => {
