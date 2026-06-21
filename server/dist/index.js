@@ -5221,7 +5221,9 @@ var require_app = __commonJS({
         databaseUriMasked: process.env.DATABASE ? process.env.DATABASE.replace(/:([^@\s/]+)@/, ":xxxx@") : null,
         mongooseConnectionState: mongoose2.connection.readyState,
         // 0 = disconnected, 1 = connected, 2 = connecting, 3 = disconnecting
-        mongooseLastError: mongoose2.connection.lastError || null
+        mongooseLastError: mongoose2.connection.lastError || null,
+        serverDirname: __dirname,
+        serverCwd: process.cwd()
       };
       try {
         const axios = require("axios");

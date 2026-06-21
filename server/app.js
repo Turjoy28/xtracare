@@ -54,6 +54,8 @@ app.get("/api/v1/debug", async (req, res) => {
       : null,
     mongooseConnectionState: mongoose.connection.readyState, // 0 = disconnected, 1 = connected, 2 = connecting, 3 = disconnecting
     mongooseLastError: mongoose.connection.lastError || null,
+    serverDirname: __dirname,
+    serverCwd: process.cwd(),
   };
 
   try {
