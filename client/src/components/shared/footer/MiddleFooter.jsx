@@ -68,7 +68,7 @@ const MiddleFooter = () => {
             <h3 className="text-base md:text-lg text-white font-semibold uppercase">
               Shop Categories
             </h3>
-            <ul className="mt-4 flex flex-col gap-y-4 list-disc custom-list overflow-y-auto max-h-40 scrollbar-thin scrollbar-thumb-[#444444] scrollbar-track-[#444444] hover:scrollbar-thumb-opacity-100 hover:scrollbar-track-opacity-100 scrollbar-thumb-opacity-0 scrollbar-track-opacity-0 transition-all">
+            <ul className="mt-4 flex flex-col gap-y-4 list-disc custom-list overflow-y-auto min-h-40 max-h-40 scrollbar-thin scrollbar-thumb-[#444444] scrollbar-track-[#444444] hover:scrollbar-thumb-opacity-100 hover:scrollbar-track-opacity-100 scrollbar-thumb-opacity-0 scrollbar-track-opacity-0 transition-all">
               {categories.map((item, index) => (
                 <li key={index}>
                   <Link
