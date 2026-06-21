@@ -20,7 +20,9 @@ const handleDuplicateFieldsDB = (err) => {
     field.charAt(0).toUpperCase() + field.slice(1).toLocaleLowerCase();
 
   const message = `${capitalizeField} already exist, Please use another ${field}.`; // ${err.keyValue.name}
-  return new AppError(message, 409);
+  const appError = new AppError(message, 409);
+  appError.validationErrors = [{ field: field, message: message }];
+  return appError;
 };
 
 const handleValidationErrorDB = (err) => {
@@ -28,8 +30,15 @@ const handleValidationErrorDB = (err) => {
     .map((item) => item.message)
     .join(", ");
 
+  const validationErrors = Object.values(err.errors).map((item) => ({
+    field: item.path,
+    message: item.message,
+  }));
+
   const message = `Validation failed, ${errors}.`;
-  return new AppError(message, 400);
+  const appError = new AppError(message, 400);
+  appError.validationErrors = validationErrors;
+  return appError;
 };
 
 const handleParallelExcludeIncludeDB = () => {
@@ -71,6 +80,7 @@ const sendErrorProd = (err, req, res) => {
       return res.status(err.statusCode).json({
         status: err.status,
         message: err.message,
+        validationErrors: err.validationErrors,
       });
     }
 

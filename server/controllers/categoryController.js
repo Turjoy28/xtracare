@@ -40,18 +40,27 @@ exports.createCategoryController = catchAsync(async (req, res, next) => {
   } catch (error) {
 
     if (error.errors) {
-      const messages = Object?.values(error.errors)
-        .map((item) => item.properties.message)
+      const messages = Object.values(error.errors)
+        .map((item) => item.properties?.message || item.message)
         .join(", ");
 
-      return next(new AppError(`Validation failed, ${messages}.`, 400));
+      const validationErrors = Object.values(error.errors).map((item) => ({
+        field: item.path,
+        message: item.properties?.message || item.message,
+      }));
+
+      const appError = new AppError(`Validation failed, ${messages}.`, 400);
+      appError.validationErrors = validationErrors;
+      return next(appError);
     } else if (error.code === 11000) {
       const field = Object.keys(error.keyPattern).join(" ");
       const capitalizeField =
         field.charAt(0).toUpperCase() + field.slice(1).toLocaleLowerCase();
 
       const message = `${capitalizeField} already exist, Please use another ${field}.`;
-      return next(new AppError(message, 409));
+      const appError = new AppError(message, 409);
+      appError.validationErrors = [{ field: field, message: message }];
+      return next(appError);
     }
 
     if (req.files && req.files.length > 0) {
@@ -109,22 +118,31 @@ exports.updateCategoryController = catchAsync(async (req, res, next) => {
   try{
    await Category.findByIdAndUpdate(req.params.id,body);
 
-  }catch {
+  }catch (error) {
 
-    // if (error.errors) {
-    //   const messages = Object?.values(error.errors)
-    //     .map((item) => item.properties.message)
-    //     .join(", ");
+    if (error.errors) {
+      const messages = Object.values(error.errors)
+        .map((item) => item.properties?.message || item.message)
+        .join(", ");
 
-    //   return next(new AppError(`Validation failed, ${messages}.`, 400));
-    // } else if (error.code === 11000) {
-    //   const field = Object.keys(error.keyPattern).join(" ");
-    //   const capitalizeField =
-    //     field.charAt(0).toUpperCase() + field.slice(1).toLocaleLowerCase();
+      const validationErrors = Object.values(error.errors).map((item) => ({
+        field: item.path,
+        message: item.properties?.message || item.message,
+      }));
 
-    //   const message = `${capitalizeField} already exist, Please use another ${field}.`;
-    //   return next(new AppError(message, 409));
-    // }
+      const appError = new AppError(`Validation failed, ${messages}.`, 400);
+      appError.validationErrors = validationErrors;
+      return next(appError);
+    } else if (error.code === 11000) {
+      const field = Object.keys(error.keyPattern).join(" ");
+      const capitalizeField =
+        field.charAt(0).toUpperCase() + field.slice(1).toLocaleLowerCase();
+
+      const message = `${capitalizeField} already exist, Please use another ${field}.`;
+      const appError = new AppError(message, 409);
+      appError.validationErrors = [{ field: field, message: message }];
+      return next(appError);
+    }
 
     if (req.files && req.files.length > 0) {
       for (const file of req.files) {

@@ -80,10 +80,17 @@ exports.createProductController = catchAsync(async (req, res, next) => {
 
     if (error.errors) {
       const messages = Object.values(error.errors)
-        .map((item) => item.properties.message)
+        .map((item) => item.properties?.message || item.message)
         .join(", ");
 
-      return next(new AppError(`Validation failed, ${messages}.`, 400));
+      const validationErrors = Object.values(error.errors).map((item) => ({
+        field: item.path,
+        message: item.properties?.message || item.message,
+      }));
+
+      const appError = new AppError(`Validation failed, ${messages}.`, 400);
+      appError.validationErrors = validationErrors;
+      return next(appError);
     } else if (error.code === 11000) {
 
       const field = Object.keys(error.keyPattern).join(" ");
@@ -91,8 +98,9 @@ exports.createProductController = catchAsync(async (req, res, next) => {
         field.charAt(0).toUpperCase() + field.slice(1).toLocaleLowerCase();
 
       const message = `${capitalizeField} already exist, Please use another ${field}.`;
-
-      return next(new AppError(message, 409));
+      const appError = new AppError(message, 409);
+      appError.validationErrors = [{ field: field, message: message }];
+      return next(appError);
     }
 
     if (req.files && req.files.length > 0) {
@@ -172,10 +180,17 @@ exports.createProductBundleController = catchAsync(async (req, res, next) => {
 
     if (error.errors) {
       const messages = Object.values(error.errors)
-        .map((item) => item.properties.message)
+        .map((item) => item.properties?.message || item.message)
         .join(", ");
 
-      return next(new AppError(`Validation failed, ${messages}.`, 400));
+      const validationErrors = Object.values(error.errors).map((item) => ({
+        field: item.path,
+        message: item.properties?.message || item.message,
+      }));
+
+      const appError = new AppError(`Validation failed, ${messages}.`, 400);
+      appError.validationErrors = validationErrors;
+      return next(appError);
     } else if (error.code === 11000) {
 
       const field = Object.keys(error.keyPattern).join(" ");
@@ -183,8 +198,9 @@ exports.createProductBundleController = catchAsync(async (req, res, next) => {
         field.charAt(0).toUpperCase() + field.slice(1).toLocaleLowerCase();
 
       const message = `${capitalizeField} already exist, Please use another ${field}.`;
-
-      return next(new AppError(message, 409));
+      const appError = new AppError(message, 409);
+      appError.validationErrors = [{ field: field, message: message }];
+      return next(appError);
     }
 
     if (req.files && req.files.length > 0) {

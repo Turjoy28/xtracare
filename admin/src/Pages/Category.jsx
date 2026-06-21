@@ -279,8 +279,23 @@ const AddCategory = () => {
       form.resetFields();
       message.success("Category, Subcategory and ChildCategory created successfully!");
     } catch (error) {
-      console.error("Failed to add category and subcategory:", error);
-      message.error("Failed to add category and subcategory.");
+      const serverMessage = error.response?.data?.message || "Failed to add category and subcategory.";
+      const validationErrors = error.response?.data?.validationErrors;
+
+      if (validationErrors && validationErrors.length > 0) {
+        const formErrors = validationErrors.map((err) => {
+          let fieldName = [err.field];
+          if (err.field === "title") fieldName = ["category", "title"];
+          return {
+            name: fieldName,
+            errors: [err.message],
+          };
+        });
+        form.setFields(formErrors);
+        message.error("Please fix the highlighted errors in the form.");
+      } else {
+        message.error(serverMessage);
+      }
     }
   };
 

@@ -288,14 +288,24 @@ const UploadProduct = () => {
       setSelectedSubCategory(null);
     } catch (error) {
       const serverMessage = error.response?.data?.message || error.message || "";
-      if (serverMessage.includes("Name already exist")) {
+      const validationErrors = error.response?.data?.validationErrors;
+
+      if (validationErrors && validationErrors.length > 0) {
+        const formErrors = validationErrors.map((err) => ({
+          name: err.field,
+          errors: [err.message],
+        }));
+        productForm.setFields(formErrors);
+        message.error("Please fix the highlighted errors in the form.");
+      } else if (serverMessage.includes("already exist")) {
+        productForm.setFields([{ name: "name", errors: ["এই নামের প্রোডাক্ট ইতিমধ্যে আছে! দয়া করে অন্য একটি নাম ব্যবহার করুন।"] }]);
         message.error("এই নামের প্রোডাক্ট ইতিমধ্যে আছে! দয়া করে অন্য একটি নাম ব্যবহার করুন।");
       } else if (serverMessage.includes("Too many files")) {
         message.error("Maximum 10 images allowed.");
       } else if (serverMessage.includes("Color code length")) {
         message.error("Color code must be 6 characters with # (example: #000000)");
       } else {
-        message.error("Something went wrong. Please try again.");
+        message.error(serverMessage || "Something went wrong. Please try again.");
       }
     } finally {
       setLoading(false);

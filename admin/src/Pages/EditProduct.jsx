@@ -151,13 +151,21 @@ const EditProduct = () => {
       setOptions([]);
       setDescription(""); // Reset description
     } catch (error) {
-      console.error("Error creating product:", error.response || error.message);
-      if (error.response) {
-        message.error(
-          `Error: ${error.response.data.message || "Something went wrong!"}`
-        );
+      const serverMessage = error.response?.data?.message || "Something went wrong!";
+      const validationErrors = error.response?.data?.validationErrors;
+
+      if (validationErrors && validationErrors.length > 0) {
+        const formErrors = validationErrors.map((err) => ({
+          name: err.field,
+          errors: [err.message],
+        }));
+        productForm.setFields(formErrors);
+        message.error("Please fix the highlighted errors in the form.");
+      } else if (serverMessage.includes("already exist")) {
+        productForm.setFields([{ name: "name", errors: ["এই নামের প্রোডাক্ট ইতিমধ্যে আছে! দয়া করে অন্য একটি নাম ব্যবহার করুন।"] }]);
+        message.error("এই নামের প্রোডাক্ট ইতিমধ্যে আছে! দয়া করে অন্য একটি নাম ব্যবহার করুন।");
       } else {
-        message.error("Something went wrong, Try again!");
+        message.error(serverMessage);
       }
     }
   };
@@ -202,7 +210,19 @@ const EditProduct = () => {
       setBrandFileList([]);
       fetchBrands(); // Refresh the brand list
     } catch (error) {
-      message.error("Failed to create brand");
+      const serverMessage = error.response?.data?.message || "Failed to create brand";
+      const validationErrors = error.response?.data?.validationErrors;
+
+      if (validationErrors && validationErrors.length > 0) {
+        const formErrors = validationErrors.map((err) => ({
+          name: err.field,
+          errors: [err.message],
+        }));
+        brandForm.setFields(formErrors);
+        message.error("Please fix the highlighted errors in the form.");
+      } else {
+        message.error(serverMessage);
+      }
     }
   };
   return (

@@ -56,7 +56,19 @@ const UploadBanner = () => {
       brandForm.resetFields();
       setFileList([]);
     } catch (error) {
-      message.error("Failed to add banner");
+      const serverMessage = error.response?.data?.message || "Failed to add banner";
+      const validationErrors = error.response?.data?.validationErrors;
+
+      if (validationErrors && validationErrors.length > 0) {
+        const formErrors = validationErrors.map((err) => ({
+          name: err.field,
+          errors: [err.message],
+        }));
+        brandForm.setFields(formErrors);
+        message.error("Please fix the highlighted errors in the form.");
+      } else {
+        message.error(serverMessage);
+      }
       console.error("Error adding banner:", error);
     }
   };
