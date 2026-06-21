@@ -29,7 +29,10 @@ app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/xwww-form-urlencoded
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads"))); // Serving static files
-app.use(helmet()); // Set security HTTP headers
+app.use(helmet({
+  crossOriginResourcePolicy: { policy: "cross-origin" },
+  referrerPolicy: { policy: "strict-origin-when-cross-origin" },
+})); // Set security HTTP headers
 
 // const limiter = rateLimit({
 //   max: 100,
