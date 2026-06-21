@@ -134,7 +134,7 @@ var require_userModel = __commonJS({
           type: String,
           required: [true, "Phone number is required"],
           validate: {
-            validator: function (v) {
+            validator: function(v) {
               return validator.isMobilePhone(v);
             },
             message: (props) => `${props.value} is not a valid phone number!`
@@ -152,7 +152,7 @@ var require_userModel = __commonJS({
           type: String,
           required: [true, "Please provide a password"],
           validate: {
-            validator: function (val) {
+            validator: function(val) {
               return /^\S*$/.test(val);
             },
             message: "Space is not allowed in password"
@@ -166,7 +166,7 @@ var require_userModel = __commonJS({
           required: [true, "Confirm your password please"],
           validate: {
             // This only works on CREATE and SAVE!
-            validator: function (val) {
+            validator: function(val) {
               return val === this.password;
             },
             message: "Password does not matched"
@@ -189,25 +189,25 @@ var require_userModel = __commonJS({
         timestamps: true
       }
     );
-    userSchema.pre("save", async function (next) {
+    userSchema.pre("save", async function(next) {
       if (!this.isModified("password")) return next();
       this.password = await bcrypt.hash(this.password, 10);
       this.confirmPassword = void 0;
       next();
     });
-    userSchema.pre("save", function (next) {
+    userSchema.pre("save", function(next) {
       if (!this.isModified("password") || this.isNew) return next();
       this.passwordChangedAt = Date.now() - 1e3;
       next();
     });
-    userSchema.pre(/^find/, function (next) {
+    userSchema.pre(/^find/, function(next) {
       this.find({ active: { $ne: false } });
       next();
     });
-    userSchema.methods.correctPassword = async function (candidatePassword, userPassword) {
+    userSchema.methods.correctPassword = async function(candidatePassword, userPassword) {
       return await bcrypt.compare(candidatePassword, userPassword);
     };
-    userSchema.methods.changedPasswordAfter = function (JWTIssuedTime) {
+    userSchema.methods.changedPasswordAfter = function(JWTIssuedTime) {
       if (this.passwordChangedAt) {
         const passwordChangeTime = parseInt(
           this.passwordChangedAt.getTime() / 1e3,
@@ -217,7 +217,7 @@ var require_userModel = __commonJS({
       }
       return false;
     };
-    userSchema.methods.createPasswordResetToken = function () {
+    userSchema.methods.createPasswordResetToken = function() {
       const resetToken = crypto.randomBytes(32).toString("hex");
       this.passwordResetToken = crypto.createHash("sha256").update(resetToken).digest("hex");
       this.passwordResetExpires = Date.now() + 10 * 60 * 1e3;
@@ -694,7 +694,7 @@ var require_categoryModel = __commonJS({
         timestamps: true
       }
     );
-    categorySchema.pre("save", function (next) {
+    categorySchema.pre("save", function(next) {
       this.slug = slugify(this.title, { lower: true });
       next();
     });
@@ -795,7 +795,7 @@ var require_brandModel = __commonJS({
         timestamps: true
       }
     );
-    brandSchema.pre("save", function (next) {
+    brandSchema.pre("save", function(next) {
       this.slug = slugify(this.title, { lower: true });
       next();
     });
@@ -878,13 +878,13 @@ var require_productModel = __commonJS({
         timestamps: true
       }
     );
-    productSchema.pre("validate", function (next) {
+    productSchema.pre("validate", function(next) {
       if (this.isNew && (!this.photos || this.photos.length === 0)) {
         this.invalidate("photos", "At least one photo is required");
       }
       next();
     });
-    productSchema.pre("save", function (next) {
+    productSchema.pre("save", function(next) {
       this.slug = slugify(this.name, { lower: true });
       next();
     });
@@ -907,13 +907,13 @@ var require_variantModel = __commonJS({
         type: String,
         validate: [
           {
-            validator: function (value) {
+            validator: function(value) {
               return !value || value.length >= 4 && value.length <= 7;
             },
             message: "Color code length must be between 4 and 7 characters if provided"
           },
           {
-            validator: function (value) {
+            validator: function(value) {
               return !value || /^#([0-9A-Fa-f]{3}){1,2}$/.test(value);
             },
             message: (props) => `${props.value} is not a valid hexadecimal color code!`
@@ -1045,7 +1045,7 @@ var require_optionModel = __commonJS({
       }
     });
     optionSchema.index({ variant: 1, size: 1 }, { unique: true });
-    optionSchema.pre("save", function (next) {
+    optionSchema.pre("save", function(next) {
       this.size = this?.size?.toUpperCase();
       next();
     });
@@ -1054,18 +1054,61 @@ var require_optionModel = __commonJS({
   }
 });
 
+// config/cloudinaryConfig.js
+var require_cloudinaryConfig = __commonJS({
+  "config/cloudinaryConfig.js"(exports2, module2) {
+    var cloudinary = require("cloudinary").v2;
+    cloudinary.config({
+      cloud_name: process.env.CLOUD_NAME,
+      api_key: process.env.API_KEY,
+      api_secret: process.env.API_SECRET
+    });
+    module2.exports = cloudinary;
+  }
+});
+
 // utils/deleteFile.js
 var require_deleteFile = __commonJS({
   "utils/deleteFile.js"(exports2, module2) {
-    var fs = require("fs");
-    var deleteFile = (filePath) => {
+    var cloudinary = require_cloudinaryConfig();
+    var getPublicIdFromUrl = (url) => {
+      try {
+        const parts = url.split("/");
+        const uploadIndex = parts.indexOf("upload");
+        if (uploadIndex === -1) return null;
+        const publicIdWithExt = parts.slice(uploadIndex + 2).join("/");
+        const lastDotIndex = publicIdWithExt.lastIndexOf(".");
+        if (lastDotIndex === -1) return publicIdWithExt;
+        return publicIdWithExt.substring(0, lastDotIndex);
+      } catch (error) {
+        return null;
+      }
+    };
+    var deleteFile = (fileUrl) => {
       return new Promise((resolve, reject) => {
-        fs.unlink(filePath, (err) => {
-          if (err) {
-            return reject(err);
+        if (fileUrl && fileUrl.includes("cloudinary.com")) {
+          const publicId = getPublicIdFromUrl(fileUrl);
+          if (publicId) {
+            cloudinary.uploader.destroy(publicId, (error, result) => {
+              if (error) {
+                console.error("Cloudinary deletion error:", error);
+                return reject(error);
+              }
+              resolve(result);
+            });
+          } else {
+            resolve();
           }
-          resolve();
-        });
+        } else {
+          const fs = require("fs");
+          fs.unlink(fileUrl, (err) => {
+            if (err) {
+              if (err.code === "ENOENT") return resolve();
+              return reject(err);
+            }
+            resolve();
+          });
+        }
       });
     };
     module2.exports = deleteFile;
@@ -1172,9 +1215,7 @@ var require_categoryController = __commonJS({
     exports2.createCategoryController = catchAsync(async (req, res, next) => {
       const body = { ...req.body };
       if (req.files && req.files.length > 0) {
-        body.photos = req.files.map((file) => {
-          return `${req.protocol}://${req.get("host")}/uploads/products/${file.filename}`;
-        });
+        body.photos = req.files.map((file) => file.filename);
       } else {
         delete body.photos;
       }
@@ -1198,14 +1239,13 @@ var require_categoryController = __commonJS({
           return next(new AppError(message, 409));
         }
         if (req.files && req.files.length > 0) {
-          req.files.forEach((file) => {
-            const filePath = `uploads/products/${file.fileName}`;
-            fs.unlink(filePath, (err) => {
-              if (err) {
-                return next(new AppError(`Error removing file: ${filePath}`, 500));
-              }
-            });
-          });
+          for (const file of req.files) {
+            try {
+              await deleteFile(file.filename);
+            } catch (err) {
+              console.error(`Error removing file: ${file.filename}`, err);
+            }
+          }
         }
         return next(
           new AppError(`Something went wrong while creating varient`, 400)
@@ -1230,9 +1270,7 @@ var require_categoryController = __commonJS({
         category[key] = req.body[key];
       });
       if (req.files && req.files.length > 0) {
-        body.photos = req.files.map((file) => {
-          return `${req.protocol}://${req.get("host")}/uploads/products/${file.filename}`;
-        });
+        body.photos = req.files.map((file) => file.filename);
       } else {
         delete body.photos;
       }
@@ -1240,14 +1278,13 @@ var require_categoryController = __commonJS({
         await Category.findByIdAndUpdate(req.params.id, body);
       } catch {
         if (req.files && req.files.length > 0) {
-          req.files.forEach((file) => {
-            const filePath = `uploads/products/${file.fileName}`;
-            fs.unlink(filePath, (err) => {
-              if (err) {
-                return next(new AppError(`Error removing file: ${filePath}`, 500));
-              }
-            });
-          });
+          for (const file of req.files) {
+            try {
+              await deleteFile(file.filename);
+            } catch (err) {
+              console.error(`Error removing file: ${file.filename}`, err);
+            }
+          }
         }
         return next(
           new AppError(`Something went wrong while update Category`, 400)
@@ -1271,17 +1308,8 @@ var require_categoryController = __commonJS({
         const brands = await Brand.find({ subCategory: subCategory._id });
         for (const brand of brands) {
           if (brand.photo) {
-            const photoName = brand.photo.split("/").pop();
-            const photoPath = path.join(
-              __dirname,
-              "..",
-              "uploads",
-              "brand",
-              photoName
-            );
             try {
-              await fs.access(photoPath);
-              await deleteFile(photoPath);
+              await deleteFile(brand.photo);
             } catch {
             }
           }
@@ -1289,17 +1317,8 @@ var require_categoryController = __commonJS({
           for (const product of products) {
             if (product.photos && product.photos.length > 0) {
               for (const photoPath of product.photos) {
-                const photoName = photoPath.split("/").pop();
-                const fullPath = path.join(
-                  __dirname,
-                  "..",
-                  "uploads",
-                  "products",
-                  photoName
-                );
                 try {
-                  await fs.access(fullPath);
-                  await deleteFile(fullPath);
+                  await deleteFile(photoPath);
                 } catch {
                 }
               }
@@ -1427,30 +1446,47 @@ var require_uploadPhotoMiddleware = __commonJS({
     var uploadPhotoMiddleware = (multiple = false, maxFiles = 7) => {
       return multiple ? upload.array("photos", maxFiles) : upload.single("photo");
     };
+    var cloudinary = require_cloudinaryConfig();
+    var streamifier = require("streamifier");
     var resizePhotoMiddleware = (directory) => {
       return catchAsync(async (req, res, next) => {
         const files = req.file ? [req.file] : req.files || [];
         if (files.length === 0) return next();
         const uniqueSuffix = () => Date.now() + "-" + Math.round(Math.random() * 1e9);
+        const dimensions = {}[directory] || {};
         const processImage = async (file) => {
           const originalExtension = path.extname(file.originalname);
-          file.filename = `${directory}-${uniqueSuffix()}${originalExtension}`;
-          const dimensions = {}[directory] || {};
-          try {
-            const transformer = sharp(file.buffer);
-            if (directory !== "banner") {
-              transformer.resize(dimensions.width, dimensions.height);
-            }
-            transformer.toFormat(originalExtension.slice(1)).toFile(`uploads/${directory}/${file.filename}`, {
-              quality: dimensions.quality
-            });
-            file.fileName = file.filename;
-          } catch (err) {
-            return next(new AppError("Failed while processing the image", 500));
+          const filename = `${directory}-${uniqueSuffix()}`;
+          const transformer = sharp(file.buffer);
+          if (directory !== "banner") {
+            transformer.resize(dimensions.width, dimensions.height);
           }
+          const format = originalExtension ? originalExtension.slice(1).toLowerCase() : "jpeg";
+          const buffer = await transformer.toFormat(format).toBuffer();
+          const result = await new Promise((resolve, reject) => {
+            const stream = cloudinary.uploader.upload_stream(
+              {
+                folder: `xtracare/${directory}`,
+                public_id: filename,
+                format
+              },
+              (error, result2) => {
+                if (error) return reject(error);
+                resolve(result2);
+              }
+            );
+            streamifier.createReadStream(buffer).pipe(stream);
+          });
+          file.filename = result.secure_url;
+          file.fileName = result.secure_url;
         };
-        await Promise.all(files.map(processImage));
-        next();
+        try {
+          await Promise.all(files.map(processImage));
+          next();
+        } catch (err) {
+          console.error("Image processing error:", err);
+          return next(new AppError("Failed while processing the image", 500));
+        }
       });
     };
     module2.exports = { uploadPhotoMiddleware, resizePhotoMiddleware };
@@ -1712,7 +1748,7 @@ var require_brandController = __commonJS({
     exports2.createBrandController = catchAsync(async (req, res, next) => {
       const body = req.body;
       if (req.file) {
-        body.photo = `${req.protocol}://${req.get("host")}/uploads/brand/${req.file.filename}`;
+        body.photo = req.file.filename;
       } else {
         delete body.photo;
       }
@@ -1727,10 +1763,11 @@ var require_brandController = __commonJS({
         });
       } catch (error) {
         if (req.file) {
-          const filePath = path.join(__dirname, "..", "uploads", "brand", req.file.filename);
-          fs.unlink(filePath).catch((err) => {
+          try {
+            await deleteFile(req.file.filename);
+          } catch (err) {
             console.error("Failed to delete file during brand creation failure:", err);
-          });
+          }
         }
         if (error.errors) {
           const messages = Object.values(error.errors).map((item) => item.properties.message).join(", ");
@@ -1752,13 +1789,8 @@ var require_brandController = __commonJS({
         return next(new AppError("No brand was found with that ID!", 404));
       }
       const body = req.body;
-      let oldPhotoLink = null;
-      if (brand.photo) {
-        const photoName = brand.photo.split("/");
-        oldPhotoLink = path.join(__dirname, "..", "uploads", "brand", photoName[photoName.length - 1]);
-      }
       if (req.file) {
-        body.photo = `${req.protocol}://${req.get("host")}/uploads/brand/${req.file.filename}`;
+        body.photo = req.file.filename;
       } else {
         delete body.photo;
       }
@@ -1766,10 +1798,12 @@ var require_brandController = __commonJS({
         brand[key] = body[key];
       });
       await brand.save();
-      if (req.file && oldPhotoLink) {
-        fs.unlink(oldPhotoLink).catch((err) => {
+      if (req.file && brand.photo) {
+        try {
+          await deleteFile(brand.photo);
+        } catch (err) {
           console.error("Failed to delete old photo:", err);
-        });
+        }
       }
       res.status(200).json({
         status: "success",
@@ -1787,11 +1821,8 @@ var require_brandController = __commonJS({
         return next(new AppError("No brand was found with that ID!", 404));
       }
       if (brand.photo) {
-        const photoName = brand.photo.split("/").pop();
-        const photoPath = path.join(__dirname, "..", "uploads", "brand", photoName);
         try {
-          await fs.access(photoPath);
-          await deleteFile(photoPath);
+          await deleteFile(brand.photo);
         } catch (err) {
           console.error(`Failed to delete file: ${err.message}`);
         }
@@ -1800,17 +1831,8 @@ var require_brandController = __commonJS({
       for (const product of products) {
         if (product.photos && product.photos.length > 0) {
           for (const photoPath of product.photos) {
-            const photoName = photoPath.split("/").pop();
-            const productPhotoPath = path.join(
-              __dirname,
-              "..",
-              "uploads",
-              "products",
-              photoName
-            );
             try {
-              await fs.access(productPhotoPath);
-              await deleteFile(productPhotoPath);
+              await deleteFile(photoPath);
             } catch (err) {
               console.error(`Failed to delete file: ${err.message}`);
             }
@@ -1956,8 +1978,7 @@ var require_productController = __commonJS({
       const protocol = isLocalhost ? "http" : "https";
       if (req.files && req.files.length > 0) {
         body.photos = req.files.map((file) => {
-          const url = `${protocol}://${req.get("host")}/uploads/products/${file.filename}`;
-          return url;
+          return file.filename;
         });
       } else {
         delete body.photos;
@@ -2001,14 +2022,13 @@ var require_productController = __commonJS({
           return next(new AppError(message, 409));
         }
         if (req.files && req.files.length > 0) {
-          req.files.forEach((file) => {
-            const filePath = `uploads/products/${file.fileName}`;
-            fs.unlink(filePath, (err) => {
-              if (err) {
-                return next(new AppError(`Error removing file: ${filePath}`, 500));
-              }
-            });
-          });
+          for (const file of req.files) {
+            try {
+              await deleteFile(file.filename);
+            } catch (err) {
+              console.error(`Error removing file: ${file.filename}`, err);
+            }
+          }
         }
         return next(
           new AppError(`Something went wrong while creating varient`, 400)
@@ -2021,8 +2041,7 @@ var require_productController = __commonJS({
       const protocol = isLocalhost ? "http" : "https";
       if (req.files && req.files.length > 0) {
         body.photos = req.files.map((file) => {
-          const url = `${protocol}://${req.get("host")}/uploads/products/${file.filename}`;
-          return url;
+          return file.filename;
         });
       } else {
         delete body.photos;
@@ -2066,14 +2085,13 @@ var require_productController = __commonJS({
           return next(new AppError(message, 409));
         }
         if (req.files && req.files.length > 0) {
-          req.files.forEach((file) => {
-            const filePath = `uploads/products/${file.fileName}`;
-            fs.unlink(filePath, (err) => {
-              if (err) {
-                return next(new AppError(`Error removing file: ${filePath}`, 500));
-              }
-            });
-          });
+          for (const file of req.files) {
+            try {
+              await deleteFile(file.filename);
+            } catch (err) {
+              console.error(`Error removing file: ${file.filename}`, err);
+            }
+          }
         }
         return next(
           new AppError(`Something went wrong while creating varient`, 400)
@@ -2183,18 +2201,14 @@ var require_productController = __commonJS({
       if (req.files && req.files.length > 0) {
         if (product.photos && product.photos.length > 0) {
           for (const photoPath of product.photos) {
-            const photoName = photoPath.split("/").pop();
-            const path = `uploads/products/${photoName}`;
             try {
-              await deleteFile(path);
+              await deleteFile(photoPath);
             } catch (err) {
               console.error(`Failed to delete file: ${err.message}`);
             }
           }
         }
-        body.photos = req.files.map(
-          (file) => `${req.protocol}://${req.get("host")}/uploads/products/${file.filename}`
-        );
+        body.photos = req.files.map((file) => file.filename);
       }
       const isValidYouTubeUrl = (url) => {
         const regex = /^https:\/\/www\.youtube\.com\/embed\/[a-zA-Z0-9_-]{11}\?si=[a-zA-Z0-9_-]+$/;
@@ -2236,18 +2250,14 @@ var require_productController = __commonJS({
       if (req.files && req.files.length > 0) {
         if (product.photos && product.photos.length > 0) {
           for (const photoPath of product.photos) {
-            const photoName = photoPath.split("/").pop();
-            const path = `uploads/products/${photoName}`;
             try {
-              await deleteFile(path);
+              await deleteFile(photoPath);
             } catch (err) {
               console.error(`Failed to delete file: ${err.message}`);
             }
           }
         }
-        body.photos = req.files.map(
-          (file) => `${req.protocol}://${req.get("host")}/uploads/products/${file.filename}`
-        );
+        body.photos = req.files.map((file) => file.filename);
       }
       const isValidYouTubeUrl = (url) => {
         const regex = /^https:\/\/www\.youtube\.com\/embed\/[a-zA-Z0-9_-]{11}\?si=[a-zA-Z0-9_-]+$/;
@@ -2289,18 +2299,14 @@ var require_productController = __commonJS({
       if (req.files && req.files.length > 0) {
         if (product.photos && product.photos.length > 0) {
           for (const photoPath of product.photos) {
-            const photoName = photoPath.split("/").pop();
-            const path = `uploads/products/${photoName}`;
             try {
-              await deleteFile(path);
+              await deleteFile(photoPath);
             } catch (err) {
               console.error(`Failed to delete file: ${err.message}`);
             }
           }
         }
-        body.photos = req.files.map(
-          (file) => `${req.protocol}://${req.get("host")}/uploads/products/${file.filename}`
-        );
+        body.photos = req.files.map((file) => file.filename);
       }
       const isValidYouTubeUrl = (url) => {
         const regex = /^https:\/\/www\.youtube\.com\/embed\/[a-zA-Z0-9_-]{11}\?si=[a-zA-Z0-9_-]+$/;
@@ -2340,10 +2346,8 @@ var require_productController = __commonJS({
       }
       if (product.photos && product.photos.length > 0) {
         for (const photoPath of product.photos) {
-          const photoName = photoPath.split("/").pop();
-          const path = `uploads/products/${photoName}`;
           try {
-            await deleteFile(path);
+            await deleteFile(photoPath);
           } catch (err) {
             console.error(`Failed to delete file: ${err.message}`);
           }
@@ -2373,10 +2377,8 @@ var require_productController = __commonJS({
       }
       if (product.photos && product.photos.length > 0) {
         for (const photoPath of product.photos) {
-          const photoName = photoPath.split("/").pop();
-          const path = `uploads/products/${photoName}`;
           try {
-            await deleteFile(path);
+            await deleteFile(photoPath);
           } catch (err) {
             console.error(`Failed to delete file: ${err.message}`);
           }
@@ -2963,7 +2965,7 @@ var require_bannerModel = __commonJS({
 // controllers/bannerController.js
 var require_bannerController = __commonJS({
   "controllers/bannerController.js"(exports2) {
-    var fs = require("fs");
+    var deleteFile = require_deleteFile();
     var Banner = require_bannerModel();
     var AppError = require_AppError();
     var catchAsync = require_catchAsync();
@@ -2972,7 +2974,7 @@ var require_bannerController = __commonJS({
       const body = req.body;
       if (req.file) {
         const { fieldname } = req.file;
-        body[fieldname] = `${req.protocol}://${req.get("host")}/uploads/banner/${req.file.filename}`;
+        body[fieldname] = req.file.filename;
       } else {
         delete body.photo;
       }
@@ -2989,13 +2991,13 @@ var require_bannerController = __commonJS({
           }
         });
       } catch (error) {
-        const filePath = `uploads/banner/${req.file.filename}`;
-        fs.unlink(filePath, (err) => {
-          if (err && req.file)
-            return next(
-              new AppError("Something gone wrong while creating banner", 500)
-            );
-        });
+        if (req.file) {
+          try {
+            await deleteFile(req.file.filename);
+          } catch (err) {
+            console.error("Failed to delete banner photo:", err);
+          }
+        }
         if (error.errors) {
           const messages = Object.values(error.errors).map((item) => item.properties.message).join(", ");
           return next(new AppError(`Validation failed, ${messages}.`, 400));
@@ -3015,14 +3017,13 @@ var require_bannerController = __commonJS({
       if (!banner) {
         return next(new AppError("No banner was found with that ID!", 404));
       }
-      const photoName = banner.photo.split("/");
-      const photoPath = `uploads/banner/${photoName[photoName.length - 1]}`;
-      fs.unlink(photoPath, (err) => {
-        if (err)
-          return next(
-            new AppError("Something gone wrong while deleting banner", 500)
-          );
-      });
+      if (banner.photo) {
+        try {
+          await deleteFile(banner.photo);
+        } catch (err) {
+          console.error("Failed to delete banner photo:", err);
+        }
+      }
       res.status(204).json({
         status: "success",
         data: null
@@ -3411,7 +3412,7 @@ var require_couponModel = __commonJS({
           type: Date,
           required: [true, "End date is required"],
           validate: {
-            validator: function (value) {
+            validator: function(value) {
               return value >= this.validFrom;
             },
             message: "valid Until date must be after or equal to validFrom date"
@@ -4096,10 +4097,7 @@ var require_featuredProductController = __commonJS({
         const isLocalhost = req.get("host").includes("localhost");
         const protocol = isLocalhost ? "http" : "https";
         if (req.files && req.files.length > 0) {
-          body.photos = req.files.map((file) => {
-            const url = `${protocol}://${req.get("host")}/uploads/products/${file.filename}`;
-            return url;
-          });
+          body.photos = req.files.map((file) => file.filename);
         } else {
           delete body.photos;
         }
@@ -4142,16 +4140,13 @@ var require_featuredProductController = __commonJS({
             return next(new AppError(message, 409));
           }
           if (req.files && req.files.length > 0) {
-            req.files.forEach((file) => {
-              const filePath = `uploads/products/${file.fileName}`;
-              fs.unlink(filePath, (err) => {
-                if (err) {
-                  return next(
-                    new AppError(`Error removing file: ${filePath}`, 500)
-                  );
-                }
-              });
-            });
+            for (const file of req.files) {
+              try {
+                await deleteFile(file.filename);
+              } catch (err) {
+                console.error(`Error removing file: ${file.filename}`, err);
+              }
+            }
           }
           return next(
             new AppError(`Something went wrong while creating varient`, 400)
@@ -4248,18 +4243,14 @@ var require_featuredProductController = __commonJS({
       if (req.files && req.files.length > 0) {
         if (product.photos && product.photos.length > 0) {
           for (const photoPath of product.photos) {
-            const photoName = photoPath.split("/").pop();
-            const path = `uploads/products/${photoName}`;
             try {
-              await deleteFile(path);
+              await deleteFile(photoPath);
             } catch (err) {
               console.error(`Failed to delete file: ${err.message}`);
             }
           }
         }
-        body.photos = req.files.map(
-          (file) => `${req.protocol}://${req.get("host")}/uploads/products/${file.filename}`
-        );
+        body.photos = req.files.map((file) => file.filename);
       }
       const isValidYouTubeUrl = (url) => {
         const regex = /^https:\/\/www\.youtube\.com\/embed\/[a-zA-Z0-9_-]{11}\?si=[a-zA-Z0-9_-]+$/;
@@ -4301,18 +4292,14 @@ var require_featuredProductController = __commonJS({
       if (req.files && req.files.length > 0) {
         if (product.photos && product.photos.length > 0) {
           for (const photoPath of product.photos) {
-            const photoName = photoPath.split("/").pop();
-            const path = `uploads/products/${photoName}`;
             try {
-              await deleteFile(path);
+              await deleteFile(photoPath);
             } catch (err) {
               console.error(`Failed to delete file: ${err.message}`);
             }
           }
         }
-        body.photos = req.files.map(
-          (file) => `${req.protocol}://${req.get("host")}/uploads/products/${file.filename}`
-        );
+        body.photos = req.files.map((file) => file.filename);
       }
       const isValidYouTubeUrl = (url) => {
         const regex = /^https:\/\/www\.youtube\.com\/embed\/[a-zA-Z0-9_-]{11}\?si=[a-zA-Z0-9_-]+$/;
@@ -4355,18 +4342,14 @@ var require_featuredProductController = __commonJS({
         if (req.files && req.files.length > 0) {
           if (product.photos && product.photos.length > 0) {
             for (const photoPath of product.photos) {
-              const photoName = photoPath.split("/").pop();
-              const path = `uploads/products/${photoName}`;
               try {
-                await deleteFile(path);
+                await deleteFile(photoPath);
               } catch (err) {
                 console.error(`Failed to delete file: ${err.message}`);
               }
             }
           }
-          body.photos = req.files.map(
-            (file) => `${req.protocol}://${req.get("host")}/uploads/products/${file.filename}`
-          );
+          body.photos = req.files.map((file) => file.filename);
         }
         const isValidYouTubeUrl = (url) => {
           const regex = /^https:\/\/www\.youtube\.com\/embed\/[a-zA-Z0-9_-]{11}\?si=[a-zA-Z0-9_-]+$/;
@@ -4407,10 +4390,8 @@ var require_featuredProductController = __commonJS({
       }
       if (product.photos && product.photos.length > 0) {
         for (const photoPath of product.photos) {
-          const photoName = photoPath.split("/").pop();
-          const path = `uploads/products/${photoName}`;
           try {
-            await deleteFile(path);
+            await deleteFile(photoPath);
           } catch (err) {
             console.error(`Failed to delete file: ${err.message}`);
           }
@@ -4441,10 +4422,8 @@ var require_featuredProductController = __commonJS({
         }
         if (product.photos && product.photos.length > 0) {
           for (const photoPath of product.photos) {
-            const photoName = photoPath.split("/").pop();
-            const path = `uploads/products/${photoName}`;
             try {
-              await deleteFile(path);
+              await deleteFile(photoPath);
             } catch (err) {
               console.error(`Failed to delete file: ${err.message}`);
             }
@@ -4570,7 +4549,7 @@ var require_landingBannerModel = __commonJS({
 // controllers/landingBannerController.js
 var require_landingBannerController = __commonJS({
   "controllers/landingBannerController.js"(exports2) {
-    var fs = require("fs");
+    var deleteFile = require_deleteFile();
     var AppError = require_AppError();
     var catchAsync = require_catchAsync();
     var { getOne, getAll } = require_handleFactory();
@@ -4579,7 +4558,7 @@ var require_landingBannerController = __commonJS({
       const body = req.body;
       if (req.file) {
         const { fieldname } = req.file;
-        body[fieldname] = `${req.protocol}://${req.get("host")}/uploads/banner/${req.file.filename}`;
+        body[fieldname] = req.file.filename;
       } else {
         delete body.photo;
       }
@@ -4596,13 +4575,13 @@ var require_landingBannerController = __commonJS({
           }
         });
       } catch (error) {
-        const filePath = `uploads/banner/${req.file.filename}`;
-        fs.unlink(filePath, (err) => {
-          if (err && req.file)
-            return next(
-              new AppError("Something gone wrong while creating banner", 500)
-            );
-        });
+        if (req.file) {
+          try {
+            await deleteFile(req.file.filename);
+          } catch (err) {
+            console.error("Failed to delete banner photo:", err);
+          }
+        }
         if (error.errors) {
           const messages = Object.values(error.errors).map((item) => item.properties.message).join(", ");
           return next(new AppError(`Validation failed, ${messages}.`, 400));
@@ -4622,14 +4601,13 @@ var require_landingBannerController = __commonJS({
       if (!banner) {
         return next(new AppError("No banner was found with that ID!", 404));
       }
-      const photoName = banner.photo.split("/");
-      const photoPath = `uploads/banner/${photoName[photoName.length - 1]}`;
-      fs.unlink(photoPath, (err) => {
-        if (err)
-          return next(
-            new AppError("Something gone wrong while deleting banner", 500)
-          );
-      });
+      if (banner.photo) {
+        try {
+          await deleteFile(banner.photo);
+        } catch (err) {
+          console.error("Failed to delete banner photo:", err);
+        }
+      }
       res.status(204).json({
         status: "success",
         data: null
@@ -4689,7 +4667,7 @@ var require_landingCoustomerReviewModel = __commonJS({
 // controllers/landingCustomerReviewController.js
 var require_landingCustomerReviewController = __commonJS({
   "controllers/landingCustomerReviewController.js"(exports2) {
-    var fs = require("fs");
+    var deleteFile = require_deleteFile();
     var AppError = require_AppError();
     var catchAsync = require_catchAsync();
     var { getOne, getAll } = require_handleFactory();
@@ -4698,7 +4676,7 @@ var require_landingCustomerReviewController = __commonJS({
       const body = req.body;
       if (req.file) {
         const { fieldname } = req.file;
-        body[fieldname] = `${req.protocol}://${req.get("host")}/uploads/banner/${req.file.filename}`;
+        body[fieldname] = req.file.filename;
       } else {
         delete body.photo;
       }
@@ -4715,13 +4693,13 @@ var require_landingCustomerReviewController = __commonJS({
           }
         });
       } catch (error) {
-        const filePath = `uploads/banner/${req.file.filename}`;
-        fs.unlink(filePath, (err) => {
-          if (err && req.file)
-            return next(
-              new AppError("Something gone wrong while creating banner", 500)
-            );
-        });
+        if (req.file) {
+          try {
+            await deleteFile(req.file.filename);
+          } catch (err) {
+            console.error("Failed to delete banner photo:", err);
+          }
+        }
         if (error.errors) {
           const messages = Object.values(error.errors).map((item) => item.properties.message).join(", ");
           return next(new AppError(`Validation failed, ${messages}.`, 400));
@@ -4741,14 +4719,13 @@ var require_landingCustomerReviewController = __commonJS({
       if (!banner) {
         return next(new AppError("No banner was found with that ID!", 404));
       }
-      const photoName = banner.photo.split("/");
-      const photoPath = `uploads/banner/${photoName[photoName.length - 1]}`;
-      fs.unlink(photoPath, (err) => {
-        if (err)
-          return next(
-            new AppError("Something gone wrong while deleting banner", 500)
-          );
-      });
+      if (banner.photo) {
+        try {
+          await deleteFile(banner.photo);
+        } catch (err) {
+          console.error("Failed to delete banner photo:", err);
+        }
+      }
       res.status(204).json({
         status: "success",
         data: null
@@ -5208,7 +5185,10 @@ var require_app = __commonJS({
     app2.use(bodyParser.json());
     app2.use(bodyParser.urlencoded({ extended: true }));
     app2.use("/uploads", express.static(path.join(__dirname, "uploads")));
-    app2.use(helmet());
+    app2.use(helmet({
+      crossOriginResourcePolicy: { policy: "cross-origin" },
+      referrerPolicy: { policy: "strict-origin-when-cross-origin" }
+    }));
     app2.use(express.json({ limit: "10kb" }));
     app2.use(cookieParser());
     app2.use(monogoSanitize());

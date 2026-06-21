@@ -1,4 +1,4 @@
-const fs = require("fs");
+const deleteFile = require("../utils/deleteFile");
 
 const AppError = require("../utils/AppError");
 const catchAsync = require("../utils/catchAsync");
@@ -10,8 +10,7 @@ exports.createLandingBannerController = catchAsync(async (req, res, next) => {
 
   if (req.file) {
     const { fieldname } = req.file;
-    body[fieldname] = `${req.protocol}://${req.get("host")}/uploads/banner/${req.file.filename
-      }`;
+    body[fieldname] = req.file.filename;
   } else {
     delete body.photo;
   }
@@ -31,13 +30,13 @@ exports.createLandingBannerController = catchAsync(async (req, res, next) => {
       },
     });
   } catch (error) {
-    const filePath = `uploads/banner/${req.file.filename}`;
-    fs.unlink(filePath, (err) => {
-      if (err && req.file)
-        return next(
-          new AppError("Something gone wrong while creating banner", 500)
-        );
-    });
+    if (req.file) {
+      try {
+        await deleteFile(req.file.filename);
+      } catch (err) {
+        console.error("Failed to delete banner photo:", err);
+      }
+    }
 
     if (error.errors) {
       const messages = Object.values(error.errors)
@@ -67,15 +66,13 @@ exports.deleteLandingBannerController = catchAsync(async (req, res, next) => {
   }
 
   // PHOTO DELETING FROM SERVER:
-  const photoName = banner.photo.split("/");
-  const photoPath = `uploads/banner/${photoName[photoName.length - 1]}`;
-
-  fs.unlink(photoPath, (err) => {
-    if (err)
-      return next(
-        new AppError("Something gone wrong while deleting banner", 500)
-      );
-  });
+  if (banner.photo) {
+    try {
+      await deleteFile(banner.photo);
+    } catch (err) {
+      console.error("Failed to delete banner photo:", err);
+    }
+  }
 
   res.status(204).json({
     status: "success",

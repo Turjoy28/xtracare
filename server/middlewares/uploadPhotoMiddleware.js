@@ -21,6 +21,9 @@ const uploadPhotoMiddleware = (multiple = false, maxFiles = 7) => {
 };
 
 // IMAGE PROCESSING USING SHARP
+const cloudinary = require("../config/cloudinaryConfig");
+const streamifier = require("streamifier");
+
 const resizePhotoMiddleware = (directory) => {
   return catchAsync(async (req, res, next) => {
     // Handle both single and multiple files
@@ -32,44 +35,53 @@ const resizePhotoMiddleware = (directory) => {
     const uniqueSuffix = () =>
       Date.now() + "-" + Math.round(Math.random() * 1e9);
 
+    const dimensions = {}[directory] || {};
+
     const processImage = async (file) => {
       // Get the original file extension
       const originalExtension = path.extname(file.originalname);
+      const filename = `${directory}-${uniqueSuffix()}`; // without extension for Cloudinary public_id
 
-      // Set file name with unique suffix and original extension
-      file.filename = `${directory}-${uniqueSuffix()}${originalExtension}`;
+      const transformer = sharp(file.buffer);
 
-      // const dimensions = {
-      //   product: { width: 900, height: 700, quality: 95 },
-      //   brand: { width: 450, height: 450, quality: 80 },
-      //   reviews: { width: 400, height: 400, quality: 85 },
-      // }[directory] || { width: 900, height: 700, quality: 90 };
-      const dimensions = {}[directory] || {};
-
-      try {
-        const transformer = sharp(file.buffer);
-
-        // Ignore resize() for Banner and Brand
-        if (directory !== "banner") {
-          transformer.resize(dimensions.width, dimensions.height);
-        }
-
-        transformer
-          .toFormat(originalExtension.slice(1)) // Set the format to the original extension
-          .toFile(`uploads/${directory}/${file.filename}`, {
-            quality: dimensions.quality,
-          });
-
-        file.fileName = file.filename; // Save the filename for later use
-      } catch (err) {
-        return next(new AppError("Failed while processing the image", 500));
+      // Ignore resize() for Banner and Brand
+      if (directory !== "banner") {
+        transformer.resize(dimensions.width, dimensions.height);
       }
+
+      const format = originalExtension ? originalExtension.slice(1).toLowerCase() : "jpeg";
+      
+      const buffer = await transformer.toFormat(format).toBuffer();
+
+      // Upload buffer to Cloudinary
+      const result = await new Promise((resolve, reject) => {
+        const stream = cloudinary.uploader.upload_stream(
+          { 
+            folder: `xtracare/${directory}`, 
+            public_id: filename,
+            format: format
+          },
+          (error, result) => {
+            if (error) return reject(error);
+            resolve(result);
+          }
+        );
+        streamifier.createReadStream(buffer).pipe(stream);
+      });
+
+      // Save the Cloudinary URL to the file object
+      file.filename = result.secure_url;
+      file.fileName = result.secure_url; 
     };
 
-    // Process all files
-    await Promise.all(files.map(processImage));
-
-    next();
+    try {
+      // Process all files
+      await Promise.all(files.map(processImage));
+      next();
+    } catch (err) {
+      console.error("Image processing error:", err);
+      return next(new AppError("Failed while processing the image", 500));
+    }
   });
 };
 

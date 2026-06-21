@@ -31,11 +31,7 @@ exports.createProductController = catchAsync(async (req, res, next) => {
 
   if (req.files && req.files.length > 0) {
     body.photos = req.files.map((file) => {
-      const url = `${protocol}://${req.get("host")}/uploads/products/${
-        file.filename
-      }`;
-
-      return url;
+      return file.filename;
     });
   } else {
     delete body.photos;
@@ -100,14 +96,13 @@ exports.createProductController = catchAsync(async (req, res, next) => {
     }
 
     if (req.files && req.files.length > 0) {
-      req.files.forEach((file) => {
-        const filePath = `uploads/products/${file.fileName}`;
-        fs.unlink(filePath, (err) => {
-          if (err) {
-            return next(new AppError(`Error removing file: ${filePath}`, 500));
-          }
-        });
-      });
+      for (const file of req.files) {
+        try {
+          await deleteFile(file.filename);
+        } catch (err) {
+          console.error(`Error removing file: ${file.filename}`, err);
+        }
+      }
     }
 
     return next(
@@ -128,11 +123,7 @@ exports.createProductBundleController = catchAsync(async (req, res, next) => {
 
   if (req.files && req.files.length > 0) {
     body.photos = req.files.map((file) => {
-      const url = `${protocol}://${req.get("host")}/uploads/products/${
-        file.filename
-      }`;
-
-      return url;
+      return file.filename;
     });
   } else {
     delete body.photos;
@@ -197,14 +188,13 @@ exports.createProductBundleController = catchAsync(async (req, res, next) => {
     }
 
     if (req.files && req.files.length > 0) {
-      req.files.forEach((file) => {
-        const filePath = `uploads/products/${file.fileName}`;
-        fs.unlink(filePath, (err) => {
-          if (err) {
-            return next(new AppError(`Error removing file: ${filePath}`, 500));
-          }
-        });
-      });
+      for (const file of req.files) {
+        try {
+          await deleteFile(file.filename);
+        } catch (err) {
+          console.error(`Error removing file: ${file.filename}`, err);
+        }
+      }
     }
 
     return next(
@@ -341,10 +331,8 @@ exports.updateProductController = catchAsync(async (req, res, next) => {
     // Remove old photos from file system
     if (product.photos && product.photos.length > 0) {
       for (const photoPath of product.photos) {
-        const photoName = photoPath.split("/").pop();
-        const path = `uploads/products/${photoName}`;
         try {
-          await deleteFile(path);
+          await deleteFile(photoPath);
         } catch (err) {
           console.error(`Failed to delete file: ${err.message}`);
         }
@@ -352,10 +340,7 @@ exports.updateProductController = catchAsync(async (req, res, next) => {
     }
 
     // Update photos
-    body.photos = req.files.map(
-      (file) =>
-        `${req.protocol}://${req.get("host")}/uploads/products/${file.filename}`
-    );
+    body.photos = req.files.map((file) => file.filename);
   }
 
   const isValidYouTubeUrl = (url) => {
@@ -411,10 +396,8 @@ exports.updateProductController = catchAsync(async (req, res, next) => {
     // Remove old photos from file system
     if (product.photos && product.photos.length > 0) {
       for (const photoPath of product.photos) {
-        const photoName = photoPath.split("/").pop();
-        const path = `uploads/products/${photoName}`;
         try {
-          await deleteFile(path);
+          await deleteFile(photoPath);
         } catch (err) {
           console.error(`Failed to delete file: ${err.message}`);
         }
@@ -422,10 +405,7 @@ exports.updateProductController = catchAsync(async (req, res, next) => {
     }
 
     // Update photos
-    body.photos = req.files.map(
-      (file) =>
-        `${req.protocol}://${req.get("host")}/uploads/products/${file.filename}`
-    );
+    body.photos = req.files.map((file) => file.filename);
   }
 
   const isValidYouTubeUrl = (url) => {
@@ -481,10 +461,8 @@ exports.updateProductBundleController = catchAsync(async (req, res, next) => {
     // Remove old photos from file system
     if (product.photos && product.photos.length > 0) {
       for (const photoPath of product.photos) {
-        const photoName = photoPath.split("/").pop();
-        const path = `uploads/products/${photoName}`;
         try {
-          await deleteFile(path);
+          await deleteFile(photoPath);
         } catch (err) {
           console.error(`Failed to delete file: ${err.message}`);
         }
@@ -492,10 +470,7 @@ exports.updateProductBundleController = catchAsync(async (req, res, next) => {
     }
 
     // Update photos
-    body.photos = req.files.map(
-      (file) =>
-        `${req.protocol}://${req.get("host")}/uploads/products/${file.filename}`
-    );
+    body.photos = req.files.map((file) => file.filename);
   }
 
   const isValidYouTubeUrl = (url) => {
@@ -547,11 +522,8 @@ exports.deleteProductController = catchAsync(async (req, res, next) => {
   // Remove product photos from file system
   if (product.photos && product.photos.length > 0) {
     for (const photoPath of product.photos) {
-      const photoName = photoPath.split("/").pop();
-      const path = `uploads/products/${photoName}`;
-
       try {
-        await deleteFile(path);
+        await deleteFile(photoPath);
       } catch (err) {
         console.error(`Failed to delete file: ${err.message}`);
         // Continue with the deletion process even if the file deletion fails
@@ -595,11 +567,8 @@ exports.deleteProductBundleController = catchAsync(async (req, res, next) => {
   // Remove product photos from file system
   if (product.photos && product.photos.length > 0) {
     for (const photoPath of product.photos) {
-      const photoName = photoPath.split("/").pop();
-      const path = `uploads/products/${photoName}`;
-
       try {
-        await deleteFile(path);
+        await deleteFile(photoPath);
       } catch (err) {
         console.error(`Failed to delete file: ${err.message}`);
         // Continue with the deletion process even if the file deletion fails

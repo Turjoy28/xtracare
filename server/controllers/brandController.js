@@ -15,9 +15,7 @@ exports.createBrandController = catchAsync(async (req, res, next) => {
   const body = req.body;
 
   if (req.file) {
-    body.photo = `${req.protocol}://${req.get("host")}/uploads/brand/${
-      req.file.filename
-    }`;
+    body.photo = req.file.filename;
   } else {
     delete body.photo;
   }
@@ -44,10 +42,11 @@ exports.createBrandController = catchAsync(async (req, res, next) => {
     });
   } catch (error) {
     if (req.file) {
-      const filePath = path.join(__dirname, "..", "uploads", "brand", req.file.filename);
-      fs.unlink(filePath).catch((err) => {
+      try {
+        await deleteFile(req.file.filename);
+      } catch (err) {
         console.error("Failed to delete file during brand creation failure:", err);
-      });
+      }
     }
 
     if (error.errors) {
@@ -78,16 +77,8 @@ exports.updateBrandController = catchAsync(async (req, res, next) => {
 
   const body = req.body;
 
-  let oldPhotoLink = null;
-  if (brand.photo) {
-    const photoName = brand.photo.split("/");
-    oldPhotoLink = path.join(__dirname, "..", "uploads", "brand", photoName[photoName.length - 1]);
-  }
-
   if (req.file) {
-    body.photo = `${req.protocol}://${req.get("host")}/uploads/brand/${
-      req.file.filename
-    }`;
+    body.photo = req.file.filename;
   } else {
     delete body.photo;
   }
@@ -99,10 +90,12 @@ exports.updateBrandController = catchAsync(async (req, res, next) => {
   await brand.save();
 
   // Delete old photo if a new one was uploaded and an old photo exists
-  if (req.file && oldPhotoLink) {
-    fs.unlink(oldPhotoLink).catch((err) => {
+  if (req.file && brand.photo) {
+    try {
+      await deleteFile(brand.photo);
+    } catch (err) {
       console.error("Failed to delete old photo:", err);
-    });
+    }
   }
 
   res.status(200).json({
@@ -126,12 +119,8 @@ exports.deleteBrandController = catchAsync(async (req, res, next) => {
 
   // Delete brand photo if it exists
   if (brand.photo) {
-    const photoName = brand.photo.split("/").pop();
-    const photoPath = path.join(__dirname, "..", "uploads", "brand", photoName);
-
     try {
-      await fs.access(photoPath); // Check if the file exists
-      await deleteFile(photoPath);
+      await deleteFile(brand.photo);
     } catch (err) {
       console.error(`Failed to delete file: ${err.message}`);
       // Continue with the brand deletion even if the file deletion fails
@@ -145,18 +134,8 @@ exports.deleteBrandController = catchAsync(async (req, res, next) => {
     // Delete product photos if they exist
     if (product.photos && product.photos.length > 0) {
       for (const photoPath of product.photos) {
-        const photoName = photoPath.split("/").pop();
-        const productPhotoPath = path.join(
-          __dirname,
-          "..",
-          "uploads",
-          "products",
-          photoName
-        );
-
         try {
-          await fs.access(productPhotoPath); // Check if the file exists
-          await deleteFile(productPhotoPath);
+          await deleteFile(photoPath);
         } catch (err) {
           console.error(`Failed to delete file: ${err.message}`);
           // Continue with the product deletion even if the file deletion fails

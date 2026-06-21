@@ -18,12 +18,7 @@ exports.createCategoryController = catchAsync(async (req, res, next) => {
   const body = { ...req.body };
 
   if (req.files && req.files.length > 0) {
-    body.photos = req.files.map((file) => {
-
-      return `${req.protocol}://${req.get("host")}/uploads/products/${
-        file.filename
-      }`;
-    });
+    body.photos = req.files.map((file) => file.filename);
   } else {
     delete body.photos;
   }
@@ -60,14 +55,13 @@ exports.createCategoryController = catchAsync(async (req, res, next) => {
     }
 
     if (req.files && req.files.length > 0) {
-      req.files.forEach((file) => {
-        const filePath = `uploads/products/${file.fileName}`;
-        fs.unlink(filePath, (err) => {
-          if (err) {
-            return next(new AppError(`Error removing file: ${filePath}`, 500));
-          }
-        });
-      });
+      for (const file of req.files) {
+        try {
+          await deleteFile(file.filename);
+        } catch (err) {
+          console.error(`Error removing file: ${file.filename}`, err);
+        }
+      }
     }
 
     return next(
@@ -106,12 +100,7 @@ exports.updateCategoryController = catchAsync(async (req, res, next) => {
     category[key] = req.body[key];
   });
   if (req.files && req.files.length > 0) {
-    body.photos = req.files.map((file) => {
-
-      return `${req.protocol}://${req.get("host")}/uploads/products/${
-        file.filename
-      }`;
-    });
+    body.photos = req.files.map((file) => file.filename);
   } else {
     delete body.photos;
   }
@@ -138,14 +127,13 @@ exports.updateCategoryController = catchAsync(async (req, res, next) => {
     // }
 
     if (req.files && req.files.length > 0) {
-      req.files.forEach((file) => {
-        const filePath = `uploads/products/${file.fileName}`;
-        fs.unlink(filePath, (err) => {
-          if (err) {
-            return next(new AppError(`Error removing file: ${filePath}`, 500));
-          }
-        });
-      });
+      for (const file of req.files) {
+        try {
+          await deleteFile(file.filename);
+        } catch (err) {
+          console.error(`Error removing file: ${file.filename}`, err);
+        }
+      }
     }
 
     return next(
@@ -179,18 +167,8 @@ exports.deleteCategoryController = catchAsync(async (req, res, next) => {
     for (const brand of brands) {
       // Delete brand photo if it exists
       if (brand.photo) {
-        const photoName = brand.photo.split("/").pop();
-        const photoPath = path.join(
-          __dirname,
-          "..",
-          "uploads",
-          "brand",
-          photoName
-        );
-
         try {
-          await fs.access(photoPath); // Check if the file exists
-          await deleteFile(photoPath);
+          await deleteFile(brand.photo);
         } catch {
           // noop
         }
@@ -203,18 +181,8 @@ exports.deleteCategoryController = catchAsync(async (req, res, next) => {
         // Delete product photos if they exist
         if (product.photos && product.photos.length > 0) {
           for (const photoPath of product.photos) {
-            const photoName = photoPath.split("/").pop();
-            const fullPath = path.join(
-              __dirname,
-              "..",
-              "uploads",
-              "products",
-              photoName
-            );
-
             try {
-              await fs.access(fullPath); // Check if the file exists
-              await deleteFile(fullPath);
+              await deleteFile(photoPath);
             } catch {
               // noop
             }
