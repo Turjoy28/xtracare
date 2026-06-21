@@ -47,7 +47,7 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           port: ${{ secrets.FTP_PORT || 21 }}
           local-dir: ./server/dist/
-          server-dir: ./api.xtracarebd.com/
+          server-dir: ./apiv1.xtracarebd.com/
           exclude: |
             **/.git*
             **/.git*/**
