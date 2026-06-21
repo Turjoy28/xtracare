@@ -212,8 +212,8 @@ const UploadBanner = () => {
                   style={{ width: "100%" }}
                   options={[
                     { label: "Main Banner", value: "Main Banner" },
-                    { label: "Deals of the Week", value: "Deals of the Week" },
-                    { label: "New Release", value: "New Release" },
+                    // { label: "Deals of the Week", value: "Deals of the Week" },
+                    // { label: "New Release", value: "New Release" },
                   ]}
                   onChange={handleBannerTypeChange} // Handle change
                 />

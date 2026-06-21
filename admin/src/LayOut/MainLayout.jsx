@@ -134,15 +134,15 @@ const MainLayout = () => {
     getItem("Dashboard ", "1", <UserOutlined />),
 
     getItem("Order", "2", <FileOutlined />),
+    getItem("Brand", "12", <FileOutlined />),
     getItem("ADD Category", "5", <FileOutlined />),
-
     getItem("Product", "sub4", <UploadOutlined />, [
       getItem("Upload Product", "7"),
       getItem("All Product", "8"),
-      getItem("Brand", "12"),
+
     ]),
-    getItem("Upload Banner", "3", <GiKnightBanner />),
     getItem("Add Discount", "9", <FileOutlined />),
+    getItem("Upload Banner", "3", <GiKnightBanner />),
     // getItem("Coupon", "11", <FileOutlined />),
     // getItem("Add Bundle", "13", <GiCardboardBox />),
     // getItem("Landing Page", "sub5", <UploadOutlined />, [

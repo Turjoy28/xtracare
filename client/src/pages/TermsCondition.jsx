@@ -153,7 +153,7 @@ const TermsCondition = () => {
                     </a>
                   </p>
                   <p className="text-paracolor text-base">
-                    <strong>ঠিকানা:</strong> নানীখির, নানীখির, মুকসুদপুর, গোপালগঞ্জ
+                    <strong>ঠিকানা:</strong> আশকোনা, হাজী স্কুল রোড, দক্ষিণখান, ঢাকা–১২৩০
                   </p>
                 </div>
               </section>

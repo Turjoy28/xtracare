@@ -44,12 +44,12 @@ export const socialList = [
   {
     name: "linkedIn",
     logo: FaLinkedinIn,
-    link: "https://www.linkedin.com/in/rpc-world-bd-661a7b408",
+    link: "https://www.linkedin.com/in/",
   },
   {
     name: "twitter",
     logo: FaXTwitter,
-    link: "https://x.com/RpcWorldBd",
+    link: "https://x.com/",
   }
 ];
 
