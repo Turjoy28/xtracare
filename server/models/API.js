@@ -113,8 +113,9 @@ const demo = {
         name: "Mens World Panjabi",
         slug: "mens-world-panjabi",
         photos: [
-          "https://server.nexlinbd .com/uploads/products/products-1723699676198-681797626.png",
-          "https://server.nexlinbd .com/uploads/products/products-1723699676200-562826305.png",
+          "https://img.freepik.com/free-psd/mens-short-sleeve-t-shirt-mockups_126278-122.jpg?t=st=1723193622~exp=1723197222~hmac=7762d3d6a7eeb1e33ae1c361858efe473c6ace00a6a5092c3f8673d75494e705&w=1800",
+          "https://img.freepik.com/free-psd/mens-ultra-cotton-tee-mockup-05_126278-147.jpg?ga=GA1.1.170410324.1722502954",
+          "https://img.freepik.com/free-psd/mens-short-sleeve-t-shirt-mockups_126278-128.jpg?ga=GA1.1.170410324.1722502954",
         ],
         description: "product description",
         details: "This is the details",
@@ -136,8 +137,9 @@ const demo = {
         name: "Mens World Shirt",
         slug: "mens-world-shirt",
         photos: [
-          "https://server.nexlinbd .com/uploads/products/products-1723699676198-681797626.png",
-          "https://server.nexlinbd .com/uploads/products/products-1723699676200-562826305.png",
+          "https://img.freepik.com/free-psd/mens-short-sleeve-t-shirt-mockups_126278-122.jpg?t=st=1723193622~exp=1723197222~hmac=7762d3d6a7eeb1e33ae1c361858efe473c6ace00a6a5092c3f8673d75494e705&w=1800",
+          "https://img.freepik.com/free-psd/mens-ultra-cotton-tee-mockup-05_126278-147.jpg?ga=GA1.1.170410324.1722502954",
+          "https://img.freepik.com/free-psd/mens-short-sleeve-t-shirt-mockups_126278-128.jpg?ga=GA1.1.170410324.1722502954",
         ],
         description: "product description",
         details: "This is the details",
