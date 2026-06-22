@@ -137,6 +137,7 @@
 
 // export default Banner;
 import { useState, useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import { Autoplay, Pagination, EffectFade } from "swiper/modules";
@@ -145,6 +146,7 @@ import axios from "axios";
 import ApiContext from "../baseapi/BaseApi";
 
 const Banner = () => {
+  const navigate = useNavigate();
   const [banners, setBanners] = useState({
     main: [],
     newReleases: [],
@@ -206,9 +208,18 @@ const Banner = () => {
                   <div>
                     {currentSlide === i && (
                       <img
-                        className="w-full h-[250px] md:h-[350px] lg:h-[450px] xl:h-[550px] 2xl:h-[750px] rounded-lg"
+                        className={`w-full h-[250px] md:h-[350px] lg:h-[450px] xl:h-[550px] 2xl:h-[750px] rounded-lg ${item?.link && item.link !== 'undefined' ? 'cursor-pointer' : ''}`}
                         src={item?.photo}
                         alt="banner"
+                        onClick={() => {
+                          if (item?.link && item.link !== 'undefined') {
+                            if (item.link.startsWith('http')) {
+                              window.location.href = item.link;
+                            } else {
+                              navigate(item.link);
+                            }
+                          }
+                        }}
                       />
                     )}
                   </div>
