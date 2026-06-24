@@ -431,7 +431,7 @@ const NavBarMain = () => {
               <IoSearch />
             </button>
 
-            <h1 className="text-white text-lg hidden md:block"> 📞 01711642452</h1>
+            <h1 className="text-white text-lg hidden md:block"> 📞 01577498985</h1>
 
             <Link to={"/checkout"} className="hidden md:flex items-center relative">
               <FaShoppingCart size={22} className="text-white" />
