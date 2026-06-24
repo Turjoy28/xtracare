@@ -353,7 +353,7 @@ const NavBarMain = () => {
           </div>
           {/* Logo Section */}
           <Link to="/" className="flex items-center space-x-2 py-4">
-            <img src={logo} alt="company_logo" className="w-24" />
+            <img src={logo} alt="company_logo" className="w-24" /> <h1 className="text-2xl font-semibold text-white">Xtra Care</h1>
           </Link>
 
           {/* Desktop Search (inline) */}
@@ -430,6 +430,8 @@ const NavBarMain = () => {
             >
               <IoSearch />
             </button>
+
+            <h1 className="text-white text-lg hidden md:block"> 📞 01711642452</h1>
 
             <Link to={"/checkout"} className="hidden md:flex items-center relative">
               <FaShoppingCart size={22} className="text-white" />

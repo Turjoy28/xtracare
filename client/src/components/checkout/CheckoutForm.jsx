@@ -475,7 +475,7 @@ const CheckoutForm = () => {
                                 <div className="flex items-center gap-2">
                                   <h3>Inside Dhaka</h3>
                                   <h4 className="flex items-center gap-x-0.5">
-                                    ৳ 70
+                                    ৳ 60
                                   </h4>
                                 </div>
                               </label>
@@ -494,7 +494,7 @@ const CheckoutForm = () => {
                                 <div className="flex items-center gap-2">
                                   <h3>Outside Dhaka</h3>
                                   <h4 className="flex items-center gap-x-0.5">
-                                    ৳ 140
+                                    ৳ 120
                                   </h4>
                                 </div>
                               </label>

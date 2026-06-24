@@ -117,7 +117,7 @@ const Navbar = () => {
           <div className="py-4 px-7 flex justify-between items-center bg-primary">
             <Link className="flex items-baseline" to="/">
               <div className="flex gap-2 items-center">
-                <img className="w-20" src={logo} />
+                <img className="w-20" src={logo} /> Xtramart
               </div>
             </Link>
             <div onClick={() => toggleDrawer()}>
