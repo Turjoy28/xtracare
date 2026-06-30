@@ -353,7 +353,7 @@ const NavBarMain = () => {
           </div>
           {/* Logo Section */}
           <Link to="/" className="flex items-center space-x-2 py-1 lg:py-4">
-            <img src={logo} alt="company_logo" className="w-20 lg:w-24" /> <h1 className="text-xl lg:text-2xl font-semibold text-white">Xtra Care</h1>
+            <img src={logo} alt="company_logo" className="w-20 lg:w-24" /> 
           </Link>
 
           {/* Desktop Search (inline) */}
