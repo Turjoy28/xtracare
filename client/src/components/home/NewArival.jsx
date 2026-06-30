@@ -36,7 +36,18 @@ const NewArival = () => {
           }
         });
 
-        setProductList(uniqueProducts);
+        // Sort by creation date descending (newest first)
+        uniqueProducts.sort((a, b) => {
+          const dateA = new Date(a?.product?.createdAt || a?.createdAt || 0);
+          const dateB = new Date(b?.product?.createdAt || b?.createdAt || 0);
+          return dateB - dateA;
+        });
+
+        // Limit to 10 latest products, then go on
+        // (If you want to show ALL products sorted by newest first, just remove the .slice(0, 10) part)
+        const latestProducts = uniqueProducts.slice(0, 10);
+
+        setProductList(latestProducts);
       } catch (error) {
         console.error("Error fetching products:", error);
       }

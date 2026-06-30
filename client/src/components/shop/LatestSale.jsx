@@ -71,7 +71,7 @@ const LatestSale = () => {
       });
 
       // Filter products by selected color
-      const filteredProducts = selectedColor
+      let filteredProducts = selectedColor
         ? productsWithSizes.filter(
             (product) =>
               product.variant?.colorName.toLowerCase() ===
@@ -79,7 +79,17 @@ const LatestSale = () => {
           )
         : productsWithSizes;
 
-      setAllProduct(filteredProducts.reverse());
+      // Sort by sellNumber descending (highest sales first)
+      filteredProducts.sort((a, b) => {
+        const sellA = a?.product?.sellNumber || a?.sellNumber || 0;
+        const sellB = b?.product?.sellNumber || b?.sellNumber || 0;
+        return sellB - sellA;
+      });
+
+      // Limit to top 15 most selling products
+      filteredProducts = filteredProducts.slice(0, 15);
+
+      setAllProduct(filteredProducts);
 
       // // Filter products by selected color if applicable
       // if (selectedColor) {

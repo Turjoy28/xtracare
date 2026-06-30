@@ -36,7 +36,17 @@ const BestSell = () => {
           }
         });
 
-        setProductList(uniqueProducts);
+        // Sort by sellNumber descending (highest sales first)
+        uniqueProducts.sort((a, b) => {
+          const sellA = a?.product?.sellNumber || a?.sellNumber || 0;
+          const sellB = b?.product?.sellNumber || b?.sellNumber || 0;
+          return sellB - sellA;
+        });
+
+        // Limit to top 10 best selling products
+        const top10BestSellers = uniqueProducts.slice(0, 10);
+
+        setProductList(top10BestSellers);
       } catch (error) {
         console.error("Error fetching products:", error);
       }

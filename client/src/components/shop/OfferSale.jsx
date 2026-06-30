@@ -75,13 +75,18 @@ const OfferSale = () => {
       });
 
       // Filter products by selected color
-      const filteredProducts = selectedColor
+      let filteredProducts = selectedColor
         ? productsWithSizes.filter(
             (product) =>
               product.variant?.colorName?.toLowerCase().trim() ===
               selectedColor.toLowerCase().trim()
           )
         : productsWithSizes;
+
+      // Filter for free shipping and discounted products only
+      filteredProducts = filteredProducts.filter(
+        (item) => item?.freeShipping === true || item?.discountValue > 0 || item?.discountPercent > 0
+      );
 
       // Set the filtered products to the state
       setAllProduct(filteredProducts);

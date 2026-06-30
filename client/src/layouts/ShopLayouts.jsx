@@ -192,14 +192,14 @@ const ShopLayouts = () => {
                 >
                   {mageSaleActive && (
                     <ul className="pb-4 px-6">
-                      <li className="py-2 text-sm text-texthead hover:text-red-500 cursor-pointer">
+                      {/* <li className="py-2 text-sm text-texthead hover:text-red-500 cursor-pointer">
                         <Link
                           onClick={() => toggleDrawer()}
                           to={"/shop/mega-sale"}
                         >
                           Mega Sale
                         </Link>
-                      </li>
+                      </li> */}
                       <li className="py-2 text-sm text-texthead hover:text-red-500 cursor-pointer">
                         <Link
                           onClick={() => toggleDrawer()}
@@ -211,9 +211,9 @@ const ShopLayouts = () => {
                       <li className="py-2 text-sm text-texthead hover:text-red-500 cursor-pointer">
                         <Link
                           onClick={() => toggleDrawer()}
-                          to={"/shop/latest-sale"}
+                          to={"/shop/best-sale"}
                         >
-                          Latest Sale
+                          Best Sale
                         </Link>
                       </li>
                     </ul>

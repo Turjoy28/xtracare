@@ -79,7 +79,7 @@ const router = createBrowserRouter(
           }
         />
         <Route
-          path="latest-sale"
+          path="best-sale"
           element={
             <Suspense fallback={<div></div>}>
               <LatestSale />
