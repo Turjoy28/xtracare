@@ -5,6 +5,13 @@ import {
   UploadOutlined,
   UserOutlined,
   FileOutlined,
+  ShoppingCartOutlined,
+  TagOutlined,
+  AppstoreAddOutlined,
+  GiftOutlined,
+  InboxOutlined,
+  UnorderedListOutlined,
+  CloudUploadOutlined,
 } from "@ant-design/icons";
 import { GiCardboardBox, GiKnightBanner } from "react-icons/gi";
 import { Button, Layout, Menu, theme } from "antd";
@@ -133,15 +140,14 @@ const MainLayout = () => {
   let items = [
     getItem("Dashboard ", "1", <UserOutlined />),
 
-    getItem("Order", "2", <FileOutlined />),
-    getItem("Brand", "12", <FileOutlined />),
-    getItem("ADD Category", "5", <FileOutlined />),
-    getItem("Product", "sub4", <UploadOutlined />, [
-      getItem("Upload Product", "7"),
-      getItem("All Product", "8"),
-
+    getItem("Order", "2", <ShoppingCartOutlined />),
+    getItem("Brand", "12", <TagOutlined />),
+    getItem("ADD Category", "5", <AppstoreAddOutlined />),
+    getItem("Product", "sub4", <InboxOutlined />, [
+      getItem("Upload Product", "7", <CloudUploadOutlined />),
+      getItem("All Product", "8", <UnorderedListOutlined />),
     ]),
-    getItem("Add Discount", "9", <FileOutlined />),
+    getItem("Add Discount", "9", <GiftOutlined />),
     getItem("Upload Banner", "3", <GiKnightBanner />),
     // getItem("Coupon", "11", <FileOutlined />),
     // getItem("Add Bundle", "13", <GiCardboardBox />),

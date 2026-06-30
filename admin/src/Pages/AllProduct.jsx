@@ -37,6 +37,11 @@ const getMinPrice = (options) => {
 const getTotalStock = (options) =>
   options?.reduce((s, o) => s + (o.stock || 0), 0) || 0;
 
+const getMaxDiscount = (options) => {
+  if (!options?.length) return 0;
+  return Math.max(...options.map((o) => Number(o.discountValue) || 0));
+};
+
 const StockBadge = ({ stock }) => {
   const color  = stock === 0 ? "#ef4444" : stock < 10 ? "#f59e0b" : "#10b981";
   const bg     = stock === 0 ? "#fee2e2" : stock < 10 ? "#fef3c7" : "#d1fae5";
@@ -264,15 +269,37 @@ const AllProduct = () => {
         childCategory: values.childCategory || null,
       });
 
-      const updatedOptions = productOptions.map((option, index) => ({
-        price:        values.price?.[index] || option.price,
-        stock:        values.quantity?.[index] || option.stock,
-        sku:          values.sku?.[index] || option.sku,
-        size:         values.size?.[index] || option.size,
-        category:     values.category,
-        subCategory:  values.subCategory || null,
-        childCategory: values.childCategory || null,
-      }));
+      const updatedOptions = productOptions.map((option, index) => {
+        let dType = values.discountType?.[index] !== undefined ? values.discountType[index] : option.discountType;
+        let dVal = values.discountValue?.[index] !== undefined ? values.discountValue[index] : option.discountValue;
+        
+        if (dType === "none" || !dVal || Number(dVal) === 0) {
+          dType = null;
+          dVal = null;
+        }
+
+        const basePrice = Number(values.price?.[index] || option.price) || 0;
+        let computedSalePrice = null;
+
+        if (dType === "percent" && Number(dVal) > 0) {
+          computedSalePrice = basePrice - (basePrice * Number(dVal) / 100);
+        } else if (dType === "amount" && Number(dVal) > 0) {
+          computedSalePrice = basePrice - Number(dVal);
+        }
+
+        return {
+          price:        basePrice,
+          stock:        values.quantity?.[index] || option.stock,
+          sku:          values.sku?.[index] || option.sku,
+          size:         values.size?.[index] || option.size,
+          discountType: dType,
+          discountValue: dVal,
+          salePrice:    computedSalePrice,
+          category:     values.category,
+          subCategory:  values.subCategory || null,
+          childCategory: values.childCategory || null,
+        };
+      });
 
       await Promise.all(
         updatedOptions.map((option, index) =>
@@ -442,6 +469,23 @@ const AllProduct = () => {
               </span>
             ))}
           </div>
+        );
+      },
+    },
+    {
+      title: "Discount",
+      key: "discount",
+      width: 100,
+      sorter: (a, b) => getMaxDiscount(a.options) - getMaxDiscount(b.options),
+      sortOrder: sortedInfo.columnKey === "discount" ? sortedInfo.order : null,
+      render: (_, record) => {
+        const optWithDiscount = record.options?.find(o => Number(o.discountValue) > 0);
+        if (!optWithDiscount) return <span style={{ color: "#94a3b8" }}>—</span>;
+        const { discountValue, discountType } = optWithDiscount;
+        return (
+          <span style={{ fontWeight: 700, color: "#f59e0b" }}>
+            {discountValue}{discountType === "percent" ? "%" : " Tk"}
+          </span>
         );
       },
     },
@@ -739,7 +783,7 @@ const AllProduct = () => {
           {productOptions.map((option, index) => (
             <div key={index} style={{ background: "#f8faff", border: "1px solid #e2e8f0", borderRadius: 10, padding: "12px 14px", marginBottom: 10 }}>
               <div style={{ fontWeight: 600, fontSize: 12, color: "#64748b", marginBottom: 8 }}>Option {index + 1} — Size: {option.size}</div>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: 8 }}>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 12 }}>
                 {[["Price", "price"], ["Quantity", "stock"], ["SKU", "sku"], ["Size", "size"]].map(([label, field]) => (
                   <Form.Item key={field} label={label} style={{ margin: 0 }}>
                     <Input
@@ -750,6 +794,30 @@ const AllProduct = () => {
                     />
                   </Form.Item>
                 ))}
+                
+                <Form.Item label="Discount Type" style={{ margin: 0 }}>
+                  <Select
+                    value={option.discountType || "none"}
+                    onChange={(val) => handleOptionChange(index, "discountType", val)}
+                    size="small"
+                    style={{ borderRadius: 6, width: "100%" }}
+                    options={[
+                      { label: "None", value: "none" },
+                      { label: "Percentage", value: "percent" },
+                      { label: "Fixed Amount", value: "amount" },
+                    ]}
+                  />
+                </Form.Item>
+                <Form.Item label="Discount Value" style={{ margin: 0 }}>
+                  <Input
+                    type="number"
+                    value={option.discountValue || ""}
+                    onChange={(e) => handleOptionChange(index, "discountValue", e.target.value)}
+                    size="small"
+                    style={{ borderRadius: 6 }}
+                    disabled={option.discountType === "none" || !option.discountType}
+                  />
+                </Form.Item>
               </div>
             </div>
           ))}

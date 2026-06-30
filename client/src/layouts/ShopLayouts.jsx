@@ -431,14 +431,14 @@ const ShopLayouts = () => {
                   >
                     {mageSaleActive && (
                       <ul className="pb-4 px-6">
-                        <li className="py-2 text-sm text-texthead hover:text-red-500 cursor-pointer">
+                        {/* <li className="py-2 text-sm text-texthead hover:text-red-500 cursor-pointer">
                           <Link to={"/shop/mega-sale"}>Mega Sale</Link>
-                        </li>
+                        </li> */}
                         <li className="py-2 text-sm text-texthead hover:text-red-500 cursor-pointer">
                           <Link to={"/shop/offer-sale"}>Offer Sale</Link>
                         </li>
                         <li className="py-2 text-sm text-texthead hover:text-red-500 cursor-pointer">
-                          <Link to={"/shop/latest-sale"}>Latest Sale</Link>
+                          <Link to={"/shop/best-sale"}>Best Sale</Link>
                         </li>
                       </ul>
                     )}

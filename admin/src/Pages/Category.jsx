@@ -27,6 +27,10 @@ const AddCategory = () => {
   const [newSubCategoryTitle, setNewSubCategoryTitle] = useState("");
   const [categorySuggestions, setCategorySuggestions] = useState([]);
   const [subCategorySuggestions, setSubCategorySuggestions] = useState([]);
+  const [allCategories, setAllCategories] = useState([]);
+  const [filteredCategories, setFilteredCategories] = useState([]);
+  const [availableSubCategories, setAvailableSubCategories] = useState([]);
+  const [selectedCategoryId, setSelectedCategoryId] = useState(null);
   const [categoryExists, setCategoryExists] = useState(false); // new state
   const [selectedCategoryTitle, setSelectedCategoryTitle] = useState("");
   const [imagePreviewUrls, setImagePreviewUrls] = useState([]);
@@ -52,11 +56,13 @@ const AddCategory = () => {
   const fetchData = async () => {
     try {
       const categoryRes = await axios.get("/category");
+      setAllCategories(categoryRes.data.data.doc || []);
+      setFilteredCategories(categoryRes.data.data.doc || []);
+      
       const subCategoryRes = await axios.get("/subCategory");
       const childCategoryRes = await axios.get("/childCategory");
 
       // console.log(childCategoryRes)
-
 
 
       const mergedData = categoryRes.data.data.doc.map((category, index) => {
@@ -219,8 +225,18 @@ const AddCategory = () => {
   };
 
   const onFinish = async (values) => {
-    const { title: categoryTitle, subtitle: subCategoryTitle } =
+    const { title: categoryTitle, subtitle: subCategoryTitle, childTitle } =
       values.category;
+
+    if (childTitle) {
+      if (!categoryExists) {
+        return message.error("To create a Child Category, you must select an EXISTING Category.");
+      }
+      const subCategoryExists = availableSubCategories.some(sub => sub.title === subCategoryTitle);
+      if (!subCategoryExists) {
+        return message.error("To create a Child Category, you must select an EXISTING Subcategory.");
+      }
+    }
 
     const formData = new FormData();
     formData.append("title", categoryTitle);
@@ -328,64 +344,57 @@ const AddCategory = () => {
     }
   };
 
-  const handleCategorySearch = async (value) => {
+  const handleCategorySearch = (value) => {
+    setSelectedCategoryTitle(value);
+    
     if (!value) {
-      setCategorySuggestions([]);
-      setSubCategorySuggestions([]);
-      setSelectedCategoryTitle("");
+      setFilteredCategories(allCategories);
+      setAvailableSubCategories([]);
+      setSelectedCategoryId(null);
+      setCategoryExists(false);
+      
+      form.setFieldsValue({
+        icon: "",
+        colorCode: { iconColor: "", bgColor: "" },
+      });
       return;
     }
 
-    setSelectedCategoryTitle(value);
+    const filtered = allCategories.filter((cat) => 
+      cat.title.toLowerCase().includes(value.toLowerCase())
+    );
+    setFilteredCategories(filtered);
 
-    const res = await axios.get("/category", {
-      params: { title: value },
-    });
-
-    const existingCategory = res.data.data.doc.length > 0;
-    setCategoryExists(existingCategory);
-
-    if (!existingCategory) {
+    const exactMatch = allCategories.find((cat) => cat.title.toLowerCase() === value.toLowerCase());
+    if (exactMatch) {
+      setCategoryExists(true);
+      setSelectedCategoryId(exactMatch._id);
+      fetchSubCategories(exactMatch._id);
+    } else {
+      setCategoryExists(false);
+      setSelectedCategoryId(null);
+      setAvailableSubCategories([]);
+      
       form.setFieldsValue({
         icon: "",
         colorCode: { iconColor: "", bgColor: "" },
       });
     }
-
-    setCategorySuggestions(res.data.data.doc.map((cat) => cat.title));
   };
 
-  const handleSubCategorySearch = async (value) => {
-    if (!value) {
-      setSubCategorySuggestions([]);
-      return;
-    }
+  const handleCategorySelect = (value, option) => {
+    setCategoryExists(true);
+    setSelectedCategoryTitle(value);
+    setSelectedCategoryId(option.key);
+    fetchSubCategories(option.key);
+  };
 
-    if (!selectedCategoryTitle) {
-      setSubCategorySuggestions([]);
-      return;
-    }
-
+  const fetchSubCategories = async (categoryId) => {
     try {
-      // Resolve selected category -> categoryId
-      const categoryRes = await axios.get("/category", {
-        params: { title: selectedCategoryTitle },
-      });
-
-      const categoryDoc = categoryRes?.data?.data?.doc?.[0];
-      if (!categoryDoc?._id) {
-        setSubCategorySuggestions([]);
-        return;
-      }
-
-      const subCategoryRes = await axios.get("/subCategory", {
-        params: { title: value, category: categoryDoc._id },
-      });
-
-      const docs = subCategoryRes?.data?.data?.doc || [];
-      setSubCategorySuggestions(docs.map((s) => s.title));
-    } catch (e) {
-      setSubCategorySuggestions([]);
+      const res = await axios.get("/subCategory", { params: { category: categoryId } });
+      setAvailableSubCategories(res.data.data.doc || []);
+    } catch (error) {
+      setAvailableSubCategories([]);
     }
   };
 
@@ -460,8 +469,11 @@ const AddCategory = () => {
               >
                 <AutoComplete
                   onSearch={handleCategorySearch}
-                  options={categorySuggestions.map((suggestion) => ({
-                    value: suggestion,
+                  onSelect={handleCategorySelect}
+                  onFocus={() => handleCategorySearch(selectedCategoryTitle || "")}
+                  options={filteredCategories.map((cat) => ({
+                    value: cat.title,
+                    key: cat._id
                   }))}
                   placeholder="Enter category title"
                 />
@@ -479,11 +491,18 @@ const AddCategory = () => {
                 ]}
               >
                 <AutoComplete
-                  onSearch={handleSubCategorySearch}
-                  options={subCategorySuggestions.map((suggestion) => ({
-                    value: suggestion,
+                  options={availableSubCategories.map((sub) => ({
+                    value: sub.title,
+                    key: sub._id
                   }))}
+                  onFocus={() => {
+                      if (!categoryExists) setAvailableSubCategories([]);
+                  }}
                   placeholder="Enter subCategory title"
+                  disabled={!selectedCategoryTitle}
+                  filterOption={(inputValue, option) =>
+                    option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
+                  }
                 />
               </Form.Item>
 

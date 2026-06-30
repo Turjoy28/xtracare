@@ -86,8 +86,8 @@ const LatestSale = () => {
         return sellB - sellA;
       });
 
-      // Limit to top 15 most selling products
-      filteredProducts = filteredProducts.slice(0, 15);
+      // Limit to top 10 most selling products
+      filteredProducts = filteredProducts.slice(0, 10);
 
       setAllProduct(filteredProducts);
 
