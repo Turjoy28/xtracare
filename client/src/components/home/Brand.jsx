@@ -97,7 +97,8 @@ const Brand = () => {
           <motion.div className="mt-10 relative">
             <Swiper
               modules={[Navigation, Autoplay]}
-              slidesPerView={1}
+              slidesPerView={2}
+              centerInsufficientSlides={true}
               loop={true}
               speed={1000}
               autoplay={{ delay: 1000, pauseOnMouseEnter: true }}
@@ -107,7 +108,7 @@ const Brand = () => {
                 prevEl: ".brand-swiper-prev",
               }}
               breakpoints={{
-                370: { slidesPerView: 3 },
+                370: { slidesPerView: 2 },
                 640: { slidesPerView: 3 },
                 768: { slidesPerView: 6 },
                 1024: { slidesPerView: 8 },
@@ -117,7 +118,7 @@ const Brand = () => {
             >
               {data.map((item, index) => (
                 <SwiperSlide key={index}>
-                  <div className="mx-5">
+                  <div className="flex justify-center items-center w-full h-full">
                     <Link
                       className="flex justify-center items-center"
                       to={`/shop/brand/${item?._id}/${item?.title}`}

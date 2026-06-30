@@ -42,14 +42,9 @@ export const socialList = [
     link: "https://www.facebook.com/share/1BXqaPoDoc/",
   },
   {
-    name: "linkedIn",
-    logo: FaLinkedinIn,
-    link: "https://www.linkedin.com/in/",
-  },
-  {
-    name: "twitter",
-    logo: FaXTwitter,
-    link: "https://x.com/",
+    name: "tiktok",
+    logo: FaTiktok,
+    link: "https://www.tiktok.com/@sahanazmoni5?_r=1&_t=ZS-97dSUtnQEfF",
   }
 ];
 

@@ -76,9 +76,9 @@ const Feature = () => {
           <motion.div className="my-6 relative flex justify-center">
             <Swiper
               modules={[Navigation, Autoplay]}
-              slidesPerView={1}
-              centerInsufficientSlides={true} // <-- Item kom thakle eka ekai center-e niye ashbe
-              loop={categories?.length > 8}   // <-- Item 8 tar beshi thaklei shudhu loop hobe (karon apnar max view 8 deya ache)
+              slidesPerView={2} // Show 2 categories by default on small mobile screens
+              centerInsufficientSlides={true}
+              loop={categories?.length > 8}
               speed={1000}
               autoplay={{ delay: 3000, pauseOnMouseEnter: true }}
               pagination={{ clickable: true }}

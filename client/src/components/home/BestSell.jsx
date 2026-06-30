@@ -103,7 +103,7 @@ const BestSell = () => {
           <div className="mt-12 w-full relative">
             <Swiper
               modules={[Navigation, Autoplay]}
-              slidesPerView={1}
+              slidesPerView={2}
               loop={true}
               speed={1000}
               autoplay={{ delay: 3000, pauseOnMouseEnter: true }}

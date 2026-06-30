@@ -94,7 +94,7 @@ const SaleFeature = () => {
                 </div>
               </div>
 
-              <div className="mt-6 w-full flex justify-center">
+              {/* <div className="mt-6 w-full flex justify-center">
                 <ul className="flex gap-x-10 items-center">
                   {select.map((item, index) => (
                     <li
@@ -110,7 +110,7 @@ const SaleFeature = () => {
                     </li>
                   ))}
                 </ul>
-              </div>
+              </div> */}
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-y-5 mt-12 lg:mt-14">
                 {currentList.map((item, index) => (
                   <NewProductItem
