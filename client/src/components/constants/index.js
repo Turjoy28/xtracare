@@ -45,6 +45,11 @@ export const socialList = [
     name: "tiktok",
     logo: FaTiktok,
     link: "https://www.tiktok.com/@sahanazmoni5?_r=1&_t=ZS-97dSUtnQEfF",
+  },
+  {
+    name: "youtube",
+    logo: FaYoutube,
+    link: "https://youtube.com/@sahanaz7075?si=HYLXJLcqdk_XIFqk",
   }
 ];
 

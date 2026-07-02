@@ -110,7 +110,9 @@ const MiddleFooter = () => {
                         ? "bg-[#3b5998] hover:bg-opacity-70 text-white"
                         : item.name === "tiktok"
                           ? "bg-[#000000] hover:bg-opacity-70 text-white"
-                          : "";
+                          : item.name === "youtube"
+                            ? "bg-[#FF0000] hover:bg-opacity-70 text-white"
+                            : "";
                     return (
                       <a
                         key={index}
