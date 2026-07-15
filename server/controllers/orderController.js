@@ -7,6 +7,7 @@ const Email = require("../utils/Email");
 const AppError = require("../utils/AppError");
 const catchAsync = require("../utils/catchAsync");
 const { getAll, getOne, deleteOne } = require("../utils/handleFactory");
+const { sendMetaPurchaseEvent } = require("../utils/metaConversionsAPI");
 
 exports.createOrderController = catchAsync(async (req, res, next) => {
   // Aggregate the product prices
@@ -121,6 +122,8 @@ console.log("productAggregation",productAggregation)  // Calculate the total pro
       console.error("Failed to send order invoice email:", err);
     }
   }
+
+  await sendMetaPurchaseEvent(order, req);
 
   res.status(201).json({
     status: "success",
@@ -239,6 +242,8 @@ exports.createOrderWithCouponController = catchAsync(async (req, res, next) => {
   } catch (err) {
     console.error("Failed to send order invoice with coupon email:", err);
   }
+
+  await sendMetaPurchaseEvent(order, req);
 
   res.status(201).json({
     status: "success",
