@@ -210,9 +210,9 @@ const CheckoutForm = () => {
     if (hasFreeShipping) return 0;
     switch (formData?.shipping) {
       case "insideDhaka":
-        return 70;
+        return 60;
       case "outsideDhaka":
-        return 140;
+        return 120;
       default:
         return 0;
     }
